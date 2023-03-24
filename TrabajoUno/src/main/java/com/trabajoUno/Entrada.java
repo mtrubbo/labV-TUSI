@@ -5,20 +5,22 @@ import java.util.Date;
 public abstract class Entrada {
     private static int idCounter = 0;
 
-    private int id;
-    private String nombreShow;
-    private Date diaYHorario;
-    private int duracion;
-
-    public Entrada() {
+    protected int id;
+    protected String nombreShow;
+    protected Date diaYHorario;
+    protected int duracion;
+    protected float costo;
+/*
+    protected Entrada() {
         idCounter++;
 
         id = idCounter;
         nombreShow = "Sin nombre";
         diaYHorario = new Date();
     }
+*/
 
-    public Entrada(String nombreShow, Date diaYHorario, int duracion) {
+    protected Entrada(String nombreShow, Date diaYHorario, int duracion) {
         idCounter++;
 
         this.id = idCounter;
@@ -62,6 +64,16 @@ public abstract class Entrada {
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
+    
+    
 
-    public abstract float calcularCosto();
+    @Override
+	public String toString() {
+		return "Entrada [id=" + id + ", nombreShow=" + nombreShow + ", diaYHorario=" + diaYHorario + ", duracion="
+				+ duracion + ", costo=" + costo + ", ";
+	}
+
+	public abstract float calcularCosto(int tipoEntrada);
 }
+
+
