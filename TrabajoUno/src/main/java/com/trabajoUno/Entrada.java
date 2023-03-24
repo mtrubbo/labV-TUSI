@@ -9,16 +9,6 @@ public abstract class Entrada {
     protected String nombreShow;
     protected Date diaYHorario;
     protected int duracion;
-    protected float costo;
-/*
-    protected Entrada() {
-        idCounter++;
-
-        id = idCounter;
-        nombreShow = "Sin nombre";
-        diaYHorario = new Date();
-    }
-*/
 
     protected Entrada(String nombreShow, Date diaYHorario, int duracion) {
         idCounter++;
@@ -70,10 +60,10 @@ public abstract class Entrada {
     @Override
 	public String toString() {
 		return "Entrada [id=" + id + ", nombreShow=" + nombreShow + ", diaYHorario=" + diaYHorario + ", duracion="
-				+ duracion + ", costo=" + costo + ", ";
+				+ duracion;
 	}
 
-	public abstract float calcularCosto(int tipoEntrada);
+	public abstract float calcularCosto();
 }
 
 
