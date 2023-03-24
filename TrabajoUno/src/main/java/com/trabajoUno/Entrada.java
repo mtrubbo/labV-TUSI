@@ -1,0 +1,67 @@
+package com.trabajoUno;
+
+import java.util.Date;
+
+public abstract class Entrada {
+    private static int idCounter = 0;
+
+    private int id;
+    private String nombreShow;
+    private Date diaYHorario;
+    private int duracion;
+
+    public Entrada() {
+        idCounter++;
+
+        id = idCounter;
+        nombreShow = "Sin nombre";
+        diaYHorario = new Date();
+    }
+
+    public Entrada(String nombreShow, Date diaYHorario, int duracion) {
+        idCounter++;
+
+        this.id = idCounter;
+        this.nombreShow = nombreShow;
+        this.diaYHorario = diaYHorario;
+        this.duracion = duracion;
+    }
+
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
+    public static void setIdCounter(int idCounter) {
+        Entrada.idCounter = idCounter;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombreShow() {
+        return nombreShow;
+    }
+
+    public void setNombreShow(String nombreShow) {
+        this.nombreShow = nombreShow;
+    }
+
+    public Date getDiaYHorario() {
+        return diaYHorario;
+    }
+
+    public void setDiaYHorario(Date diaYHorario) {
+        this.diaYHorario = diaYHorario;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public abstract float calcularCosto();
+}
