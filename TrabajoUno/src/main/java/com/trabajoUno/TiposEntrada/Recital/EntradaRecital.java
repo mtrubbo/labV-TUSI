@@ -70,6 +70,7 @@ public class EntradaRecital extends Entrada {
     public String toString() {
         return "EntradaRecital{" +
                 "categoria=" + categoria +
+                ", costo=" + categoria.obtenerCosto() +
                 ", genero='" + genero + '\'' +
                 ", bandaPrincipal=" + bandaPrincipal +
                 ", bandasSoporte=" + bandasSoporte +
