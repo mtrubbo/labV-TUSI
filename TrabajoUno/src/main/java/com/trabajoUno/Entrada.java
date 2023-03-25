@@ -10,7 +10,7 @@ public abstract class Entrada {
     protected Date diaYHorario;
     protected int duracion;
 
-    protected Entrada(String nombreShow, Date diaYHorario, int duracion) {
+    public Entrada(String nombreShow, Date diaYHorario, int duracion) {
         idCounter++;
 
         this.id = idCounter;
@@ -59,7 +59,8 @@ public abstract class Entrada {
 
     @Override
 	public String toString() {
-		return "Entrada [id=" + id + ", nombreShow=" + nombreShow + ", diaYHorario=" + diaYHorario + ", duracion="
+    	return "Entrada Numero: " + id + ""
+				+ ", Nombre del show: " + nombreShow + ", Fecha: " + diaYHorario + ", Duracion: "
 				+ duracion;
 	}
 

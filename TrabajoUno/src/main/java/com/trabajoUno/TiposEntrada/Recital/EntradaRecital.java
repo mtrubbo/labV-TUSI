@@ -1,6 +1,7 @@
 package com.trabajoUno.TiposEntrada.Recital;
 
 import com.trabajoUno.Entrada;
+import com.trabajoUno.Genero;
 import com.trabajoUno.TiposEntrada.Recital.Categorias.CategoriaNormal;
 import com.trabajoUno.TiposEntrada.Recital.Categorias.ICategoria;
 
@@ -10,13 +11,13 @@ import java.util.List;
 
 public class EntradaRecital extends Entrada {
     private ICategoria categoria;
-    private String genero;
+    private Genero genero;
     private Banda bandaPrincipal;
     private List<Banda> bandasSoporte;
 
 
     public EntradaRecital(String nombreShow, Date diaYHorario, int duracion, ICategoria categoria,
-                          String genero, Banda bandaPrincipal) {
+                          Genero genero, Banda bandaPrincipal) {
         super(nombreShow, diaYHorario, duracion);
         this.categoria = categoria;
         this.genero = genero;
@@ -25,7 +26,7 @@ public class EntradaRecital extends Entrada {
     }
 
     public EntradaRecital(String nombreShow, Date diaYHorario, int duracion, ICategoria categoria,
-                          String genero, Banda bandaPrincipal, List<Banda> bandasSoporte) {
+    		Genero genero, Banda bandaPrincipal, List<Banda> bandasSoporte) {
         super(nombreShow, diaYHorario, duracion);
         this.categoria = categoria;
         this.genero = genero;
@@ -46,11 +47,11 @@ public class EntradaRecital extends Entrada {
         this.categoria = categoria;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
