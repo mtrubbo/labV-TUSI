@@ -11,6 +11,7 @@ public class EntradaTeatro {
 	private List<Actor> actoresPrincipales;
 	private Genero genre;
 	
+	
 	public EntradaTeatro(List<Actor> actoresPrincipales, Genero genre) {
 		super();
 		this.actoresPrincipales = actoresPrincipales;
