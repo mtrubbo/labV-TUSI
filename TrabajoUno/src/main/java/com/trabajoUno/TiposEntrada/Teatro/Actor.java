@@ -24,6 +24,11 @@ public class Actor {
 	public void setApellido(String apellido) {
 		Apellido = apellido;
 	}
+
+	@Override
+	public String toString() {
+		return "Actor " + Nombre + " " + Apellido;
+	}
 	
 	
 }

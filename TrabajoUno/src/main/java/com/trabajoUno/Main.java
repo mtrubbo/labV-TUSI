@@ -4,12 +4,14 @@ import com.trabajoUno.TiposEntrada.Infantil.EntradaInfantil;
 import com.trabajoUno.TiposEntrada.Recital.Banda;
 import com.trabajoUno.TiposEntrada.Recital.Categorias.CategoriaNormal;
 import com.trabajoUno.TiposEntrada.Recital.Categorias.CategoriaVip;
-
+import com.trabajoUno.TiposEntrada.Teatro.Actor;
+import com.trabajoUno.TiposEntrada.Teatro.EntradaTeatro;
 import com.trabajoUno.TiposEntrada.Recital.EntradaRecital;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,5 +39,27 @@ public class Main {
         EntradaInfantil er4 = new EntradaInfantil("EL MAGO SIN DIENTES", new Date(), 60, LocalDate.parse("2020-05-08"), true); 
         System.out.println(er4.toString());
         
+        
+        
+        /* ENTRADA TEATRO */
+        ArrayList<Actor> listActor = new ArrayList<Actor>();
+        ArrayList<Entrada> listEntradas = new ArrayList<Entrada>();
+        Actor ac1 = new Actor("Lucas", "Gomez");
+        Actor ac2  = new Actor("Pablo", "Caero");
+        
+        listActor.add(ac1);
+        listActor.add(ac2);
+        
+        EntradaTeatro et = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(3, "Drama"));
+        EntradaTeatro et2 = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(5, "Teatro"));
+        EntradaTeatro et3= new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(4, "Comedia"));
+        
+        listEntradas.add(et);
+        listEntradas.add(et2);
+        listEntradas.add(et3);
+        
+        for(Entrada etn : listEntradas) {
+        	System.out.println(etn.toString());
+        }
     }
 }
