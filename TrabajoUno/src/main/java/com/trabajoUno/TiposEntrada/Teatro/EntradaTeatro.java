@@ -7,7 +7,7 @@ import com.trabajoUno.Entrada;
 import com.trabajoUno.Genero;
 
 public class EntradaTeatro extends Entrada {
-	private final float costoEntrada = 1350.50F;
+	private static final float costoEntrada = 1350.50F;
 	
 	private List<Actor> actoresPrincipales;
 	private Genero genero;
