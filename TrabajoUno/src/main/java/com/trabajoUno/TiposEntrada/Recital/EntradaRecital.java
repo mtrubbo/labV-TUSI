@@ -17,15 +17,6 @@ public class EntradaRecital extends Entrada {
 
 
     public EntradaRecital(String nombreShow, Date diaYHorario, int duracion, ICategoria categoria,
-                          Genero genero, Banda bandaPrincipal) {
-        super(nombreShow, diaYHorario, duracion);
-        this.categoria = categoria;
-        this.genero = genero;
-        this.bandaPrincipal = bandaPrincipal;
-        this.bandasSoporte = new ArrayList<Banda>();
-    }
-
-    public EntradaRecital(String nombreShow, Date diaYHorario, int duracion, ICategoria categoria,
     		Genero genero, Banda bandaPrincipal, List<Banda> bandasSoporte) {
         super(nombreShow, diaYHorario, duracion);
         this.categoria = categoria;
