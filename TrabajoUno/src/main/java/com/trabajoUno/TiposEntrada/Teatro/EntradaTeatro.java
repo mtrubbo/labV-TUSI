@@ -36,8 +36,8 @@ public class EntradaTeatro extends Entrada {
 	@Override
 	public String toString() {
 		return "Nombre Show: "+ this.nombreShow +" Duracion: "+ this.duracion + " Dia y Horario: "+ this.diaYHorario
-				+ " Costo: " + this.costoEntrada +  ", actoresPrincipales=" + actoresPrincipales + ", genero: "
-				+ genero;
+				+ " Costo: " + costoEntrada +  ", actoresPrincipales=" + this.actoresPrincipales + ", genero: "
+				+ this.genero;
 	}
 
 	@Override
