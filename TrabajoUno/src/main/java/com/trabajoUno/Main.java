@@ -1,5 +1,6 @@
 package com.trabajoUno;
 
+import com.trabajoUno.TiposEntrada.Deporte.EntradaDeporte;
 import com.trabajoUno.TiposEntrada.Infantil.EntradaInfantil;
 import com.trabajoUno.TiposEntrada.Recital.Banda;
 import com.trabajoUno.TiposEntrada.Recital.Categorias.CategoriaNormal;
@@ -15,8 +16,9 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        //prueba creacion de entradas recitales
         
+        										/*ENTRADAS RECITALES*/
+    	/********************************************************************************************************/
 		///BANDAS SOPORTE
 		ArrayList<Banda> ls = new ArrayList<Banda>();
 		ls.add(new Banda("Twenty one pilots"));
@@ -36,6 +38,12 @@ public class Main {
         
         System.out.println(er2.toString());
         
+   	    /********************************************************************************************************/
+
+        
+        
+        											/*ENTRADAS INFANTILES*/
+        /********************************************************************************************************/
         //ENTRADA INFANTIL SOLICITA UNA FECHA DE NACIMIENTO CON LocalDate. FALSE: SIN SOUVENIR - TRUE: CON SOUVENIR
         
         /*ENTRADA INFANTIL CON COSTO PARA MAYORES DE 8 AÑOS Y CON SOUVENIR*/
@@ -46,7 +54,10 @@ public class Main {
         EntradaInfantil er4 = new EntradaInfantil("EL MAGO SIN DIENTES", new Date(), 60, LocalDate.parse("2020-05-08"), true); 
         System.out.println(er4.toString());
         
-        /* ENTRADA TEATRO */
+        /********************************************************************************************************/
+        
+        											   /* ENTRADA TEATRO */
+        /********************************************************************************************************/
         ArrayList<Actor> listActor = new ArrayList<Actor>();
         ArrayList<Entrada> listEntradas = new ArrayList<Entrada>();
         Actor ac1 = new Actor("Lucas", "Gomez");
@@ -66,5 +77,26 @@ public class Main {
         for(Entrada etn : listEntradas) {
         	System.out.println(etn.toString());
         }
+        
+        /********************************************************************************************************/
+        
+        									/*ENTRADAS EVENTOS DEPORTIVOS*/
+        /********************************************************************************************************/
+        //ENTRADA DE EVENTO DEPORTIVO SOLICITA EL TIPO DE DEPORTE (Futbol, Rugby o Hockey) 
+        //Y SI ES INTERNACIONAL (true: SI - false: NO)
+        
+        /*ENTRADA DE DEPORTE FUTBOL NACIONAL*/
+        EntradaDeporte entradaNacional = new EntradaDeporte("Boca vs River", new Date(), 90, "Futbol", false);
+        System.out.println(entradaNacional.toString());
+        
+        /*ENTRADA DE DEPORTE FUTBOL INTERNACIONAL*/
+        EntradaDeporte entradaInternacional = new EntradaDeporte("Argentina vs Alemania", new Date(), 90, "Futbol", true);
+        System.out.println(entradaInternacional.toString());
+
+        
+        
+        /********************************************************************************************************/
+
+
     }
 }
