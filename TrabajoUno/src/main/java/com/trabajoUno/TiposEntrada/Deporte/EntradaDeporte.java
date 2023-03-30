@@ -76,6 +76,6 @@ public class EntradaDeporte extends Entrada {
 	//METODO toString
 	public String toString() {
 		String internacionalResult = this.internacional?"SI":"NO";
-		return "Entrada Deporte:  " + super.toString() + " | Costo: $ " + costoEntrada + " | Deporte: " + deporte + " | Internacional: " + internacionalResult + " | " + super.toString();
+		return "Entrada Deporte:  " + super.toString() + " | Costo: $ " + costoEntrada + " | Deporte: " + deporte + " | Internacional: " + internacionalResult + " | ";
 	}
 }

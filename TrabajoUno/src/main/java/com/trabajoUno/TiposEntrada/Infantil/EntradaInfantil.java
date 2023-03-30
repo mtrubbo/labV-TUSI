@@ -72,7 +72,7 @@ public class EntradaInfantil extends Entrada {
 	@Override
 	public String toString() {
 		String souvenirResult = this.souvenir?"SI":"NO";
-		return "Entrada Infantil: "+ super.toString() +" | Costo: $ " + costoEntrada + " | Fecha de Nacimiento: " + nacimiento + " | SOUVENIR: "+ souvenirResult + " | " + super.toString();
+		return "Entrada Infantil: "+ super.toString() +" | Costo: $ " + costoEntrada + " | Fecha de Nacimiento: " + nacimiento + " | SOUVENIR: "+ souvenirResult + " | ";
 
 	}
 	

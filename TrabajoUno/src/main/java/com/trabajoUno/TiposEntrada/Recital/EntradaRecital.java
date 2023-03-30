@@ -64,9 +64,9 @@ public class EntradaRecital extends Entrada {
         return "Entrada Recital:  " + super.toString() +
                 " | Categoria: " + categoria +
                 " | Costo: $" + categoria.obtenerCosto() +
-                " | Genero: " + genero + '\'' +
-                " | BandaPrincipal=" + bandaPrincipal +
-                " | BandasSoporte=" + bandasSoporte;
+                " | Genero: " + genero +
+                " | Banda Principal: " + bandaPrincipal +
+                " | Bandas Soporte: " + bandasSoporte;
 
     }
 }

@@ -20,6 +20,6 @@ public class Banda {
 
     @Override
     public String toString() {
-        return "Banda " + this.nombre;
+        return "" + this.nombre;
     }
 }
