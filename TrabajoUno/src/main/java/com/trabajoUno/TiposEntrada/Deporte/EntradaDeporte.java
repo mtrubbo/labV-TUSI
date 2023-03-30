@@ -16,6 +16,8 @@ public class EntradaDeporte extends Entrada {
 		this.deporte = deporte;
 		this.internacional = internacional;
 		this.costoEntrada = calcularCosto();
+		
+		Entrada.entradasList.add(this);
 	}
 	
 	//METODO PARA CALCULAR COSTO SEGÚN DEPORTE Y CLASIFICACIÓN REGIONAL
@@ -39,7 +41,7 @@ public class EntradaDeporte extends Entrada {
 		
 		//VERIFICO SI ES INTERNACIONAL
 		if(internacional){
-			costoEntrada = (float) (costoEntrada* (1.3));
+			costoEntrada = costoEntrada* 1.3f;
 		}
 				
 		return costoEntrada;
@@ -73,14 +75,7 @@ public class EntradaDeporte extends Entrada {
 	
 	//METODO toString
 	public String toString() {
-		if(internacional) {
-		return "Entrada de Evento Deporte - Costo: $ " + costoEntrada + ", Deporte: " + deporte + ", Internacional: SI - " + super.toString();
-		}
-		else {
-		return "Entrada de Evento Deporte - Costo: $ " + costoEntrada + ",  Deporte: " + deporte + ", Internacional: NO - " + super.toString();
-
-		}
-	
-
-}
+		String internacionalResult = this.internacional?"SI":"NO";
+		return "Entrada Deporte:  " + super.toString() + " | Costo: $ " + costoEntrada + " | Deporte: " + deporte + " | Internacional: " + internacionalResult + " | " + super.toString();
+	}
 }

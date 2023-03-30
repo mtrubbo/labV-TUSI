@@ -1,14 +1,23 @@
 package com.trabajoUno;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Entrada {
-    private static int idCounter = 0;
+    private static int idCounter=0;
+    
+    protected static ArrayList<Entrada> entradasList = new ArrayList<Entrada>();
 
     protected int id;
     protected String nombreShow;
     protected Date diaYHorario;
     protected int duracion;
+    
+    public static void getEntradasList() {
+        for(Entrada e : entradasList) {
+        	System.out.println(e.toString());
+        }
+    }
 
     public Entrada(String nombreShow, Date diaYHorario, int duracion) {
         idCounter++;
@@ -17,6 +26,7 @@ public abstract class Entrada {
         this.nombreShow = nombreShow;
         this.diaYHorario = diaYHorario;
         this.duracion = duracion;
+        
     }
 
     public static int getIdCounter() {
@@ -59,8 +69,8 @@ public abstract class Entrada {
 
     @Override
 	public String toString() {
-    	return "Entrada Numero: " + id + ""
-				+ ", Nombre del show: " + nombreShow + ", Fecha: " + diaYHorario + ", Duracion: "
+    	return "Entrada Numero: " + id
+				+ " | Nombre del show: " + nombreShow + " | Fecha: " + diaYHorario + " | Duracion: "
 				+ duracion;
 	}
 

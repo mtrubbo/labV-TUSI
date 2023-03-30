@@ -20,83 +20,60 @@ public class Main {
         										/*ENTRADAS RECITALES*/
     	/********************************************************************************************************/
 		///BANDAS SOPORTE
-		ArrayList<Banda> ls = new ArrayList<Banda>();
-		ls.add(new Banda("Twenty one pilots"));
+		ArrayList<Banda> bandasSop1 = new ArrayList<Banda>();
+		bandasSop1.add(new Banda("Twenty one pilots"));
 		
-		ArrayList<Banda> ls2 = new ArrayList<Banda>();
-		ls2.add(new Banda("Lali"));
-		ls2.add(new Banda("Airbag"));
-
+		ArrayList<Banda> bandasSop2 = new ArrayList<Banda>();
+		bandasSop2.add(new Banda("Lali"));
+		bandasSop2.add(new Banda("Airbag"));
+		
+		
 		///ENTRADAS RECITALES
-        EntradaRecital er = new EntradaRecital("Lollapalooza", new Date(),60, new CategoriaVip()
-                , new Genero(1, "Trap"), new Banda("Drake"), ls);
-
-        System.out.println(er.toString());
+        EntradaRecital e1 = new EntradaRecital("Lollapalooza", new Date(),60, new CategoriaVip()
+                , new Genero(1, "Trap"), new Banda("Drake"), bandasSop1);
         
-        Entrada er2 = new EntradaRecital("Cosquin Rock",new Date(),90, new CategoriaNormal()
-                , new Genero(2, "Reggaeton"), new Banda("Rels b"), ls2);
-        
-        System.out.println(er2.toString());
-        
-   	    /********************************************************************************************************/
-
+        Entrada e2 = new EntradaRecital("Cosquin Rock",new Date(),90, new CategoriaNormal()
+                , new Genero(2, "Reggaeton"), new Banda("Rels b"), bandasSop2);
         
         
+   	    /********************************************************************************************************/     
         											/*ENTRADAS INFANTILES*/
         /********************************************************************************************************/
         //ENTRADA INFANTIL SOLICITA UNA FECHA DE NACIMIENTO CON LocalDate. FALSE: SIN SOUVENIR - TRUE: CON SOUVENIR
         
         /*ENTRADA INFANTIL CON COSTO PARA MAYORES DE 8 AÑOS Y CON SOUVENIR*/
-        EntradaInfantil er3 = new EntradaInfantil("LA VACA LOLA", new Date(), 60, LocalDate.parse("2010-05-08"), false); 
-        System.out.println(er3.toString());
-        
+        EntradaInfantil e3 = new EntradaInfantil("LA VACA LOLA", new Date(), 60, LocalDate.parse("2010-05-08"), false);        
         /*ENTRADA INFANTIL CON COSTO PARA MAYORES DE 8 AÑOS Y CON SOUVENIR*/
-        EntradaInfantil er4 = new EntradaInfantil("EL MAGO SIN DIENTES", new Date(), 60, LocalDate.parse("2020-05-08"), true); 
-        System.out.println(er4.toString());
-        
+        EntradaInfantil e4 = new EntradaInfantil("EL MAGO SIN DIENTES", new Date(), 60, LocalDate.parse("2020-05-08"), true);        
         /********************************************************************************************************/
-        
         											   /* ENTRADA TEATRO */
         /********************************************************************************************************/
         ArrayList<Actor> listActor = new ArrayList<Actor>();
-        ArrayList<Entrada> listEntradas = new ArrayList<Entrada>();
         Actor ac1 = new Actor("Lucas", "Gomez");
         Actor ac2  = new Actor("Pablo", "Caero");
         
         listActor.add(ac1);
         listActor.add(ac2);
         
-        EntradaTeatro et = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(3, "Drama"));
-        EntradaTeatro et2 = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(5, "Teatro"));
-        EntradaTeatro et3= new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(4, "Comedia"));
+        EntradaTeatro e5 = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(3, "Drama"));
+        EntradaTeatro e6 = new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(5, "Teatro"));
+        EntradaTeatro e7= new EntradaTeatro("Opera 1", new Date(), 60, listActor, new Genero(4, "Comedia")); 
         
-        listEntradas.add(et);
-        listEntradas.add(et2);
-        listEntradas.add(et3);
         
-        for(Entrada etn : listEntradas) {
-        	System.out.println(etn.toString());
-        }
-        
-        /********************************************************************************************************/
-        
+        /********************************************************************************************************/       
         									/*ENTRADAS EVENTOS DEPORTIVOS*/
         /********************************************************************************************************/
         //ENTRADA DE EVENTO DEPORTIVO SOLICITA EL TIPO DE DEPORTE (Futbol, Rugby o Hockey) 
         //Y SI ES INTERNACIONAL (true: SI - false: NO)
         
         /*ENTRADA DE DEPORTE FUTBOL NACIONAL*/
-        EntradaDeporte entradaNacional = new EntradaDeporte("Boca vs River", new Date(), 90, "Futbol", false);
-        System.out.println(entradaNacional.toString());
-        
+        EntradaDeporte e8 = new EntradaDeporte("Boca vs River", new Date(), 90, "Futbol", false);    
         /*ENTRADA DE DEPORTE FUTBOL INTERNACIONAL*/
-        EntradaDeporte entradaInternacional = new EntradaDeporte("Argentina vs Alemania", new Date(), 90, "Futbol", true);
-        System.out.println(entradaInternacional.toString());
-
-        
-        
+        EntradaDeporte e9 = new EntradaDeporte("Argentina vs Alemania", new Date(), 90, "Futbol", true);
         /********************************************************************************************************/
 
+        
+        Entrada.getEntradasList();
 
     }
 }

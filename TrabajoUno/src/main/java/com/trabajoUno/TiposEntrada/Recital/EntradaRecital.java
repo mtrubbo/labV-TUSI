@@ -23,6 +23,7 @@ public class EntradaRecital extends Entrada {
         this.genero = genero;
         this.bandaPrincipal = bandaPrincipal;
         this.bandasSoporte = bandasSoporte;
+        Entrada.entradasList.add(this);
     }
 
     @Override
@@ -60,16 +61,12 @@ public class EntradaRecital extends Entrada {
 
     @Override
     public String toString() {
-        return "EntradaRecital{" +
-                "categoria=" + categoria +
-                ", costo=" + categoria.obtenerCosto() +
-                ", genero='" + genero + '\'' +
-                ", bandaPrincipal=" + bandaPrincipal +
-                ", bandasSoporte=" + bandasSoporte +
-                ", id=" + id +
-                ", nombreShow='" + nombreShow + '\'' +
-                ", diaYHorario=" + diaYHorario +
-                ", duracion=" + duracion +
-                '}';
+        return "Entrada Recital:  " + super.toString() +
+                " | Categoria: " + categoria +
+                " | Costo: $" + categoria.obtenerCosto() +
+                " | Genero: " + genero + '\'' +
+                " | BandaPrincipal=" + bandaPrincipal +
+                " | BandasSoporte=" + bandasSoporte;
+
     }
 }

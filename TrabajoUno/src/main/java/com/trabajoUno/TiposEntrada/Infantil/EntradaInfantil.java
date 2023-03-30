@@ -19,7 +19,7 @@ public class EntradaInfantil extends Entrada {
 		this.nacimiento = nacimiento;
 		this.souvenir = souvenir;
 		this.costoEntrada = calcularCosto();
-		
+		Entrada.entradasList.add(this);
 	}
 
 	//METODOS PARA CALCULAR EDAD Y COSTOS
@@ -71,13 +71,9 @@ public class EntradaInfantil extends Entrada {
 
 	@Override
 	public String toString() {
-		if(souvenir) {
-		return "Entrada Infantil - Costo: $ " + costoEntrada + ", Fecha de Nacimiento: " + nacimiento + ", CON SOUVENIR - " + super.toString();
-		}
-		else {
-		return "Entrada Infantil - Costo: $ " + costoEntrada + ", Fecha de Nacimiento: " + nacimiento + ", SIN SOUVENIR - " + super.toString();
+		String souvenirResult = this.souvenir?"SI":"NO";
+		return "Entrada Infantil: "+ super.toString() +" | Costo: $ " + costoEntrada + " | Fecha de Nacimiento: " + nacimiento + " | SOUVENIR: "+ souvenirResult + " | " + super.toString();
 
-		}
 	}
 	
 

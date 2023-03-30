@@ -17,6 +17,7 @@ public class EntradaTeatro extends Entrada {
 			super(nombreShow,diaYHorario,duracion);
 		this.actoresPrincipales = actoresPrincipales;
 		this.genero = genre;
+		Entrada.entradasList.add(this);
 	}
 
 
@@ -35,8 +36,7 @@ public class EntradaTeatro extends Entrada {
 
 	@Override
 	public String toString() {
-		return "Nombre Show: "+ this.nombreShow +" Duracion: "+ this.duracion + " Dia y Horario: "+ this.diaYHorario
-				+ " Costo: " + costoEntrada +  ", actoresPrincipales=" + this.actoresPrincipales + ", genero: "
+		return "Entrada Teatro:   "+ super.toString()+ " | Costo: $" + costoEntrada +  " | Actores Principales: " + this.actoresPrincipales + " | Genero: "
 				+ this.genero;
 	}
 
