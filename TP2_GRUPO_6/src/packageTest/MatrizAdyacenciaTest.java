@@ -14,7 +14,9 @@ class MatrizAdyacenciaTest {
 
 	private MatrizAdyacencia ma = new MatrizAdyacencia(5);
 
-	/// A
+	/// a. Crear un método llamado agregarElementoTest, que verifique que
+	//luego de agregar un elemento este elemento exista dentro de la matriz
+
 	@Disabled
 	@Test
 	public void agregarElementoTest() {
@@ -22,7 +24,10 @@ class MatrizAdyacenciaTest {
 		assertTrue(ma.existeElemento(1, 1));
 	}
 
-	/// B
+	/// B Crear un método llamado agregarElementoSimetriaTest, que
+	//verifique que luego de agregar un elemento, ese exista en su posición
+	//opuesta/simétrica. Ejemplo, si agrego un elemento en la posición [2,3],
+	//verificar que se haya agregado el elemento [3,2]
 	@Disabled
 	@Test
 	public void agregarElementoSimetriaTest() {
@@ -30,7 +35,10 @@ class MatrizAdyacenciaTest {
 		assertEquals(true, ma.existeElemento(2, 3));
 	}
 
-	/// C
+	/// C . Crear un método llamado eliminarElementoTest, que verifique que
+	//luego de eliminar un elemento este elemento no exista dentro de la
+	//matriz
+
 	@Disabled
 	@Test
 	public void eliminarElementoTest() {
@@ -40,7 +48,10 @@ class MatrizAdyacenciaTest {
 		assertFalse(ma.existeElemento(1, 1));
 	}
 
-	/// D
+	/// D Crear un método llamado eliminarElementoSimetricoTest, que
+	//verifique que luego de eliminar un elemento también elimine su simétrico.
+	//Ejemplo, si elimino el elemento de la posición [2,3], verificar que se haya
+	//eliminado el elemento [3,2]
 	@Disabled
 	@Test
 	public void eliminarElementoSimetricoTest() {
@@ -54,7 +65,6 @@ class MatrizAdyacenciaTest {
 	// Ejemplo: Si agregamos tres elementos [2,3] [1,4] y [1,2] ...
 	// hay un total de tres relaciones.}
 
-	/// E
 	@Disabled
 	@Test
 	public void contarRelacionesTest() {
@@ -71,7 +81,6 @@ class MatrizAdyacenciaTest {
 	// todos estos elementos se hayan guardado correctamente
 	// en su posiciÃ³n original y en su simetrico.
 
-	/// F
 	@Disabled
 	@Test
 	public void existenTodosLosElementosTest() {
@@ -87,7 +96,10 @@ class MatrizAdyacenciaTest {
 		assertTrue(ma.existeElemento(1, 4));
 	}
 
-	
+	//Crear un método llamado agregarElementoFilaNegativaTest
+	//que verifique que, si uno quiere agregar un elemento en una fila
+	//negativa, éste arroje una excepción.
+
 	@Test
 	public void agregarElementoFilaNegativaTest() throws Exception {
 
@@ -106,6 +118,10 @@ class MatrizAdyacenciaTest {
 	}
 
 	
+	//Crear un método llamado agregarElementoColumnaNegativaTest
+	//que verifique que, si uno quiere agregar un elemento en una columna
+	//negativa, éste arroje una excepción.
+
 	@Test
 	public void agregarElementoColumnaNegativaTest() {
 
@@ -124,6 +140,11 @@ class MatrizAdyacenciaTest {
 	}
 
 	
+	//Crear un método llamado agregarElementoFueraRangoTest que
+	//verifique que, si uno quiere agregar un elemento en una columna fuera
+	//del rango, éste arroje una excepción. Ejemplo: si tenemos una matriz de
+	//2x2,(dos filas, dos columnas) probar que si uno quiere agregar en la
+	//columna 3 o fila 3, se arroje una excepción
 	@Test
 	public void agregarElementoFueraRangoTest()  {
 		
