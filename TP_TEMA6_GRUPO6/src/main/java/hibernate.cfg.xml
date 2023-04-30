@@ -12,5 +12,6 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
         <mapping class="GRUPO6.entity.Genero" resource="GRUPO6/entity/Genero.hbm.xml"></mapping>
+        <mapping class="GRUPO6.entity.Nacionalidad"/>
     </session-factory>
 </hibernate-configuration>
