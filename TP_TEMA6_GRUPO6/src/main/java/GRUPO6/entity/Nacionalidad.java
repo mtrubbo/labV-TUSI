@@ -38,5 +38,13 @@ public class Nacionalidad implements Serializable {
 	public void setDescripcion(String descripcion) {
 		Descripcion = descripcion;
 	}
+
+	@Override
+	public String toString() {
+		return "Nacionalidad{" +
+				"IdNacionalidad=" + IdNacionalidad +
+				", Descripcion='" + Descripcion + '\'' +
+				'}';
+	}
 }
 

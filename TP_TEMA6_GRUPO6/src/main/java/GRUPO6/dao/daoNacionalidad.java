@@ -1,20 +1,12 @@
 package GRUPO6.dao;
 
-import org.hibernate.Session;
-
 import GRUPO6.entity.Nacionalidad;
 
-public class daoNacionalidad {
+public class daoNacionalidad extends DaoBase {
 
-	public static void Add(Nacionalidad na)
+	public static void AddNacionalidad(Nacionalidad na)
 	{
-		ConfigHibernate cf = new ConfigHibernate();
-		Session session = cf.openConnection();
-		
-		session.beginTransaction();
-		session.save(na);
-		session.getTransaction().commit();
-		cf.closeSession();
+		Add(na);
 	}
 	
 }
