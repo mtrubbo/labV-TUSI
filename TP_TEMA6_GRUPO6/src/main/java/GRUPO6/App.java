@@ -3,6 +3,7 @@ package GRUPO6;
 import GRUPO6.entity.*;
 import GRUPO6.dao.*;
 
+import java.util.Date;
 import java.util.List;
 
 public class App 
@@ -12,12 +13,7 @@ public class App
     	
     	Genero gen = new Genero();
     	gen.setDescripcion("Terror");
-//    	DaoBase.Add(gen);
-    	
-    	Genero gen2 = new Genero();	
-    	gen2 = daoGenero.ReadOne(1);
-    
-        System.out.println("Info: " + gen2.toString());
+     	DaoBase.Add(gen);
         
         Nacionalidad n1 = new Nacionalidad(1,"Argentina");
         Nacionalidad n2 = new Nacionalidad(2,"Francia");
@@ -25,11 +21,11 @@ public class App
         Nacionalidad n4 = new Nacionalidad(4,"Inglaterra");
         Nacionalidad n5 = new Nacionalidad(5,"Brasil");
         
-//        daoNacionalidad.AddNacionalidad(n1);
-//        daoNacionalidad.AddNacionalidad(n2);
-//        daoNacionalidad.AddNacionalidad(n3);
-//        daoNacionalidad.AddNacionalidad(n4);
-//        daoNacionalidad.AddNacionalidad(n5);
+        DaoBase.Add(n1);
+        DaoBase.Add(n2);
+        DaoBase.Add(n3);
+        DaoBase.Add(n4);
+        DaoBase.Add(n5);
 
         Autor au1 = new Autor();
         au1.setNombre("Jorge");
@@ -52,6 +48,17 @@ public class App
             System.out.println("Autor nuevo: " + au);
         }
 
-
+        Biblioteca b1 = new Biblioteca(1,new Date(),1);
+        Biblioteca b2 = new Biblioteca(2,new Date(),2);
+        Biblioteca b3 = new Biblioteca(3,new Date(),2);
+        Biblioteca b4 = new Biblioteca(4,new Date(),1);
+        Biblioteca b5 = new Biblioteca(5,new Date(),2);
+        
+        ///ALTA REGISTROS BIBLIOTECA
+        DaoBase.Add(b1);
+        DaoBase.Add(b2);
+        DaoBase.Add(b3);
+        DaoBase.Add(b4);
+        DaoBase.Add(b5);
     }
 }
