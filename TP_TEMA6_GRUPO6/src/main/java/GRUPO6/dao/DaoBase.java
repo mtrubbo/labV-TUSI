@@ -17,6 +17,27 @@ public class DaoBase {
         session.getTransaction().commit();
         hibernate.closeSession();
     }
+    
+    public static void Update(Object entity){
+        ConfigHibernate hibernate = new ConfigHibernate();
+        Session session = hibernate.openConnection();
+
+        session.beginTransaction();
+        session.update(entity);
+        session.getTransaction().commit();
+        hibernate.closeSession();
+    }
+    
+    
+    public static void Delete(Object entity){
+        ConfigHibernate hibernate = new ConfigHibernate();
+        Session session = hibernate.openConnection();
+
+        session.beginTransaction();
+        session.delete(entity);
+        session.getTransaction().commit();
+        hibernate.closeSession();
+    }
 
     public static Object GetById(Class clazz, int id){
         ConfigHibernate hibernate = new ConfigHibernate();

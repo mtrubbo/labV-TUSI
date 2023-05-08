@@ -14,5 +14,7 @@
         <mapping class="GRUPO6.entity.Genero" resource="Genero.hbm.xml"></mapping>
         <mapping class="GRUPO6.entity.Nacionalidad"/>
         <mapping class="GRUPO6.entity.Autor"/>
+        <mapping class="GRUPO6.entity.Biblioteca"/>
+        <mapping class="GRUPO6.entity.Libro"/>
     </session-factory>
 </hibernate-configuration>
