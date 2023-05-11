@@ -3,10 +3,8 @@ package GRUPO6;
 import GRUPO6.entity.*;
 import GRUPO6.dao.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class App 
 {
@@ -80,13 +78,6 @@ public class App
         DaoBase.Add(au4);
         DaoBase.Add(au5);
 
-        /*
-        List autores = DaoBase.GetAll(Autor.class);
-        for (Object au: autores) {
-            System.out.println("Autor nuevo: " + au);
-        }
-        */
-
         
         ///ALTA REGISTROS BIBLIOTECA
         Biblioteca b1 = new Biblioteca(1,new Date(),1);
@@ -108,6 +99,7 @@ public class App
         Libro l3 = new Libro("0000000000033", "El Gran Lobo Feroz", new Date(),"Español",70,au3,"Cuidado con el lobo",Arrays.asList(gen3,gen2),b3);
         Libro l4 = new Libro("0000000000034", "Abrapalabra", new Date(),"Italiano",46,au3,"Conoceras palabras magicas",Arrays.asList(gen4,gen1),b4);
         Libro l5 = new Libro("0000000000035", "David el Dinosaurio", new Date(),"English",210,au1,"Guiá a david en sus vacaciones por el mundo",Arrays.asList(gen4,gen5),b5);
+       
         DaoBase.Add(l1);
         DaoBase.Add(l2);
         DaoBase.Add(l3);
