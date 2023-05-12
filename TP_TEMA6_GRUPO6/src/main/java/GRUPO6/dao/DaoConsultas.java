@@ -1,5 +1,6 @@
 package GRUPO6.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -29,6 +30,8 @@ public class DaoConsultas {
 		ConfigHibernate ch = new ConfigHibernate();
 		Session s = ch.openConnection();
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		List<Object[]> lBiblioteca = (List<Object[]>)s.createQuery("FROM Biblioteca as b JOIN b.libro where b.Estado = 2").list();
 		
 		System.err.println("PUNTO 2 - LIBROS PRESTADOS");
@@ -36,7 +39,7 @@ public class DaoConsultas {
 		for (Object[] obj : lBiblioteca) {
 			Biblioteca b = (Biblioteca)obj[0];
 			
-			System.out.println(b.toString());
+			System.out.println("ID: " + b.getId() +"\n"+ "Fecha de alta: " + sdf.format(b.getFechaAlta()) + "\n" + "Titulo Libro: "+ b.getLibro().getTitulo() + "\n\n");
 		}
 		
 		ch.closeSession();

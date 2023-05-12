@@ -79,7 +79,5 @@ public class Biblioteca implements Serializable {
 		return strB.toString();
 	}
 
-	
-	
 }
 
