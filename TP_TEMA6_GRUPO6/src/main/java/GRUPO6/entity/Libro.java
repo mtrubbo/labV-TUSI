@@ -24,6 +24,8 @@ public class Libro implements Serializable {
 	    @JoinTable(name="libro_x_generos",joinColumns= {@JoinColumn(name="IDLibro")},inverseJoinColumns= {@JoinColumn(name="IDGenero")})
 	    private List<Genero> generos;
 	    
+	    public Libro(){}
+	    
 	    public Libro(String ISBN, String titulo, Date fechaLanzamiento, String idioma, int cantidadPaginas, Autor autor, String descripcion, List<Genero> generos) {
 	        this.ISBN = ISBN;
 	        this.titulo = titulo;
