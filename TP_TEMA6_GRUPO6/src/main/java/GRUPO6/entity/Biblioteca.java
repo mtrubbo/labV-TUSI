@@ -1,6 +1,7 @@
 package GRUPO6.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -67,8 +68,15 @@ public class Biblioteca implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Id= " + Id + ", Fecha de alta= " + FechaAlta + ", Estado= " + Estado + ", Libro=" + libro.getTitulo()
-				+ "";
+		SimpleDateFormat dFormat = new SimpleDateFormat("dd/MM/yyyy");
+		StringBuilder strB = new StringBuilder();
+		
+		strB.append("ID Biblioteca: " + this.Id + "\n");
+		strB.append("Fecha alta: " + dFormat.format(this.FechaAlta) + "\n");
+		strB.append("Estado: "+ this.Estado + "\n");
+		strB.append("Titulo Libro: " + this.libro.getTitulo() + "\n\n");
+		
+		return strB.toString();
 	}
 
 	
