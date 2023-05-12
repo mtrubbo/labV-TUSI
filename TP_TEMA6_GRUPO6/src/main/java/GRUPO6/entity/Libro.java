@@ -23,11 +23,8 @@ public class Libro implements Serializable {
 	    @ManyToMany(cascade = {CascadeType.ALL})
 	    @JoinTable(name="libro_x_generos",joinColumns= {@JoinColumn(name="IDLibro")},inverseJoinColumns= {@JoinColumn(name="IDGenero")})
 	    private List<Genero> generos;
-	    @ManyToOne(cascade = {CascadeType.ALL})
-	    @JoinColumn(name="IDBiblioteca")
-	    private Biblioteca biblioteca;
 	    
-	    public Libro(String ISBN, String titulo, Date fechaLanzamiento, String idioma, int cantidadPaginas, Autor autor, String descripcion, List<Genero> generos, Biblioteca biblioteca) {
+	    public Libro(String ISBN, String titulo, Date fechaLanzamiento, String idioma, int cantidadPaginas, Autor autor, String descripcion, List<Genero> generos) {
 	        this.ISBN = ISBN;
 	        this.titulo = titulo;
 	        this.fechaLanzamiento = fechaLanzamiento;
@@ -36,7 +33,6 @@ public class Libro implements Serializable {
 	        this.autor = autor;
 	        this.descripcion = descripcion;
 	        this.generos = generos;
-	        this.biblioteca = biblioteca;
 	    }
 	    
 	    // Métodos getters y setters para cada atributo
@@ -104,14 +100,6 @@ public class Libro implements Serializable {
 	    public void setGeneros(List<Genero> generos) {
 	        this.generos = generos;
 	    }
-	    
-	    public Biblioteca getBiblioteca() {
-	        return biblioteca;
-	    }
-	    
-	    public void setBiblioteca(Biblioteca biblioteca) {
-	        this.biblioteca = biblioteca;
-	    }
 
 	    @Override
 	    public String toString() {
@@ -129,7 +117,6 @@ public class Libro implements Serializable {
 	        for (Genero genero : this.generos) {
 	            sb.append(" - ").append(genero.getDescripcion()).append("\n");
 	        }
-	        sb.append("Biblioteca: ").append(this.biblioteca.getIdLibro()).append("\n");
 
 	        return sb.toString();
 	    }

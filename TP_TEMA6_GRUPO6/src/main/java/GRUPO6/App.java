@@ -77,28 +77,14 @@ public class App
         DaoBase.Add(au3);
         DaoBase.Add(au4);
         DaoBase.Add(au5);
-
-        
-        ///ALTA REGISTROS BIBLIOTECA
-        Biblioteca b1 = new Biblioteca(1,new Date(),1);
-        Biblioteca b2 = new Biblioteca(2,new Date(),2);
-        Biblioteca b3 = new Biblioteca(3,new Date(),2);
-        Biblioteca b4 = new Biblioteca(4,new Date(),1);
-        Biblioteca b5 = new Biblioteca(5,new Date(),2);
-        
-        DaoBase.Add(b1);
-        DaoBase.Add(b2);
-        DaoBase.Add(b3);
-        DaoBase.Add(b4);
-        DaoBase.Add(b5);
-        
+     
         
         ///ALTA REGISTROS LIBROS
-        Libro l1 = new Libro("0000000000031", "Los Simpsons", new Date(),"Ingles",210,au1,"Historia de los personajes",Arrays.asList(gen1),b1);
-        Libro l2 = new Libro("0000000000032", "El Pollo Pepe", new Date(),"Ingles",52,au2,"Una fascinante aventura",Arrays.asList(gen1,gen2),b2);
-        Libro l3 = new Libro("0000000000033", "El Gran Lobo Feroz", new Date(),"Español",70,au3,"Cuidado con el lobo",Arrays.asList(gen3,gen2),b3);
-        Libro l4 = new Libro("0000000000034", "Abrapalabra", new Date(),"Italiano",46,au3,"Conoceras palabras magicas",Arrays.asList(gen4,gen1),b4);
-        Libro l5 = new Libro("0000000000035", "David el Dinosaurio", new Date(),"English",210,au1,"Guiá a david en sus vacaciones por el mundo",Arrays.asList(gen4,gen5),b5);
+        Libro l1 = new Libro("0000000000031", "Los Simpsons", new Date(),"Ingles",210,au1,"Historia de los personajes",Arrays.asList(gen1));
+        Libro l2 = new Libro("0000000000032", "El Pollo Pepe", new Date(),"Ingles",52,au2,"Una fascinante aventura",Arrays.asList(gen1,gen2));
+        Libro l3 = new Libro("0000000000033", "El Gran Lobo Feroz", new Date(),"Español",70,au3,"Cuidado con el lobo",Arrays.asList(gen3,gen2));
+        Libro l4 = new Libro("0000000000034", "Abrapalabra", new Date(),"Italiano",46,au3,"Conoceras palabras magicas",Arrays.asList(gen4,gen1));
+        Libro l5 = new Libro("0000000000035", "David el Dinosaurio", new Date(),"English",210,au1,"Guiá a david en sus vacaciones por el mundo",Arrays.asList(gen4,gen5));
        
         DaoBase.Add(l1);
         DaoBase.Add(l2);
@@ -107,8 +93,22 @@ public class App
         DaoBase.Add(l5);
         
         
+        ///ALTA REGISTROS BIBLIOTECA
+        Biblioteca b1 = new Biblioteca(1,new Date(),1,l1);
+        Biblioteca b2 = new Biblioteca(2,new Date(),2,l2);
+        Biblioteca b3 = new Biblioteca(3,new Date(),2,l3);
+        Biblioteca b4 = new Biblioteca(4,new Date(),1,l4);
+        Biblioteca b5 = new Biblioteca(5,new Date(),2,l5);
+        
+        DaoBase.Add(b1);
+        DaoBase.Add(b2);
+        DaoBase.Add(b3);
+        DaoBase.Add(b4);
+        DaoBase.Add(b5);
+        
+        /*
         //ABML REGISTRO BIBLIOTECA
-        Biblioteca b6 = new Biblioteca(6,new Date(),2);
+        Biblioteca b6 = new Biblioteca(6,new Date(),2,l3);
         //Alta
         DaoBase.Add(b6);
         //Baja
@@ -119,6 +119,7 @@ public class App
         DaoBase.Update(b6);
         //Listado
         Class bclass = b6.getClass();
-        System.out.println(DaoBase.GetById(bclass,b6.getIdLibro()));
+        System.out.println(DaoBase.GetById(bclass,b6.getId()));
+        */
     }
 }

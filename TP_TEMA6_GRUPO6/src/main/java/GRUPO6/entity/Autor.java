@@ -72,11 +72,11 @@ public class Autor implements Serializable {
     @Override
     public String toString() {
         return "Autor{" +
-                "ID=" + ID +
-                ", Nombre='" + Nombre + '\'' +
-                ", Apellido='" + Apellido + '\'' +
-                ", Nacionalidad=" + Nacionalidad +
-                ", Email='" + Email + '\'' +
+                "Id: " + ID +
+                ", Nombre: '" + Nombre + '\'' +
+                ", Apellido: '" + Apellido + '\'' +
+                ", Nacionalidad: " + Nacionalidad +
+                ", Email: '" + Email + '\'' +
                 '}';
     }
 }

@@ -14,9 +14,11 @@ public class DaoConsultas {
 		Session session= ch.openConnection();
 		
         List<Libro> listaLibros= (List<Libro>) session.createQuery("FROM Libro l ORDER BY l.ISBN DESC").list();
-                
+        
+        System.err.println("Mostrar todos los libros ordenados según ISBN de mayor a menor");
+        
         for (Libro libro : listaLibros) {
-        	  System.out.println(" Libros: "+ libro.toString()+" ");	
+        	  System.out.println("* "+ libro.toString()+" ");	
 		}
   
         ch.closeSession();

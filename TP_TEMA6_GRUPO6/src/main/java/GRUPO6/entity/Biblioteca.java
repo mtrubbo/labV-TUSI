@@ -3,8 +3,11 @@ package GRUPO6.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 
@@ -13,25 +16,29 @@ public class Biblioteca implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private int IdLibro;
+	private int Id;
 	private Date FechaAlta;
 	private int Estado;
+	@ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="Libro")
+    private Libro libro;
 	
 	public Biblioteca(){}
 
-	public Biblioteca(int idLibro, Date fechaAlta, int estado) {
+	public Biblioteca(int idLibro, Date fechaAlta, int estado, Libro libro) {
 		super();
-		IdLibro = idLibro;
+		Id = idLibro;
 		FechaAlta = fechaAlta;
 		Estado = estado;
+		this.libro = libro;
 	}
 
-	public int getIdLibro() {
-		return IdLibro;
+	public int getId() {
+		return Id;
 	}
 
-	public void setIdLibro(int idLibro) {
-		IdLibro = idLibro;
+	public void setId(int id) {
+		Id= id;
 	}
 
 	public Date getFechaAlta() {
@@ -42,7 +49,15 @@ public class Biblioteca implements Serializable {
 		FechaAlta = fechaAlta;
 	}
 
-	public int isEstado() {
+	public Libro getLibro() {
+		return libro;
+	}
+
+	public void setLibro(Libro libro) {
+		this.libro = libro;
+	}
+
+	public int getEstado() {
 		return Estado;
 	}
 
@@ -52,8 +67,11 @@ public class Biblioteca implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ID= " + IdLibro + ", Fecha de alta= " + FechaAlta + ", Estado= " + Estado + "";
+		return "Id= " + Id + ", Fecha de alta= " + FechaAlta + ", Estado= " + Estado + ", Libro=" + libro.getTitulo()
+				+ "";
 	}
+
+	
 	
 }
 
