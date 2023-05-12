@@ -1,9 +1,8 @@
 package GRUPO6.dao;
-
-import GRUPO6.entity.Genero;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DaoBase {
@@ -39,7 +38,7 @@ public class DaoBase {
         hibernate.closeSession();
     }
 
-    public static Object GetById(Class clazz, int id){
+    public static Object GetById(Class clazz, Serializable id){
         ConfigHibernate hibernate = new ConfigHibernate();
         Session s = hibernate.openConnection();
 
