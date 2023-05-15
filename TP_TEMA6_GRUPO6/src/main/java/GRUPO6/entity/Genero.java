@@ -2,11 +2,6 @@ package GRUPO6.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 
 public class Genero implements Serializable {
 
@@ -42,7 +37,7 @@ public class Genero implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Genero [ID=" + ID + ", Descripcion=" + Descripcion + "]";
+		return "ID: " + ID + ", Descripcion: " + Descripcion + "";
 	}
 	
 	
