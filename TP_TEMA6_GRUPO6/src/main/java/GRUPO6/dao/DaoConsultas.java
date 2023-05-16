@@ -57,6 +57,10 @@ public class DaoConsultas {
 
 		Nacionalidad nacArgentino = DaoNacionalidad.GetByName("Argentina");
 
+		if(nacArgentino == null){
+			System.out.println("Error: no se encontro la nacionalidad");
+		}
+
 		List<Object[]> autores = s
 				.createQuery("FROM Autor as a JOIN a.Nacionalidad as n where n.IdNacionalidad = :nac")
 				.setParameter("nac", nacArgentino.getIdNacionalidad())
