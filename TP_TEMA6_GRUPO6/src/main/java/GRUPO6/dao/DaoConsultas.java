@@ -3,13 +3,15 @@ package GRUPO6.dao;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import GRUPO6.entity.*;
 import org.hibernate.Session;
 
-import GRUPO6.entity.Biblioteca;
-import GRUPO6.entity.Libro;
-
 public class DaoConsultas {
-	
+
+//	Mostrar todos los libros ordenados según ISBN de mayor a menor.
+//	Los campos que se deben mostrar son los siguientes: ISBN, Titulo, fecha de
+//	lanzamiento, idioma, cantidad de páginas, autor (ID, Nombre, Apellido, Email,
+//  Nacionalidad(ID, Descripción)), descripción y la lista de géneros (ID Genero, descripción)
 	public static void Punto1()
 	{
 		ConfigHibernate ch = new ConfigHibernate();
@@ -25,7 +27,9 @@ public class DaoConsultas {
   
         ch.closeSession();
 	}
-	
+
+	// Mostrar todos los libros de la biblioteca que se encuentran prestados
+	// Los campos que se deben mostrar son ID biblioteca, fecha de alta y estado
 	public static void Punto2() {
 		ConfigHibernate ch = new ConfigHibernate();
 		Session s = ch.openConnection();
@@ -42,6 +46,28 @@ public class DaoConsultas {
 			System.out.println("ID: " + b.getId() +"\n"+ "Fecha de alta: " + sdf.format(b.getFechaAlta()) + "\n" + "Titulo Libro: "+ b.getLibro().getTitulo() + "\n\n");
 		}
 		
+		ch.closeSession();
+	}
+
+	// Mostrar todos los autores que sean de nacionalidad Argentina
+	// ID de autor, nombre, apellido, email y su nacionalidad (ID, Descripcion)
+	public static void Punto3() {
+		ConfigHibernate ch = new ConfigHibernate();
+		Session s = ch.openConnection();
+
+		Nacionalidad nacArgentino = DaoNacionalidad.GetByName("Argentina");
+
+		List<Object[]> autores = s
+				.createQuery("FROM Autor as a JOIN a.Nacionalidad as n where n.IdNacionalidad = :nac")
+				.setParameter("nac", nacArgentino.getIdNacionalidad())
+				.list();
+
+		System.out.println("PUNTO 3 - Listado de autores argentinos");
+
+		for (Object[] autor : autores) {
+			System.out.println(autor[0]);
+		}
+
 		ch.closeSession();
 	}
 
