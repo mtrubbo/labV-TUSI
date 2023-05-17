@@ -113,7 +113,7 @@ public class Libro implements Serializable {
 	        sb.append("Fecha de Lanzamiento: ").append(dateFormat.format(this.fechaLanzamiento)).append("\n");
 	        sb.append("Idioma: ").append(this.idioma).append("\n");
 	        sb.append("Cantidad de páginas: ").append(this.cantidadPaginas).append("\n");
-	        sb.append("Autor: ").append(this.autor.toString()).append("\n");
+	        sb.append("Autor= ").append(this.autor.toString()).append("\n");
 	        sb.append("Descripción: ").append(this.descripcion).append("\n");
 	        sb.append("Géneros: ").append("\n");
 	        for (Genero genero : this.generos) {

@@ -76,6 +76,6 @@ public class Autor implements Serializable {
                 ", Nombre: " + Nombre +
                 ", Apellido: " + Apellido +
                 ", Email: " + Email +
-                ", Nacionalidad: " + Nacionalidad.getDescripcion();
+                ", Nacionalidad= " + Nacionalidad;
     }
 }
