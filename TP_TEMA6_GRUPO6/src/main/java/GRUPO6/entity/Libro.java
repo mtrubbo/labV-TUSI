@@ -124,4 +124,27 @@ public class Libro implements Serializable {
 	    }
 	    
 	    
+	    public String toStringPunto4() {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+	        StringBuilder sb = new StringBuilder();
+	        sb.append("ISBN: ").append(this.ISBN).append("\n");
+	        sb.append("Título: ").append(this.titulo).append("\n");
+	        sb.append("Fecha de Lanzamiento: ").append(dateFormat.format(this.fechaLanzamiento)).append("\n");
+	        sb.append("Idioma: ").append(this.idioma).append("\n");
+	        sb.append("Cantidad de páginas: ").append(this.cantidadPaginas).append("\n");
+	        
+	        sb.append("Autor= ").append(this.autor.getID() + " - " + this.autor.getNombre() + " - " +
+	        						    this.autor.getApellido() + " - " + this.autor.getEmail()).append("\n");
+	        
+	        sb.append("Descripción: ").append(this.descripcion).append("\n");
+	        sb.append("Géneros: ").append("\n");
+	        for (Genero genero : this.generos) {
+	            sb.append(" - ").append(genero.toString()).append("\n");
+	        }
+
+	        return sb.toString();
+	    }
+	    
+	    
 }

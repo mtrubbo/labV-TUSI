@@ -9,6 +9,7 @@ public class AppTP4 {
 //		DaoConsultas.Punto1();
 //		DaoConsultas.Punto2();
 //      DaoConsultas.Punto3();
+		DaoConsultas.Punto4();
         
 	}
 }

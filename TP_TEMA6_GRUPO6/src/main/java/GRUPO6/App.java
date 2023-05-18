@@ -52,7 +52,7 @@ public class App
         au2.setNombre("Pepe");
         au2.setApellido("Lopez");
         au2.setEmail("pepito@hotmail.com");
-        au2.setNacionalidad(n2);
+        au2.setNacionalidad(n1);
         
         Autor au3 = new Autor();
         au3.setNombre("Gerardo");
@@ -80,7 +80,7 @@ public class App
      
         
         ///ALTA REGISTROS LIBROS
-        Libro l1 = new Libro("0000000000031", "Los Simpsons", new Date(),"Ingles",210,au1,"Historia de los personajes",Arrays.asList(gen1));
+        Libro l1 = new Libro("12345", "Los Simpsons", new Date(),"Ingles",210,au1,"Historia de los personajes",Arrays.asList(gen1,gen3));
         Libro l2 = new Libro("0000000000032", "El Pollo Pepe", new Date(),"Ingles",52,au2,"Una fascinante aventura",Arrays.asList(gen1,gen2));
         Libro l3 = new Libro("0000000000033", "El Gran Lobo Feroz", new Date(),"Español",70,au3,"Cuidado con el lobo",Arrays.asList(gen3,gen2));
         Libro l4 = new Libro("0000000000034", "Abrapalabra", new Date(),"Italiano",46,au3,"Conoceras palabras magicas",Arrays.asList(gen4,gen1));

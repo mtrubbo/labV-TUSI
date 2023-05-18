@@ -7,17 +7,19 @@ import GRUPO6.entity.*;
 import org.hibernate.Session;
 
 public class DaoConsultas {
-
-//	Mostrar todos los libros ordenados según ISBN de mayor a menor.
-//	Los campos que se deben mostrar son los siguientes: ISBN, Titulo, fecha de
-//	lanzamiento, idioma, cantidad de páginas, autor (ID, Nombre, Apellido, Email,
-//  Nacionalidad(ID, Descripción)), descripción y la lista de géneros (ID Genero, descripción)
 	
+	private static Session session;
+	private static ConfigHibernate ch;
+	
+	private static void Config() {
+		ch = new ConfigHibernate();
+		session= ch.openConnection();
+	}
+
+
 	public static void Punto1()
-	{
-		ConfigHibernate ch = new ConfigHibernate();
-		Session session= ch.openConnection();
-		
+	{	
+		Config();
         List<Libro> listaLibros= (List<Libro>) session.createQuery("FROM Libro l ORDER BY l.ISBN DESC").list();
         
         System.err.println("Mostrar todos los libros ordenados según ISBN de mayor a menor");
@@ -34,12 +36,11 @@ public class DaoConsultas {
 //  Los campos que se deben mostrar son ID biblioteca, fecha de alta y estado
 	
 	public static void Punto2() {
-		ConfigHibernate ch = new ConfigHibernate();
-		Session s = ch.openConnection();
+		Config();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		List<Object[]> lBiblioteca = (List<Object[]>)s.createQuery("FROM Biblioteca as b JOIN b.libro where b.Estado = 2").list();
+		List<Object[]> lBiblioteca = (List<Object[]>)session.createQuery("FROM Biblioteca as b JOIN b.libro where b.Estado = 2").list();
 		
 		System.err.println("PUNTO 2 - LIBROS PRESTADOS");
 		
@@ -56,8 +57,7 @@ public class DaoConsultas {
 //  ID de autor, nombre, apellido, email y su nacionalidad (ID, Descripcion)
 	
 	public static void Punto3() {
-		ConfigHibernate ch = new ConfigHibernate();
-		Session s = ch.openConnection();
+		Config();
 
 		Nacionalidad nacArgentino = DaoNacionalidad.GetByName("Argentina");
 
@@ -65,7 +65,7 @@ public class DaoConsultas {
 			System.out.println("Error: no se encontro la nacionalidad");
 		}
 
-		List<Object[]> autores = s
+		List<Object[]> autores = session
 				.createQuery("FROM Autor as a JOIN a.Nacionalidad as n where n.IdNacionalidad = :nac")
 				.setParameter("nac", nacArgentino.getIdNacionalidad())
 				.list();
@@ -76,6 +76,17 @@ public class DaoConsultas {
 			System.out.println(autor[0]);
 		}
 
+		ch.closeSession();
+	}
+	
+	
+	
+	public static void Punto4() {
+		Config();
+
+		Libro l = (Libro)session.createQuery("FROM Libro l where l.ISBN = 12345").uniqueResult();
+		System.out.println(l.toStringPunto4());
+		
 		ch.closeSession();
 	}
 
