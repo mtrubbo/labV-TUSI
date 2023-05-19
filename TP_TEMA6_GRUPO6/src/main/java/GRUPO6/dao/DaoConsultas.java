@@ -5,6 +5,7 @@ import java.util.List;
 
 import GRUPO6.entity.*;
 import org.hibernate.Session;
+import org.hibernate.Query;
 
 public class DaoConsultas {
 	
@@ -79,7 +80,11 @@ public class DaoConsultas {
 		ch.closeSession();
 	}
 	
-	
+	/*4) Mostrar el libro con ISBN 12345 junto con todos sus géneros
+		 Los campos que se deben mostrar son los siguientes: ISBN, Titulo, fecha de
+		 lanzamiento, idioma, cantidad de páginas, autor (ID, Nombre, Apellido, Email),
+		 descripción y la lista de géneros (ID Genero, descripción)*/
+
 	
 	public static void Punto4() {
 		Config();
@@ -89,5 +94,53 @@ public class DaoConsultas {
 		
 		ch.closeSession();
 	}
+	
+	/*5) Mostrar el libro que tenga el mayor número de ISBN
+		 El único campo que se debe mostrar es ISBN.*/
+		
+	public static void Punto5() {
+		Config();
+		
+		String hql = "SELECT l.ISBN " +
+	             	 "FROM Libro l " +
+	             	 "ORDER BY l.ISBN DESC";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(1); // Unico campo que se debe mostrar
+		String ISBN = (String) query.uniqueResult();
+
+		System.out.println("El libro con el mayor número de ISBN es: " + ISBN);
+
+		ch.closeSession(); 
+	}
+	
+	/* 6) Mostrar la cantidad de libros que existen para cada género.
+		  Los campos que se deben mostrar son ID género, descripción y cantidad.*/
+	
+	public static void Punto6() {
+		Config(); 
+
+		String hql = "SELECT g.id, g.descripcion, COUNT(l) " +
+		             "FROM Genero g " +
+		             "LEFT JOIN g.libros l " +
+		             "GROUP BY g.id, g.descripcion";
+		Query query = session.createQuery(hql);
+		List<Object[]> result = query.list();
+
+		System.out.println("Cantidad de libros por género:");
+		for (Object[] row : result) {
+		    int generoId = (int) row[0];
+		    String generoDescripcion = (String) row[1];
+		    long cantidadLibros = (long) row[2];
+
+		    System.out.println("ID género: " + generoId);
+		    System.out.println("Descripción: " + generoDescripcion);
+		    System.out.println("Cantidad de libros: " + cantidadLibros);
+		    System.out.println("----------------------------------------");
+		}
+
+		ch.closeSession(); 
+	}
+	
+	
 
 }
