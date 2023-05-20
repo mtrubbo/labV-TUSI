@@ -100,13 +100,8 @@ public class DaoConsultas {
 		
 	public static void Punto5() {
 		Config();
-		
-		String hql = "SELECT l.ISBN " +
-	             	 "FROM Libro l " +
-	             	 "ORDER BY l.ISBN DESC";
-		Query query = session.createQuery(hql);
-		query.setMaxResults(1); // Unico campo que se debe mostrar
-		String ISBN = (String) query.uniqueResult();
+
+		String ISBN = (String)session.createQuery("SELECT l.ISBN FROM Libro l ORDER BY l.ISBN DESC").setMaxResults(1).uniqueResult();
 
 		System.out.println("El libro con el mayor número de ISBN es: " + ISBN);
 
@@ -119,15 +114,12 @@ public class DaoConsultas {
 	public static void Punto6() {
 		Config(); 
 
-		String hql = "SELECT g.ID, g.Descripcion, COUNT(l.IDLibro) as Cantidad" + 
-					 "FROM Genero g, libro_x_generos l " + 
-				     "WHERE g.ID = l.IDGenero" + 
-				     "GROUP BY g.ID, g.Descripcion";
-		Query query = session.createQuery(hql);
-		List<Object[]> result = query.list();
+		List<Object[]> list = session.createQuery("Select g.ID, g.Descripcion, Count(*) as cont FROM Libro l " +
+                "JOIN l.generos g " +
+                "GROUP BY g.ID, g.Descripcion").list();
 
 		System.out.println("Cantidad de libros por género:");
-		for (Object[] row : result) {
+		for (Object[] row : list) {
 			Integer generoId = (Integer) row[0];
 		    String generoDescripcion = (String) row[1];
 		    Long cantidadLibros = (Long) row[2];
