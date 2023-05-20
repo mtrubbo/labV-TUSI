@@ -119,18 +119,18 @@ public class DaoConsultas {
 	public static void Punto6() {
 		Config(); 
 
-		String hql = "SELECT g.id, g.descripcion, COUNT(l) " +
-		             "FROM Genero g " +
-		             "LEFT JOIN g.libros l " +
-		             "GROUP BY g.id, g.descripcion";
+		String hql = "SELECT g.ID, g.Descripcion, COUNT(l.IDLibro) as Cantidad" + 
+					 "FROM Genero g, libro_x_generos l " + 
+				     "WHERE g.ID = l.IDGenero" + 
+				     "GROUP BY g.ID, g.Descripcion";
 		Query query = session.createQuery(hql);
 		List<Object[]> result = query.list();
 
 		System.out.println("Cantidad de libros por género:");
 		for (Object[] row : result) {
-		    int generoId = (int) row[0];
+			Integer generoId = (Integer) row[0];
 		    String generoDescripcion = (String) row[1];
-		    long cantidadLibros = (long) row[2];
+		    Long cantidadLibros = (Long) row[2];
 
 		    System.out.println("ID género: " + generoId);
 		    System.out.println("Descripción: " + generoDescripcion);

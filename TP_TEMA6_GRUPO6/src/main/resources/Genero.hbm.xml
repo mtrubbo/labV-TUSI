@@ -11,5 +11,6 @@
         <property name="Descripcion" type="java.lang.String">
             <column name="DESCRIPCION" />
         </property>
+        
     </class>
 </hibernate-mapping>
