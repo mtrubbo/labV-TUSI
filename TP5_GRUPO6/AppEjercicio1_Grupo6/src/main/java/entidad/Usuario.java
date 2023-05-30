@@ -44,10 +44,22 @@ public class Usuario implements Serializable{
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+	
+	//Desarrollo métodos init y destroy
+	
+		public void initUsuario()
+		{
+			System.out.println("Se inicializa bean");
+		}
+		
+		public void destroyUsuario()
+		{
+			System.out.println("Se destruye bean");
+		}
 
 	@Override
 	public String toString() {
-		return "usuario=" + usuario + ", contrasenia=" + contrasenia + "]";
+		return "Usuario= " + usuario + ", Contraseña= " + contrasenia + "";
 	}
 
 }

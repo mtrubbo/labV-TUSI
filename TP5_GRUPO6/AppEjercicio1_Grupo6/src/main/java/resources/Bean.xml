@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="Usuario" class="entidad.Usuario">
+	<bean id="Usuario" class="entidad.Usuario" init-method="initUsuario"  destroy-method="destroyUsuario">
 		<property name="usuario" value="admin"></property>
 		<property name="contrasenia" value="admin"></property>
 	</bean>
