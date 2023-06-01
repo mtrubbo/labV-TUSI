@@ -12,19 +12,25 @@ public class Main {
 	static ApplicationContext appContext;
 	
 	public static void main(String[] args) {
-		
-	    appContext = new ClassPathXmlApplicationContext("resources/Bean.xml");
-		Usuario u = (Usuario)appContext.getBean("Usuario");
-		System.out.println("Salida: "+u.toString());
+
+	    appContext = new ClassPathXmlApplicationContext("Bean.xml");
+
+		// Instanciar clases desde el contenedor
+		Usuario usuario = (Usuario)appContext.getBean("Usuario");
+		System.out.println("Usuario: " + usuario.toString());
+
+		UsuarioNegocio usuarioNegocio = (UsuarioNegocio)appContext.getBean("UsuarioNegocio");
+		System.out.println("Usuario negocio: " + usuarioNegocio.toString());
+
 		((ConfigurableApplicationContext)(appContext)).close();
 
-	    
-	    /*UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+	    // Comprobar correcto funcionamiento
 	    boolean estado= usuarioNegocio.agregarUsuario(usuario);
 	    if(estado)
 	    	System.out.println("Se agrego correctamente");
 	    else
-	    	System.out.println("No se pudo agregar, el usuario ya existe en la BD");*/
-		    	
+	    	System.out.println("No se pudo agregar, el usuario ya existe en la BD");
+
+
 	}	
 }

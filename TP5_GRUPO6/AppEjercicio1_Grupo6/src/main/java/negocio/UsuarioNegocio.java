@@ -6,14 +6,18 @@ import entidad.Usuario;
 public class UsuarioNegocio {
 
 	private UsuarioDao usuarioDao;
-	
+
+	public UsuarioNegocio(UsuarioDao usuarioDao) {
+		this.usuarioDao = usuarioDao;
+	}
+
 	public boolean agregarUsuario(Usuario usuario)
 	{
-		usuarioDao = new UsuarioDao();
-		boolean existe = usuarioDao.Exist(usuario.getUsuario());
+		String u = usuario.getUsuario();
+		boolean existe = this.usuarioDao.Exist(u);
 		if(existe ==false)
 		{
-			usuarioDao.Add(usuario);
+			this.usuarioDao.Add(usuario);
 			return true;
 		}
 		return false;
