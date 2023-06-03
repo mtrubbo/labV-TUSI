@@ -1,5 +1,6 @@
 package resources;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import entidad.Usuario;
@@ -8,7 +9,8 @@ import entidad.Usuario;
 public class Config {
 	
 	//Bean Usuario
-	public Usuario getUsuario() {
+	@Bean
+	public Usuario Usuario() {
 		Usuario u = new Usuario();
 		u.setUsuario("admin");
 		u.setContrasenia("admin");

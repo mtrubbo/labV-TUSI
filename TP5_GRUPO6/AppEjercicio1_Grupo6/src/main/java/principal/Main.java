@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-	    appContext = new ClassPathXmlApplicationContext("Bean.xml");
+	    appContext = new ClassPathXmlApplicationContext("resources/Bean.xml");
 
 		// Instanciar clases desde el contenedor
 		Usuario usuario = (Usuario)appContext.getBean("Usuario");

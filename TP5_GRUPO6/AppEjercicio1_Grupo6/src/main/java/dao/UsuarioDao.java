@@ -7,11 +7,12 @@ import entidad.Usuario;
 public class UsuarioDao {
 
 	private ConfigHibernate config;
+	private Session session;
 	
 	public void Add(Usuario user)
 	{
 		config = new ConfigHibernate();
-		Session session= config.abrirConexion();
+	    session= config.abrirConexion();
 		
 	        
 	    session.beginTransaction();
@@ -24,7 +25,7 @@ public class UsuarioDao {
 	public Usuario ReadOne(String nombreUsuario)
 	{
 		config = new ConfigHibernate();
-		Session session= config.abrirConexion();
+		session= config.abrirConexion();
 		
 		session.beginTransaction();
         Usuario usuario=(Usuario)session.get(Usuario.class,nombreUsuario);
@@ -37,7 +38,7 @@ public class UsuarioDao {
 	public boolean Exist(String nombreUsuario)
 	{
 		config = new ConfigHibernate();
-		Session session= config.abrirConexion();
+		session= config.abrirConexion();
 		
 		session.beginTransaction();
         Usuario usuario=(Usuario)session.get(Usuario.class,nombreUsuario);
@@ -52,8 +53,8 @@ public class UsuarioDao {
 	
 	public void Update(Usuario usuario)
 	{
-		ConfigHibernate config = new ConfigHibernate();
-		Session session= config.abrirConexion();
+		config = new ConfigHibernate();
+		session= config.abrirConexion();
 		
         session.beginTransaction();
         session.update(usuario);
