@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import entidad.Usuario;
+import dao.UsuarioDao;
+import negocio.UsuarioNegocio;
 
 @Configuration
 public class Config {
@@ -16,5 +18,12 @@ public class Config {
 		u.setContrasenia("admin");
 		return u;
 	}
+	
+	@Bean
+	public UsuarioDao UsuarioDao() {
+		return new UsuarioDao();
+	}
+	
+
 	
 }
