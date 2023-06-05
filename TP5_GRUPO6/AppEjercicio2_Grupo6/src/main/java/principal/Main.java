@@ -20,13 +20,13 @@ public class Main {
 		System.out.println("Usuario: " + usuario.toString());
 		((ConfigurableApplicationContext)(appContext)).close();
 
-		/*
+		
 	    UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 	    boolean estado= usuarioNegocio.agregarUsuario(usuario);
 	    if(estado)
 	    	System.out.println("Se agrego correctamente");
 	    else
 	    	System.out.println("No se pudo agregar, el usuario ya existe en la BD");
-		*/
+		
 	}	
 }

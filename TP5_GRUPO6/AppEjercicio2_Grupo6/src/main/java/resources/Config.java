@@ -24,6 +24,12 @@ public class Config {
 		return new UsuarioDao();
 	}
 	
+	
+	@Bean
+	public UsuarioNegocio UsuarioNegocio() {
+		return new UsuarioNegocio();
+	}
+	
 
 	
 }
