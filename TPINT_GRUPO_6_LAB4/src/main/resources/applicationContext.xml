@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<!-- Transaction Manager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property>
+	</bean>
+
+	<!-- Para que lea los metodos anotados con @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+
+	<!-- CREO EL SERVICIO PARA USUARIO -->
+	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	
+
+	<!-- EL SERVICIO NECESITA EL DAO  -->
+	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.UsuarioDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
+	<bean id="dataSourceBean"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/BDEjemploSpringMVC3?createDatabaseIfNotExist=true" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- Session factory de Hibernate -->
+	<bean id="sessionFactoryBean"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceBean" />
+
+		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JPA. -->
+		<property name="annotatedClasses">
+			<list>
+				<value>frgp.utn.edu.ar.dominio.Usuario</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="show_sql">true</prop >
+				
+				<!-- CREACION DE LA BASE -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop> 
+			</props>
+		</property>
+	</bean>
+
+	
+	
+</beans>
