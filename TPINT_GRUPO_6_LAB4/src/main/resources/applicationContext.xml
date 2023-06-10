@@ -23,13 +23,13 @@
 	
 
 	<!-- CREO EL SERVICIO PARA USUARIO -->
-	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
+	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.ClienteServicioImpl">
 		<property name="dataAccess" ref="dataAccessBean"></property>
 	</bean>
 	
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
-	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.UsuarioDaoImpl" 
+	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
@@ -51,7 +51,7 @@
 		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JPA. -->
 		<property name="annotatedClasses">
 			<list>
-				<value>frgp.utn.edu.ar.dominio.Usuario</value>
+				<value>frgp.utn.edu.ar.dominio.Cliente</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

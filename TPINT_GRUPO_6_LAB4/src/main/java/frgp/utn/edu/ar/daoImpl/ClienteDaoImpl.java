@@ -7,10 +7,10 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import frgp.utn.edu.ar.dao.UsuarioDao;
-import frgp.utn.edu.ar.dominio.Usuario;
+import frgp.utn.edu.ar.dao.ClienteDao;
+import frgp.utn.edu.ar.dominio.Cliente;
 
-public class UsuarioDaoImpl implements UsuarioDao {
+public class ClienteDaoImpl implements ClienteDao {
 
 	private HibernateTemplate hibernateTemplate = null;
 
@@ -20,35 +20,34 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void insertarUsuario(Usuario usuario) {
+	public void insertar(Cliente usuario) {
 		this.hibernateTemplate.save(usuario);
 		
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Usuario obtenerUsuarioPorNombre(String nombreUser) {
-		return this.hibernateTemplate.get(Usuario.class, nombreUser);
+	public Cliente obtenerPorDni(String nombreUser) {
+		return this.hibernateTemplate.get(Cliente.class, nombreUser);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public ArrayList<Usuario> obtenerUsuarios() {
-		return (ArrayList<Usuario>) this.hibernateTemplate.loadAll(Usuario.class);
+	public ArrayList<Cliente> obtenerTodos() {
+		return (ArrayList<Cliente>) this.hibernateTemplate.loadAll(Cliente.class);
 	}
 
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void eliminarUsuario(Integer idUsuario) {
-		Usuario user = new Usuario();
-		user.setId(idUsuario);
+	public void eliminar(String dni) {
+		Cliente user = obtenerPorDni(dni);
 		this.hibernateTemplate.delete(user);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void actualizarUsuario(Usuario persona) {
+	public void actualizar(Cliente persona) {
 		this.hibernateTemplate.update(persona);
 	}
 
