@@ -2,16 +2,16 @@ package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
 
+import frgp.utn.edu.ar.dtos.ClienteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import org.springframework.web.bind.annotation.PathVariable;
 
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
@@ -24,17 +24,17 @@ public class ClienteController {
 
 	@Autowired
 	public ClienteServicio service;
-	
+
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
-		
+
 		this.service = (ClienteServicio) ctx.getBean("serviceBean");
 	}
-	
-	
+
+
 	//Inicio
-	
+
 	@RequestMapping("")
 	public ModelAndView lista(){
 		ModelAndView MV = new ModelAndView();
@@ -52,23 +52,23 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crearUsuario(String dni,
-									   String nombre,
-									   String apellido,
-									   String sexo,
-									   Date fechaNac,
-									   String direccion,
-									   String localidad,
-									   String email,
-									   String telefono){
+	public ModelAndView crearUsuario(@ModelAttribute ClienteRequest clienteRequest,
+									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 		
-		Cliente x = new Cliente(dni, nombre, apellido, sexo, fechaNac, direccion, localidad, email, telefono);
-
 		String Message="";
+
+		if(bindingResult.hasErrors()){
+			for (ObjectError error: bindingResult.getAllErrors()) {
+				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
+			}
+
+			MV.addObject("Mensaje", Message);
+			MV.setViewName("Clientes/Alta");
+		}
+
 		try{
-			
-			service.insertar(x);
+			service.insertar(clienteRequest.construirCliente());
 			Message = "Cliente agregado";
 		}
 		catch(Exception e)
@@ -83,10 +83,10 @@ public class ClienteController {
 	}
 	
      
-	@RequestMapping(value ="/eliminar/{dni}" , method= { RequestMethod.GET })
-	public ModelAndView eliminar(@PathVariable String dni){
+	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
+	public ModelAndView eliminar(@PathVariable int id){
 		ModelAndView MV = new ModelAndView();
-		service.eliminar(dni);
+		service.eliminar(id);
 		MV.addObject("clientes",this.service.obtenerTodos());
 		MV.addObject("Mensaje", "Usuario eliminado");
 		MV.setViewName("Clientes/Listado");

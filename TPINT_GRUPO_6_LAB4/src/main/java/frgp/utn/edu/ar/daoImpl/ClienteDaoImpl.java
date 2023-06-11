@@ -20,15 +20,21 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void insertar(Cliente usuario) {
-		this.hibernateTemplate.save(usuario);
+	public void insertar(Cliente c) {
+		this.hibernateTemplate.save(c);
 		
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Cliente obtenerPorDni(String nombreUser) {
-		return this.hibernateTemplate.get(Cliente.class, nombreUser);
+	public Cliente obtenerPorDni(String dni) {
+		return this.hibernateTemplate.get(Cliente.class, dni);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public Cliente obtenerPorId(int id) {
+		return this.hibernateTemplate.get(Cliente.class, id);
 	}
 
 	@Override
@@ -40,15 +46,15 @@ public class ClienteDaoImpl implements ClienteDao {
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void eliminar(String dni) {
-		Cliente user = obtenerPorDni(dni);
-		this.hibernateTemplate.delete(user);
+	public void eliminar(int id) {
+		Cliente c = obtenerPorId(id);
+		this.hibernateTemplate.delete(c);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void actualizar(Cliente persona) {
-		this.hibernateTemplate.update(persona);
+	public void actualizar(Cliente c) {
+		this.hibernateTemplate.update(c);
 	}
 
 

@@ -20,9 +20,15 @@ ${Mensaje}
 	<table border="1px">
 		<thead>
 			<tr>
-				<th>Id Usuario</th>
-				<th>Usuario</th>
-				<th>Contraseña</th>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Sexo</th>
+                <th>Fecha de nacimiento</th>
+                <th>Direccion</th>
+                <th>Localidad</th>
+                <th>Email</th>
+                <th>Telefono</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,7 +36,7 @@ ${Mensaje}
 				
 				<tr>
 			
-				<td> ${item.dni}</label> </td>
+				<td>${item.dni}</label> </td>
 				<td>${item.nombre}</td>
 				<td>${item.apellido}</td>
 				<td>${item.sexo}</td>

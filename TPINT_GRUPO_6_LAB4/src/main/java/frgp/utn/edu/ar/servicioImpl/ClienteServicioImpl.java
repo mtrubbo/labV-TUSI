@@ -31,8 +31,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 	}
 
 	@Override
-	public void eliminar(String dni) {
-		dataAccess.eliminar(dni);
+	public void eliminar(int id) {
+		dataAccess.eliminar(id);
 		
 	}
 
