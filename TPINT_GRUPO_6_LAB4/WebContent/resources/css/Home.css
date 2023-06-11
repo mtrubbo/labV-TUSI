@@ -1,0 +1,44 @@
+@charset "ISO-8859-1";
+
+.mainBackgorundsetting{
+	background-image: url("/resources/img/home-background.jpg");
+}
+
+.home{
+	height: 90vh; 
+	width: 100%;
+	background-image: url("/Spring-Hibernate/resources/img/home-background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	background-color: #D8D8D8;
+}
+.sectionSizes{
+	height: 400px;
+	width: inherit;
+}
+
+.inhetHeight{
+	height: inherit;
+}
+
+.linkingCard{
+	margin: 5px 0;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 3px 2px 10px 0 #2222;
+	padding: 60px;
+}
+
+.linkingFirst{
+	height: 100%;
+}
+
+.linkingDoubles{
+	height: 50%;	
+}
+
+.rowHeight{
+	height: inherit;
+	border: 1px solid black;
+}
