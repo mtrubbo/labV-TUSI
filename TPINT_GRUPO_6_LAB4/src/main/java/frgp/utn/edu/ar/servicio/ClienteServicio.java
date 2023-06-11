@@ -12,7 +12,7 @@ public interface ClienteServicio {
 
 	void insertar(Cliente c);
 
-    void eliminar(String dni) ;
+    void eliminar(int id) ;
 
 	void actualizar(Cliente c);
 	

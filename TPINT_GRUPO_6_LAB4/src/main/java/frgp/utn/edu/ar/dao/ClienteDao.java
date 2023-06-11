@@ -9,8 +9,9 @@ public interface ClienteDao {
 
 	public void insertar(Cliente c);
 	public Cliente obtenerPorDni(String dni);
+	public Cliente obtenerPorId(int id);
 	public ArrayList<Cliente> obtenerTodos();
-	public void eliminar(String dni);
+	public void eliminar(int id);
 	public void actualizar(Cliente c);
 	
 

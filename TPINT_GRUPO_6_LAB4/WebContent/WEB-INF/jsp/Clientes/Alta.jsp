@@ -12,13 +12,50 @@
 <body>
 
 <h2>Alta de cliente</h2>
+</br>
+<form action="/clientes/crear" method="POST">
+    <label for="dni">DNI: </label>
+    <input id="dni" name="dni" />
 
-<form action="/clientes/crear" method="post">
-	<table>
-	<tr> <td> Nombre:  </td> <td> <input name="nombre"/> </td></tr>
-	<tr>  <td> Apellido: </td> <td>  <input name="apellido"/> </td></tr>
-	<tr>  <td> </td> <td> <input type="submit" name="btnAceptar" value="Aceptar"> </td></tr>
-	</table>
+    </br>
+    <label for="nombre">Nombre: </label>
+    <input id="nombre" name="nombre" />
+
+    </br>
+    <label for="apellido">Apellido: </label>
+    <input id="apellido" name="apellido" />
+
+	</br>
+    <label for="sexo">Sexo: </label>
+    <select id="sexo" name="sexo">
+      <option value="Masculino" selected>Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    </br>
+    <label for="fechaNac">Fecha de nacimiento: </label>
+    <input type="date" id="fechaNac" name="fechaNac" />
+
+    </br>
+    <label for="direccion">Direccion: </label>
+    <input id="direccion" name="direccion" />
+
+    </br>
+    <label for="localidad">Localidad: </label>
+    <input id="localidad" name="localidad" />
+
+    </br>
+    <label for="email">Email: </label>
+    <input id="email" name="email" />
+
+    </br>
+    <label for="telefono">Telefono: </label>
+    <input id="telefono" name="telefono" />
+
+    </br>
+    </br>
+    <input type="submit" value="Aceptar" />
 </form>
 
 ${Mensaje}
