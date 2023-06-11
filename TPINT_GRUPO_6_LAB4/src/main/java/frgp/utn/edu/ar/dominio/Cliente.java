@@ -41,7 +41,6 @@ public class Cliente {
 				   String telefono)
 	{
 		super();
-		this.id = id;
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;

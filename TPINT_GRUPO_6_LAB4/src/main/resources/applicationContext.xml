@@ -27,9 +27,19 @@
 		<property name="dataAccess" ref="dataAccessBean"></property>
 	</bean>
 	
+	<!-- CREO EL SERVICIO PARA ARTICULO -->
+	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.ArticuloServicioImpl">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
 	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+	
+	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ArticuloDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
@@ -48,10 +58,11 @@
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSourceBean" />
 
-		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JPA. -->
+		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JSP. -->
 		<property name="annotatedClasses">
 			<list>
 				<value>frgp.utn.edu.ar.dominio.Cliente</value>
+				<value>frgp.utn.edu.ar.dominio.Articulo</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

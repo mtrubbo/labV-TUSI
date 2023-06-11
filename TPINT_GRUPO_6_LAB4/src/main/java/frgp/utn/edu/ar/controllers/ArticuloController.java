@@ -2,31 +2,33 @@ package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
 
-import frgp.utn.edu.ar.dtos.ClienteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import frgp.utn.edu.ar.servicio.ClienteServicio;
+import frgp.utn.edu.ar.dtos.ArticuloRequest;
+import frgp.utn.edu.ar.servicio.ArticuloServicio;
 
 @Controller
-@RequestMapping("/clientes")
-public class ClienteController {
-
+@RequestMapping("/articulos")
+public class ArticuloController {
+	
 	@Autowired
-	public ClienteServicio service;
+	public ArticuloServicio service;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.service = (ClienteServicio) ctx.getBean("serviceBean");
+		this.service = (ArticuloServicio) ctx.getBean("serviceBean");
 	}
 
 
@@ -35,8 +37,8 @@ public class ClienteController {
 	@RequestMapping("")
 	public ModelAndView lista(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("clientes",this.service.obtenerTodos());
-		MV.setViewName("Clientes/Listado");
+		MV.addObject("articulos",this.service.obtenerTodos());
+		MV.setViewName("Articulos/Listado");
 		return MV;
 	}
 
@@ -44,12 +46,12 @@ public class ClienteController {
 	@RequestMapping("/alta")
 	public ModelAndView pantallaDeAlta(){
 		ModelAndView MV = new ModelAndView();
-		MV.setViewName("Clientes/Alta");
+		MV.setViewName("Articulos/Alta");
 		return MV;
 	}
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crearUsuario(@ModelAttribute ClienteRequest clienteRequest,
+	public ModelAndView crearArticulo(@ModelAttribute ArticuloRequest articuloRequest,
 									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 		
@@ -61,20 +63,20 @@ public class ClienteController {
 			}
 
 			MV.addObject("Mensaje", Message);
-			MV.setViewName("Clientes/Alta");
+			MV.setViewName("Articulos/Alta");
 		}
 
 		try{
-			service.insertar(clienteRequest.construirCliente());
-			Message = "Cliente agregado";
+			service.insertar(articuloRequest.construirArticulo());
+			Message = "Articulo agregado";
 		}
 		catch(Exception e)
 		{
-			Message = "No se pudo insertar el cliente";
+			Message = "No se pudo agregar el articulo";
 		}
 	
 		MV.addObject("Mensaje", Message);
-		MV.setViewName("Clientes/Alta");
+		MV.setViewName("Articulo/Alta");
 		return MV;
 		
 	}
@@ -84,9 +86,9 @@ public class ClienteController {
 	public ModelAndView eliminar(@PathVariable int id){
 		ModelAndView MV = new ModelAndView();
 		service.eliminar(id);
-		MV.addObject("clientes",this.service.obtenerTodos());
-		MV.addObject("Mensaje", "Usuario eliminado");
-		MV.setViewName("Clientes/Listado");
+		MV.addObject("articulos",this.service.obtenerTodos());
+		MV.addObject("Mensaje", "Articulo eliminado");
+		MV.setViewName("Articulos/Listado");
 		return MV;
 	}
 
