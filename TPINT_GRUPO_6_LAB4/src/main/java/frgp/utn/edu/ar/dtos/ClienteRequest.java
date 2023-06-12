@@ -5,6 +5,9 @@ import frgp.utn.edu.ar.dominio.Cliente;
 import java.util.Date;
 
 public class ClienteRequest {
+
+
+    private int id;
     private String dni;
     private String nombre;
     private String apellido;
@@ -29,6 +32,10 @@ public class ClienteRequest {
                 ", telefono='" + telefono + '\'' +
                 '}';
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) {this.id = id; }
 
     public String getDni() {
         return dni;
@@ -103,6 +110,12 @@ public class ClienteRequest {
     }
 
     public Cliente construirCliente(){
-        return new Cliente(dni, nombre, apellido, sexo, fechaNac, direccion, localidad, email, telefono);
+        Cliente c = new Cliente(dni, nombre, apellido, sexo, fechaNac, direccion, localidad, email, telefono);
+
+        if(id != 0){
+            c.setId(id);
+        }
+
+        return c;
     }
 }

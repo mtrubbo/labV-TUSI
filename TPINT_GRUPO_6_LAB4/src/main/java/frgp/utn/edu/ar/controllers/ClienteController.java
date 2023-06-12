@@ -89,7 +89,7 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value ="/modificar" , method = RequestMethod.POST)
-	public ModelAndView modificarPost(@ModelAttribute Cliente cliente,
+	public ModelAndView modificarPost(@ModelAttribute ClienteRequest cliente,
 									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 
@@ -106,7 +106,7 @@ public class ClienteController {
 		}
 
 		try{
-			service.actualizar(cliente);
+			service.actualizar(cliente.construirCliente());
 			Message = "Cliente actualizado";
 		}
 		catch(Exception e)
