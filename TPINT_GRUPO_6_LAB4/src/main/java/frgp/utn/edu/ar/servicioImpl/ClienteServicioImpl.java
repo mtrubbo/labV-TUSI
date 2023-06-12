@@ -25,6 +25,11 @@ public class ClienteServicioImpl implements ClienteServicio {
 	}
 
 	@Override
+	public Cliente obtenerPorId(int id) {
+		return dataAccess.obtenerPorId(id);
+	}
+
+	@Override
 	public void insertar(Cliente c) {
 		 dataAccess.insertar(c);
 		

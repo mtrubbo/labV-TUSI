@@ -10,6 +10,8 @@ public interface ClienteServicio {
 
 	Cliente obtenerPorDni(String dni);
 
+	Cliente obtenerPorId(int id);
+
 	void insertar(Cliente c);
 
     void eliminar(int id) ;

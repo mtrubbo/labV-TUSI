@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
 
+import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dtos.ClienteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -48,8 +49,9 @@ public class ClienteController {
 		return MV;
 	}
 
+
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crearUsuario(@ModelAttribute ClienteRequest clienteRequest,
+	public ModelAndView crear(@ModelAttribute ClienteRequest clienteRequest,
 									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 		
@@ -76,7 +78,47 @@ public class ClienteController {
 		MV.addObject("Mensaje", Message);
 		MV.setViewName("Clientes/Alta");
 		return MV;
-		
+	}
+
+	@RequestMapping("/modificar/{id}")
+	public ModelAndView modificarGet(@PathVariable int id){
+		ModelAndView MV = new ModelAndView();
+		MV.addObject("Cliente", this.service.obtenerPorId(id));
+		MV.setViewName("Clientes/Modificar");
+		return MV;
+	}
+
+	@RequestMapping(value ="/modificar" , method = RequestMethod.POST)
+	public ModelAndView modificarPost(@ModelAttribute Cliente cliente,
+									 BindingResult bindingResult){
+		ModelAndView MV = new ModelAndView();
+
+		String Message="";
+
+		if(bindingResult.hasErrors()){
+			for (ObjectError error: bindingResult.getAllErrors()) {
+				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
+			}
+
+			MV.addObject("Mensaje", Message);
+			MV.addObject("Cliente", cliente);
+			MV.setViewName("Clientes/Modificar");
+		}
+
+		try{
+			service.actualizar(cliente);
+			Message = "Cliente actualizado";
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			Message = "No se pudo actualizar el cliente";
+		}
+
+		MV.addObject("Mensaje", Message);
+		MV.addObject("Cliente", service.obtenerPorId(cliente.getId()));
+		MV.setViewName("Clientes/Modificar");
+		return MV;
 	}
 	
      

@@ -46,6 +46,7 @@ ${Mensaje}
 				<td>${item.email}</td>
 				<td>${item.telefono}</td>
 				<td><a href="<c:url value='/clientes/eliminar/${item.id}' />"  >Eliminar</a></td>
+				<td><a href="<c:url value='/clientes/modificar/${item.id}' />"  >Actualizar</a></td>
 
 				</tr>
 				
