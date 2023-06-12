@@ -8,8 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Alta de cliente</title>
+
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/Home.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
 </head>
 <body>
+<jsp:include page="../components/Navbar.jsp"></jsp:include>
 
 <h2>Alta de cliente</h2>
 </br>
@@ -57,6 +61,7 @@
     </br>
     <input type="submit" value="Aceptar" />
 </form>
+<a href="/clientes">Volver</a>
 
 ${Mensaje}
 

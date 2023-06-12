@@ -8,9 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Listado de clientes</title>
+
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/Home.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
 </head>
 <body>
-
+<jsp:include page="../components/Navbar.jsp"></jsp:include>
 
 ${Mensaje}
 
@@ -53,5 +56,7 @@ ${Mensaje}
 			</c:forEach>
 	    </tbody>
 	</table>
+	</br>
+	<a href="/clientes/alta">Alta de cliente</a>
 </body>
 </html>
