@@ -64,6 +64,7 @@ public class ClienteController {
 
 			MV.addObject("Mensaje", Message);
 			MV.setViewName("Clientes/Alta");
+			return MV;
 		}
 
 		try{
@@ -103,21 +104,23 @@ public class ClienteController {
 			MV.addObject("Mensaje", Message);
 			MV.addObject("Cliente", cliente);
 			MV.setViewName("Clientes/Modificar");
+			return MV;
 		}
 
 		try{
 			service.actualizar(cliente.construirCliente());
-			Message = "Cliente actualizado";
+			MV.setViewName("redirect:/clientes");
+			return MV;
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
 			Message = "No se pudo actualizar el cliente";
+			MV.setViewName("Clientes/Modificar");
 		}
 
-		MV.addObject("Mensaje", Message);
 		MV.addObject("Cliente", service.obtenerPorId(cliente.getId()));
-		MV.setViewName("Clientes/Modificar");
+		MV.addObject("Mensaje", Message);
 		return MV;
 	}
 	
@@ -126,9 +129,7 @@ public class ClienteController {
 	public ModelAndView eliminar(@PathVariable int id){
 		ModelAndView MV = new ModelAndView();
 		service.eliminar(id);
-		MV.addObject("clientes",this.service.obtenerTodos());
-		MV.addObject("Mensaje", "Usuario eliminado");
-		MV.setViewName("Clientes/Listado");
+		MV.setViewName("redirect:/clientes");
 		return MV;
 	}
 

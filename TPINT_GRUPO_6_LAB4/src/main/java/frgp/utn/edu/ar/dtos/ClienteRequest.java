@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Cliente;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class ClienteRequest {
     private String nombre;
     private String apellido;
     private String sexo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNac;
     private String direccion;
     private String localidad;
