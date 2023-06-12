@@ -28,7 +28,7 @@ public class ArticuloController {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.service = (ArticuloServicio) ctx.getBean("serviceBean");
+		this.service = (ArticuloServicio) ctx.getBean("serviceBeanArt");
 	}
 
 

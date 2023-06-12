@@ -28,8 +28,8 @@
 	</bean>
 	
 	<!-- CREO EL SERVICIO PARA ARTICULO -->
-	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.ArticuloServicioImpl">
-		<property name="dataAccess" ref="dataAccessBean"></property>
+	<bean id="serviceBeanArt" class="frgp.utn.edu.ar.servicioImpl.ArticuloServicioImpl">
+		<property name="dataAccess" ref="dataAccessBeanArt"></property>
 	</bean>
 	
 
@@ -39,7 +39,7 @@
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
 	
-	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ArticuloDaoImpl"
+	<bean id="dataAccessBeanArt" class="frgp.utn.edu.ar.daoImpl.ArticuloDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
