@@ -1,5 +1,9 @@
 @charset "ISO-8859-1";
 
+body{
+	overflow: hidden;
+}
+
 .mainBackgorundsetting{
 	background-image: url("/resources/img/home-background.jpg");
 }
@@ -36,6 +40,51 @@
 
 .linkingDoubles{
 	height: 50%;	
+}
+
+.articuloCard{
+	background-image: url("/Spring-Hibernate/resources/img/articulos-clickevent.png");
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.3s ease;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+}
+
+.articuloCard:hover{
+	background-size: 120%;
+	transform: scale(1);
+	cursor: pointer;
+}
+
+.ventasCard{
+		background-image: url("/Spring-Hibernate/resources/img/ventas-clickevent.jpg");
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.3s ease;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+}
+
+.ventasCard:hover{
+		background-size: 120%;
+	transform: scale(1);
+	cursor: pointer;
+}
+
+.clientesCard{
+	background-image: url("/Spring-Hibernate/resources/img/clientes-clickevent.jpg");
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.3s ease;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+}
+
+.clientesCard:hover{
+	background-size: 200%;
+	transform: scale(1);
+	cursor: pointer;
 }
 
 .rowHeight{

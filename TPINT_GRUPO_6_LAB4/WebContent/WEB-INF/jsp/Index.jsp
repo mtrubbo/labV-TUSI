@@ -13,14 +13,14 @@
 <jsp:include page="./components/Navbar.jsp"></jsp:include>
 <main class="home d-flex justify-content-around align-items-center screenComplete">
 	<section class="sectionSizes d-flex flex-row justify-content-around align-items-center">
-		<div class="linkingFirst linkingCard">
+		<div class="linkingFirst linkingCard clientesCard">
 			<h1>Gestiona tus clientes</h1>
 		</div>
 		<div class="flex-column justify-content-around inhetHeight">
-			<div class="linkingCard linkingDoubles">
+			<div class="linkingCard linkingDoubles articuloCard">
 				<h1>Gestiona tus articulos</h1>
 			</div>
-			<div class="linkingCard linkingDoubles">
+			<div class="linkingCard linkingDoubles ventasCard">
 				<h1>Gestiona tus ventas</h1>
 			</div>
 		</div>
