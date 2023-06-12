@@ -1,0 +1,42 @@
+@charset "ISO-8859-1";
+
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
+.header-img{
+	width: 200px;
+	height:150px;
+	margin: 0 auto;
+}
+
+.welcomeSection{
+	background: linear-gradient(rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5)), url("/Spring-Hibernate/resources/img/login-background.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: rgba(200, 200, 200, 0.5);
+	width: 100%;
+}
+
+.titleHeader{
+	color: #fff;
+	text-shadow: 2px 2px 0px #000;
+}
+
+.footerHeader{
+	color: #fff;
+	text-shadow: 2px 2px 0px #000;
+}
+
+.borderDetail{
+	border: 1px solid black;
+}
+
+.formSection{
+	width: 100%;
+}
+
+.formdetails{
+	width: 50%;
+}
