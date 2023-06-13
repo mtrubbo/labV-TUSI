@@ -55,13 +55,6 @@ public class ClienteController {
 	}
 
 
-	@RequestMapping("/alta")
-	public ModelAndView pantallaDeAlta(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("Clientes/Alta");
-		return MV;
-	}
-
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
 	@ResponseBody
@@ -89,13 +82,6 @@ public class ClienteController {
 		}
 	}
 
-	@RequestMapping("/modificar/{id}")
-	public ModelAndView modificarGet(@PathVariable int id){
-		ModelAndView MV = new ModelAndView();
-		MV.addObject("Cliente", this.service.obtenerPorId(id));
-		MV.setViewName("Clientes/Modificar");
-		return MV;
-	}
 
 	@RequestMapping(value ="/modificar" , method = RequestMethod.POST)
 	@ResponseBody
