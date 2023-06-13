@@ -78,7 +78,7 @@ public class ClienteController {
 		}
 
 		try{
-			service.actualizar(cliente.construirCliente());
+			service.insertar(cliente.construirCliente());
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Cliente dado de alta exitosamente");
 		}
