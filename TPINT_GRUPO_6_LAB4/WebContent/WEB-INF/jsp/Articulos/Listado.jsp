@@ -7,20 +7,45 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
-<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
-<link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
-
-<script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <title>Articulos</title>
+<!-- ContextPath setting in css, DO NOT TOUCH!!! -->
+<style>
+    :root {
+        --contextPath: "${pageContext.request.contextPath}";
+    }
+</style>
+
+<!-- STYLESHEETS -->
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/articulos.css"/>'>
+<link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+<!-- Enlace al archivo CSS de Font Awesome -->
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/css/all.min.css"/>'>
+
+<!-- Enlace opcional a los archivos de fuentes de Font Awesome -->
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-brands-400.woff2"/>'>
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-regular-400.woff2"/>'>
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
+
+
+<!-- scripts -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
-<body>
+<body class="">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
-<main class="d-flex justify-content-center align-items-start flex-column w-100">
-<h2>Articulos</h2>
-<!-- Action Modal -->
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newArt">
+<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+	<section class="sectionTable">
+	<h2>Articulos</h2>
+
+	<!-- Action Modal -->
+	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#newArt">
   		Nuevo Articulo
 	</button>
 	
@@ -45,11 +70,12 @@
 				<td>${item.marca}</td>
 				<td>${item.tipo}</td>
 				<td>${item.precio}</td>
-				<td><button onclick='editOpen(${item.id})'>Editar</button><a href="<c:url value='/articulos/eliminar/${item.id}' />"  >Eliminar</a></td>
+				<td><button class="btnTableEdit" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button><a style="text-style: none; color: red;" href="<c:url value='/articulos/eliminar/${item.id}' />"  ><i class="fa-solid fa-trash"></i></a></td>
 				</tr>
 			</c:forEach>
 	    </tbody>
 	</table>
+	</section>
 	<!-- END DATATABLE -->
 	
 	<!-- MODALS -->

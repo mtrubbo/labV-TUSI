@@ -1,2 +1,41 @@
 @charset "ISO-8859-1";
 
+body{
+	overflow: hidden;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.articulosBody{
+	height: 90vh; 
+	width: 100%;
+	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	overflow:hidden;
+}
+
+
+.sectionTable{
+	z-index: 2;
+	background: #fff;
+	padding: 55px;
+	width: 70%;
+	border-radius: 10px;
+	box-shadow: 3px 2px 8px 0 #000;
+}
+
+.btnNewArt{
+	background-color: #DAAE59;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+
+.btnTableEdit{
+	border: none;
+	color: green;
+	margin-right: 10px;
+}
