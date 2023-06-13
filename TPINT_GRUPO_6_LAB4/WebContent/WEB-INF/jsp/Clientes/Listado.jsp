@@ -102,7 +102,7 @@
                 e.preventDefault();
                 let action = e.target.getAttribute('action');
                 let data = {
-                    id: $('#id').val(),
+                    id: Number($('#id').val()),
                     dni: $('#dni').val(),
                     nombre: $('#nombre').val(),
                     apellido: $('#apellido').val(),
@@ -120,7 +120,11 @@
                     data,
                     success: function(res){
                         console.log(res);
-                        $('#resultadoOperacion').text(res);
+                        $('#resultadoOperacion').text(res + ". Refrescando sitio...");
+
+                        setTimeout(function(){
+                           window.location.reload();
+                        }, 1500);
                     },
                     error: function(res, error) {
                         console.log(res);
@@ -128,8 +132,6 @@
                         $('#resultadoOperacion').text('Error al realizar peticion');
                     }
                 })
-
-                console.log(e);
             });
         });
 
