@@ -120,12 +120,11 @@
                 success: function(json){
                     let res = JSON.parse(json);
                     console.log(res);
-                    $('#id').attr(res.id);
-                    console.log($('#id').val())
+                    $('#id').val(res.id);
                     $('#dni').val(res.dni);
                     $('#nombre').val(res.nombre);
                     $('#apellido').val(res.apellido);
-                    $('#sexo').val(res.sexi);
+                    $('#sexo').val(res.sexo);
                     $('#fechaNac').val(res.fechaNac);
                     $('#direccion').val(res.direccion);
                     $('#localidad').val(res.localidad);
