@@ -17,14 +17,21 @@ public class Cliente {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	@Column(nullable = false)
 	private String dni;
+	@Column(nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private String apellido;
+	@Column(nullable = false)
 	private String sexo;
+	@Column(nullable = false)
 	private Date fechaNac;
+	@Column(nullable = false)
 	private String direccion;
+	@Column(nullable = false)
 	private String localidad;
+	@Column(nullable = false)
 	private String email;
 	private String telefono;
 
