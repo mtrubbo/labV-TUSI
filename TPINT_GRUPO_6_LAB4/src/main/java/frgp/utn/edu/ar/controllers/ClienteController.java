@@ -2,10 +2,14 @@ package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
 
+import com.google.gson.Gson;
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dtos.ClienteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -39,6 +43,15 @@ public class ClienteController {
 		MV.addObject("clientes",this.service.obtenerTodos());
 		MV.setViewName("Clientes/Listado");
 		return MV;
+	}
+
+	@RequestMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<String> obtenerClienteJSON(@PathVariable int id) {
+		Cliente c = this.service.obtenerPorId(id);
+		Gson gson = new Gson();
+		String jsonArray = gson.toJson(c);
+		return new ResponseEntity<>(jsonArray, HttpStatus.OK);
 	}
 
 

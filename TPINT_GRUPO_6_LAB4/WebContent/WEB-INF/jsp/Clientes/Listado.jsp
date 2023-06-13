@@ -9,54 +9,135 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Listado de clientes</title>
 
-<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/Home.css"/>'>
+
+<!-- STYLESHEETS -->
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/articulos.css"/>'>
+<link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+<!-- Enlace al archivo CSS de Font Awesome -->
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/css/all.min.css"/>'>
+
+<!-- Enlace opcional a los archivos de fuentes de Font Awesome -->
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-brands-400.woff2"/>'>
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-regular-400.woff2"/>'>
+<link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
+
 </head>
 <body>
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
+<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+	<section class="sectionTable">
+        <h2>Clientes</h2>
 
-${Mensaje}
+        <!-- Action Modal -->
+        	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#newArt">
+          		Nuevo cliente
+        	</button>
 
-<br/><br/><br/>
+        <table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
+            <thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Sexo</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Direccion</th>
+                    <th>Localidad</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${clientes}" var="item">
+                    <tr>
+                    <td>${item.dni}</label> </td>
+                    <td>${item.nombre}</td>
+                    <td>${item.apellido}</td>
+                    <td>${item.sexo}</td>
+                    <td>${item.fechaNac}</td>
+                    <td>${item.direccion}</td>
+                    <td>${item.localidad}</td>
+                    <td>${item.email}</td>
+                    <td>${item.telefono}</td>
+                    <td>
+                        <button class="btnTableEdit" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button>
+                        <a style="text-style: none; color: red;" href="<c:url value='/clientes/eliminar/${item.id}' />"  >
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </section> <!-- END DATATABLE -->
 
-<h2>Clientes</h2>
-	<table border="1px">
-		<thead>
-			<tr>
-				<th>DNI</th>
-				<th>Nombre</th>
-				<th>Apellido</th>
-				<th>Sexo</th>
-                <th>Fecha de nacimiento</th>
-                <th>Direccion</th>
-                <th>Localidad</th>
-                <th>Email</th>
-                <th>Telefono</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${clientes}" var="item">
-				
-				<tr>
-			
-				<td>${item.dni}</label> </td>
-				<td>${item.nombre}</td>
-				<td>${item.apellido}</td>
-				<td>${item.sexo}</td>
-				<td>${item.fechaNac}</td>
-				<td>${item.direccion}</td>
-				<td>${item.localidad}</td>
-				<td>${item.email}</td>
-				<td>${item.telefono}</td>
-				<td><a href="<c:url value='/clientes/eliminar/${item.id}' />"  >Eliminar</a></td>
-				<td><a href="<c:url value='/clientes/modificar/${item.id}' />"  >Actualizar</a></td>
+    <!-- MODALS -->
+    <!-- Modal NUEVO -->
+        <div class="modal fade" id="newArt" tabindex="-1" aria-labelledby="newArtlabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newArtlabel">Nuevo cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <jsp:include page="./AltaModificacionForm.jsp"></jsp:include>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal EDITAR -->
+        <div class="modal fade" id="editArt" tabindex="-1" aria-labelledby="editArtLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editArtLabel">Actualizar cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <jsp:include page="./AltaModificacionForm.jsp"></jsp:include>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				</tr>
-				
-			</c:forEach>
-	    </tbody>
-	</table>
-	</br>
-	<a href="/clientes/alta">Alta de cliente</a>
+    <a href="/clientes/alta">Alta de cliente</a>
+
+	<!-- scripts -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function editOpen(id){
+            $.ajax({
+                url: "/clientes/"+id,
+                method: "GET",
+                success: function(json){
+                    let res = JSON.parse(json);
+                    console.log(res);
+                    $('#id').attr(res.id);
+                    console.log($('#id').val())
+                    $('#dni').val(res.dni);
+                    $('#nombre').val(res.nombre);
+                    $('#apellido').val(res.apellido);
+                    $('#sexo').val(res.sexi);
+                    $('#fechaNac').val(res.fechaNac);
+                    $('#direccion').val(res.direccion);
+                    $('#localidad').val(res.localidad);
+                    $('#email').val(res.email);
+                    $('#telefono').val(res.telefono);
+                },
+                complete: function() {
+                    $('#editArt').modal('toggle');
+                }
+
+            })
+        }
+    </script>
 </body>
 </html>
