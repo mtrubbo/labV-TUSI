@@ -34,7 +34,7 @@
         <h2>Clientes</h2>
 
         <!-- Action Modal -->
-        	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#newArt">
+        	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#modal" onclick='crearOpen()'>
           		Nuevo cliente
         	</button>
 
@@ -76,43 +76,63 @@
         </table>
     </section> <!-- END DATATABLE -->
 
-    <!-- MODALS -->
-    <!-- Modal NUEVO -->
-        <div class="modal fade" id="newArt" tabindex="-1" aria-labelledby="newArtlabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newArtlabel">Nuevo cliente</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <jsp:include page="./AltaModificacionForm.jsp"></jsp:include>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="newArtlabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModal">Nuevo cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <jsp:include page="./AltaModificacionForm.jsp"></jsp:include>
+                </div>
+                <p id="resultadoOperacion"></p>
             </div>
         </div>
-        <!-- Modal EDITAR -->
-        <div class="modal fade" id="editArt" tabindex="-1" aria-labelledby="editArtLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editArtLabel">Actualizar cliente</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <jsp:include page="./AltaModificacionForm.jsp"></jsp:include>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <a href="/clientes/alta">Alta de cliente</a>
+    </div>
 
 	<!-- scripts -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        $(document).ready( function () {
+            $('#formulario').on("submit", (e) => {
+                e.preventDefault();
+                let action = e.target.getAttribute('action');
+                let data = {
+                    id: $('#id').val(),
+                    dni: $('#dni').val(),
+                    nombre: $('#nombre').val(),
+                    apellido: $('#apellido').val(),
+                    sexo: $('#sexo').val(),
+                    fechaNac: $('#fechaNac').val(),
+                    direccion: $('#direccion').val(),
+                    localidad: $('#localidad').val(),
+                    email: $('#email').val(),
+                    telefono: $('#telefono').val(),
+                }
+
+                $.ajax({
+                    url: action,
+                    method: "POST",
+                    data,
+                    success: function(res){
+                        console.log(res);
+                        $('#resultadoOperacion').text(res);
+                    },
+                    error: function(res, error) {
+                        console.log(res);
+                        console.log(error);
+                        $('#resultadoOperacion').text('Error al realizar peticion');
+                    }
+                })
+
+                console.log(e);
+            });
+        });
+
         function editOpen(id){
             $.ajax({
                 url: "/clientes/"+id,
@@ -132,10 +152,31 @@
                     $('#telefono').val(res.telefono);
                 },
                 complete: function() {
-                    $('#editArt').modal('toggle');
+                    document.getElementById('formulario')
+                      .setAttribute('action', '/clientes/modificar');
+
+                    $('#tituloModal').text('Actualizar cliente');
+                    $('#modal').modal('toggle');
                 }
 
             })
+        }
+
+        function crearOpen(){
+            $('#tituloModal').text('Nuevo cliente');
+            document.getElementById('formulario')
+              .setAttribute('action', '/clientes/crear');
+
+            $('#id').val('');
+            $('#dni').val('');
+            $('#nombre').val('');
+            $('#apellido').val('');
+            $('#sexo').val('');
+            $('#fechaNac').val('');
+            $('#direccion').val('');
+            $('#localidad').val('');
+            $('#email').val('');
+            $('#telefono').val('');
         }
     </script>
 </body>

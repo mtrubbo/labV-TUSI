@@ -1,4 +1,4 @@
-<form action="/clientes/crear" method="POST">
+<form id="formulario" action="/clientes/crear" method="POST">
     <input id="id" type="hidden" name="id" />
 
     <div class="row">

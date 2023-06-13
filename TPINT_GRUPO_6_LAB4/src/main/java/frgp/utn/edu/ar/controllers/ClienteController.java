@@ -64,34 +64,29 @@ public class ClienteController {
 
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crear(@ModelAttribute ClienteRequest clienteRequest,
+	@ResponseBody
+	public String crear(@ModelAttribute ClienteRequest clienteRequest,
 									 BindingResult bindingResult){
-		ModelAndView MV = new ModelAndView();
-		
-		String Message="";
 
+		String Message="";
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
 
-			MV.addObject("Mensaje", Message);
-			MV.setViewName("Clientes/Alta");
-			return MV;
+			System.out.println(Message);
+
+			return "Error al intentar dar de alta cliente";
 		}
 
 		try{
 			service.insertar(clienteRequest.construirCliente());
-			Message = "Cliente agregado";
+			return "Cliente agregado";
 		}
 		catch(Exception e)
 		{
-			Message = "No se pudo insertar el cliente";
+			return "No se pudo insertar el cliente";
 		}
-	
-		MV.addObject("Mensaje", Message);
-		MV.setViewName("Clientes/Alta");
-		return MV;
 	}
 
 	@RequestMapping("/modificar/{id}")
@@ -103,7 +98,8 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value ="/modificar" , method = RequestMethod.POST)
-	public ModelAndView modificarPost(@ModelAttribute ClienteRequest cliente,
+	@ResponseBody
+	public String modificarPost(@ModelAttribute ClienteRequest cliente,
 									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 
@@ -114,27 +110,20 @@ public class ClienteController {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
 
-			MV.addObject("Mensaje", Message);
-			MV.addObject("Cliente", cliente);
-			MV.setViewName("Clientes/Modificar");
-			return MV;
+			System.out.println(Message);
+
+			return "Hubo un error con los datos enviados. Por favor revise los campos.";
 		}
 
 		try{
 			service.actualizar(cliente.construirCliente());
-			MV.setViewName("redirect:/clientes");
-			return MV;
+			return "Cliente actualizado exitosamente";
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
-			Message = "No se pudo actualizar el cliente";
-			MV.setViewName("Clientes/Modificar");
+			return "Error al actualizar el cliente";
 		}
-
-		MV.addObject("Cliente", service.obtenerPorId(cliente.getId()));
-		MV.addObject("Mensaje", Message);
-		return MV;
 	}
 	
      
