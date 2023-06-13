@@ -62,7 +62,7 @@
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
-      					<form action="/Spring-Hibernate/articulos/crear" method="POST">
+      					<form action="${pageContext.request.contextPath}/articulos/crear" method="POST">
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
       							<input id="nombre" type="text" name="nombre" class="form-control">
@@ -95,7 +95,7 @@
     			</div>
   			</div>
 		</div>
-		
+		</div>
 		<!-- Modal EDITAR ARTICULO -->
 		<div class="modal fade" id="editArt" tabindex="-1" aria-labelledby="editArtLabel" aria-hidden="true">
   			<div class="modal-dialog modal-lg">
@@ -105,29 +105,30 @@
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
-      					<form action="/Spring-Hibernate/articulos/crear" method="POST">
+      					<form action="${pageContext.request.contextPath}/articulos/editar" method="POST">
+      						<input type="hidden" id="idEdit" name="id">
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
-      							<input id="nombre" type="text" name="nombre" class="form-control">
+      							<input id="nombreEdit" type="text" name="nombre" class="form-control">
       						</div>
       						<div class="row">
       							<div class="col-md-6">
       								<label class="form-label">Descripcion</label>
-      								<input id="descripcion" type="text" name="descripcion" class="form-control">
+      								<input id="descripcionEdit" type="text" name="descripcion" class="form-control">
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<input id="marca" type="text" name="marca" class="form-control">
+      								<input id="marcaEdit" type="text" name="marca" class="form-control">
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Tipo</label>
-	      							<input id="tipo" type="text" name="tipo" class="form-control">
+	      							<input id="tipoEdit" type="text" name="tipo" class="form-control">
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
-	      							<input id="precio" type="text" name="precio" class="form-control">
+	      							<input id="precioEdit" type="text" name="precio" class="form-control">
 	      						</div>
       						</div>
       						<div class="mt-5">
@@ -137,6 +138,7 @@
       					</form>
     			</div>
   			</div>
+		</div>
 		</div>
 </main>	
 <!-- SCRIPTS INIT -->
@@ -148,11 +150,17 @@ $(document).ready( function () {
 
 function editOpen(id){
 	$.ajax({
-		url: "/articulos/getArticulo/"+id,
+		url: "${pageContext.request.contextPath}/articulos/getArticulo/"+id,
 		method: "GET",
-		dataType: 'json',
-		success: function(res){
-			console.log(res)
+		success: function(json){
+			let res = JSON.parse(json);
+			console.log(res);
+			$('#idEdit').val(res.id);
+			$('#nombreEdit').val(res.nombre);
+			$('#descripcionEdit').val(res.descripcion);
+			$('#marcaEdit').val(res.marca);
+			$('#tipoEdit').val(res.tipo);
+			$('#precioEdit').val(res.precio);
 		},
 		complete: function() {
 			$('#editArt').modal('toggle');

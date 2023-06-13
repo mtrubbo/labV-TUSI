@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,11 +57,13 @@ public class ArticuloController {
 		return MV;
 	}
 	
-	  @RequestMapping(value = "/getArticulo/{id}", method = RequestMethod.GET)
+	  	@RequestMapping(value = "/getArticulo/{id}", method = RequestMethod.GET)
 	    @ResponseBody
-	    public ResponseEntity<Articulo> getArticuloById(@PathVariable int id) {
+	    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
 	        Articulo articulo = this.service.getbyID(id);
-	        return new ResponseEntity<>(articulo, HttpStatus.OK);
+	        Gson gson = new Gson();
+	        String jsonArray = gson.toJson(articulo);
+	        return new ResponseEntity<>(jsonArray, HttpStatus.OK);
 	    }
 
 	@RequestMapping("/alta")
@@ -95,8 +100,7 @@ public class ArticuloController {
 	
 		MV.addObject("Mensaje", Message);
 		MV.setViewName("Articulos/Listado");
-		return MV;
-		
+		return MV;		
 	}
 	
      
@@ -108,6 +112,38 @@ public class ArticuloController {
 		MV.addObject("Mensaje", "Articulo eliminado");
 		MV.setViewName("Articulos/Listado");
 		return MV;
+	}
+	
+	@RequestMapping(value="/editar", method=RequestMethod.POST)
+	public ModelAndView editar(@ModelAttribute ArticuloRequest articuloRequest,
+			 BindingResult bindingResult) {
+		
+		ModelAndView MV = new ModelAndView();
+		
+		String Message="";
+
+		if(bindingResult.hasErrors()){
+			for (ObjectError error: bindingResult.getAllErrors()) {
+				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
+			}
+
+			MV.addObject("Mensaje", Message);
+			MV.setViewName("Articulos/Listado");
+		}
+
+		try{
+			service.insertar(articuloRequest.construirArticulo());
+			Message = "Articulo agregado";
+		}
+		catch(Exception e)
+		{
+			Message = "No se pudo agregar el articulo";
+		}
+	
+		MV.addObject("Mensaje", Message);
+		MV.setViewName("Articulos/Listado");
+		return MV;
+
 	}
 
 }

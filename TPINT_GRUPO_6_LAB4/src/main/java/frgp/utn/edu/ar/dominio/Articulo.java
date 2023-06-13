@@ -80,6 +80,8 @@ public class Articulo {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+
+	
 	
 
 }
