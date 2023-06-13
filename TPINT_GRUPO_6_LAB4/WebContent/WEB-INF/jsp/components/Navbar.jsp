@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}">
     	<img class="navLogo" src='<c:url value="/resources/img/logo-navbar.png"/>'/>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,13 +20,13 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ms-auto navbar-text">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/clientes">Clientes</a>
+          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/clientes">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/articulos">Articulos</a>
+          <a class="nav-link" href="${pageContext.request.contextPath}/articulos">Articulos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/ventas">Ventas</a>
+          <a class="nav-link" href="${pageContext.request.contextPath}/ventas">Ventas</a>
         </li>
       </ul>
     </div>
