@@ -1,9 +1,12 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -11,9 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
 
+
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 
@@ -37,11 +46,20 @@ public class ArticuloController {
 	@RequestMapping("")
 	public ModelAndView lista(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("articulos",this.service.obtenerTodos());
+		ArrayList<Articulo> listarr = this.service.obtenerTodos();
+		if(listarr != null) {			
+			MV.addObject("articulos", listarr);
+		}
 		MV.setViewName("Articulos/Listado");
 		return MV;
 	}
-
+	
+	  @RequestMapping(value = "/getArticulo/{id}", method = RequestMethod.GET)
+	    @ResponseBody
+	    public ResponseEntity<Articulo> getArticuloById(@PathVariable int id) {
+	        Articulo articulo = this.service.getbyID(id);
+	        return new ResponseEntity<>(articulo, HttpStatus.OK);
+	    }
 
 	@RequestMapping("/alta")
 	public ModelAndView pantallaDeAlta(){
@@ -63,7 +81,7 @@ public class ArticuloController {
 			}
 
 			MV.addObject("Mensaje", Message);
-			MV.setViewName("Articulos/Alta");
+			MV.setViewName("Articulos/Listado");
 		}
 
 		try{
@@ -76,7 +94,7 @@ public class ArticuloController {
 		}
 	
 		MV.addObject("Mensaje", Message);
-		MV.setViewName("Articulo/Alta");
+		MV.setViewName("Articulos/Listado");
 		return MV;
 		
 	}

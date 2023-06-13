@@ -42,4 +42,10 @@ public class ArticuloServicioImpl implements ArticuloServicio {
 		
 	}
 
+	@Override
+	public Articulo getbyID(int id) {
+		return dataAccess.obtenerPorId(id);
+	}
+	
+
 }

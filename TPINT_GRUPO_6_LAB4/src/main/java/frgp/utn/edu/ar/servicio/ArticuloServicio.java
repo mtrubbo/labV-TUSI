@@ -16,4 +16,6 @@ public interface ArticuloServicio {
 
 	void actualizar(Articulo a);
 
+	Articulo getbyID(int id);
+
 }
