@@ -26,6 +26,9 @@
           <a class="nav-link" href="${pageContext.request.contextPath}/articulos">Articulos</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="${pageContext.request.contextPath}/stocks">Stocks</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="${pageContext.request.contextPath}/ventas">Ventas</a>
         </li>
       </ul>

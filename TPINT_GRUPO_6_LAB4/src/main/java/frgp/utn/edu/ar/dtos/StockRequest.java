@@ -7,6 +7,10 @@ import frgp.utn.edu.ar.dominio.Stock;
 
 public class StockRequest {
 	
+
+
+
+
 	private int id;
 	private Articulo articulo;
 	private Date fechaIngreso;
@@ -112,4 +116,9 @@ public class StockRequest {
         return s;
     }
 
+	@Override
+	public String toString() {
+		return "StockRequest [id=" + id + ", articulo=" + articulo.getNombre() + ", fechaIngreso=" + fechaIngreso + ", cantidad="
+				+ cantidad + ", precioCompra=" + precioCompra + "]";
+	}
 }
