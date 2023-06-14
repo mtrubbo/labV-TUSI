@@ -32,6 +32,11 @@
 		<property name="dataAccess" ref="dataAccessBeanArt"></property>
 	</bean>
 	
+	<!-- CREO EL SERVICIO PARA STOCK -->
+	<bean id="serviceBeanStock" class="frgp.utn.edu.ar.servicioImpl.StockServicioImpl">
+		<property name="dataAccess" ref="dataAccessBeanStock"></property>
+	</bean>
+	
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
 	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
@@ -42,6 +47,12 @@
 	<bean id="dataAccessBeanArt" class="frgp.utn.edu.ar.daoImpl.ArticuloDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+	
+		<bean id="dataAccessBeanStock" class="frgp.utn.edu.ar.daoImpl.StockDaoImpl"
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+		
 	</bean>
 
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
@@ -63,6 +74,7 @@
 			<list>
 				<value>frgp.utn.edu.ar.dominio.Cliente</value>
 				<value>frgp.utn.edu.ar.dominio.Articulo</value>
+				<value>frgp.utn.edu.ar.dominio.Stock</value>
 				<value>frgp.utn.edu.ar.dominio.Usuario</value>
 				<value>frgp.utn.edu.ar.dominio.RolUsuario</value>
 			</list>
