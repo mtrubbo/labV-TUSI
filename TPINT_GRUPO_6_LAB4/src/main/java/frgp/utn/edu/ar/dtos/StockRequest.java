@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.dtos;
 
+import java.util.Date;
+
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Stock;
 
@@ -7,14 +9,16 @@ public class StockRequest {
 	
 	private int id;
 	private Articulo articulo;
+	private Date fechaIngreso;
 	private int cantidad;
-	private float precioVenta;
+	private float precioCompra;
 	
-
-
+	
 	public int getId() {
 		return id;
 	}
+
+
 
 
 
@@ -26,9 +30,13 @@ public class StockRequest {
 
 
 
+
+
 	public Articulo getArticulo() {
 		return articulo;
 	}
+
+
 
 
 
@@ -40,9 +48,31 @@ public class StockRequest {
 
 
 
+
+
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+
+
+
+
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+
+
+
+
+
 	public int getCantidad() {
 		return cantidad;
 	}
+
+
 
 
 
@@ -54,27 +84,26 @@ public class StockRequest {
 
 
 
-	public float getPrecioVenta() {
-		return precioVenta;
+
+
+	public float getPrecioCompra() {
+		return precioCompra;
 	}
 
 
 
 
-	public void setPrecioVenta(float precioVenta) {
-		this.precioVenta = precioVenta;
+
+
+	public void setPrecioVenta(float precioCompra) {
+		this.precioCompra = precioCompra;
 	}
 
 
-	@Override
-	public String toString() {
-		return "ID: " + id + ", Articulo: " + articulo.getNombre() + ", Cantidad: " + cantidad + ", Precio de Venta: $" + precioVenta;
-				
-	}
 
 
 	public Stock construirStock(){
-        Stock s = new Stock(articulo, cantidad, precioVenta);
+        Stock s = new Stock(articulo, fechaIngreso, cantidad, precioCompra);
         
         if(id != 0){
             s.setId(id);
