@@ -57,14 +57,14 @@ public class ArticuloController {
 		return MV;
 	}
 	
-	  	@RequestMapping(value = "/getArticulo/{id}", method = RequestMethod.GET)
-	    @ResponseBody
-	    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
-	        Articulo articulo = this.service.getbyID(id);
-	        Gson gson = new Gson();
-	        String jsonArray = gson.toJson(articulo);
-	        return new ResponseEntity<>(jsonArray, HttpStatus.OK);
-	    }
+	@RequestMapping(value = "/getArticulo/{id}", method = RequestMethod.GET)
+	@ResponseBody
+    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
+		Articulo articulo = this.service.getbyID(id);
+	    Gson gson = new Gson();
+	    String jsonArray = gson.toJson(articulo);
+	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+    }
 
 	@RequestMapping("/alta")
 	public ModelAndView pantallaDeAlta(){

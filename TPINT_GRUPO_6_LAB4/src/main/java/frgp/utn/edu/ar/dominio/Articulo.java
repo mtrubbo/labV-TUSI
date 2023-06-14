@@ -16,10 +16,15 @@ public class Articulo {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private String descripcion;
+	@Column(nullable = false)
 	private String marca;
+	@Column(nullable = false)
 	private String tipo;
+	@Column(nullable = false)
 	private float precio;
 	
 	public Articulo() {}

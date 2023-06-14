@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletConfig;
 
 import com.google.gson.Gson;
@@ -42,7 +44,10 @@ public class ClienteController {
 	@RequestMapping("")
 	public ModelAndView lista(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("clientes",this.service.obtenerTodos());
+		ArrayList<Cliente> listar = this.service.obtenerTodos();
+		if(listar != null) {			
+			MV.addObject("clientes", listar);
+		}
 		MV.setViewName("Clientes/Listado");
 		return MV;
 	}
@@ -55,8 +60,6 @@ public class ClienteController {
 		String jsonArray = gson.toJson(c);
 		return new ResponseEntity<>(jsonArray, HttpStatus.OK);
 	}
-
-
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
 	@ResponseBody
