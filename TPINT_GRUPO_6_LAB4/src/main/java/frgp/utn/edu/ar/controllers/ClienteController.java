@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dtos.ClienteRequest;
+import frgp.utn.edu.ar.dtos.ResponseResult;
+import frgp.utn.edu.ar.dtos.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -61,28 +63,40 @@ public class ClienteController {
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
 	@ResponseBody
-	public String crear(@ModelAttribute ClienteRequest clienteRequest,
+	public String crear(@ModelAttribute ClienteRequest cliente,
 									 BindingResult bindingResult){
+
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
 
 		String Message="";
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
-
 			System.out.println(Message);
 
-			return "Error al intentar dar de alta cliente";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
+			json = gson.toJson(result);
+			return json;
 		}
 
 		try{
-			return "Cliente agregado";
-			service.insertar(clienteRequest.construirCliente());
+			service.insertar(cliente.construirCliente());
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Cliente agregado");
 		}
 		catch(Exception e)
 		{
-			return "No se pudo insertar el cliente";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("No se pudo insertar el cliente");
+			System.out.println(e);
 		}
+
+		json = gson.toJson(result);
+		return json;
 	}
 
 
@@ -90,10 +104,11 @@ public class ClienteController {
 	@ResponseBody
 	public String modificarPost(@ModelAttribute ClienteRequest cliente,
 									 BindingResult bindingResult){
-		ModelAndView MV = new ModelAndView();
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
 
 		String Message="";
-
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
@@ -101,18 +116,26 @@ public class ClienteController {
 
 			System.out.println(Message);
 
-			return "Hubo un error con los datos enviados. Por favor revise los campos.";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
+			json = gson.toJson(result);
+			return json;
 		}
 
 		try{
 			service.actualizar(cliente.construirCliente());
-			return "Cliente actualizado exitosamente";
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Cliente actualizado");
 		}
 		catch(Exception e)
 		{
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al actualizar cliente");
 			System.out.println(e);
-			return "Error al actualizar el cliente";
 		}
+
+		json = gson.toJson(result);
+		return json;
 	}
 	
      

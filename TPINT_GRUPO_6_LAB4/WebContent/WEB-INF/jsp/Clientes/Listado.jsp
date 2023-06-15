@@ -118,13 +118,20 @@
                     url: action,
                     method: "POST",
                     data,
-                    success: function(res){
-                        console.log(res);
-                        $('#resultadoOperacion').text(res + ". Refrescando sitio...");
+                    success: function(data){
+                        console.log(data);
+                        let res = JSON.parse(data);
 
-                        setTimeout(function(){
-                           window.location.reload();
-                        }, 1500);
+                        if(res.status == 'ok'){
+                            $('#resultadoOperacion').text(res.message + ". Refrescando sitio...");
+                            setTimeout(function(){
+                               window.location.reload();
+                            }, 1500);
+                        }
+                        else{
+                            $('#resultadoOperacion').text(res.message);
+                        }
+
                     },
                     error: function(res, error) {
                         console.log(res);
