@@ -118,26 +118,17 @@
                     url: action,
                     method: "POST",
                     data,
-                    success: function(data){
-                        let res = JSON.parse(data);
+                    success: function(res){
                         console.log(res);
+                        $('#resultadoOperacion').text(res + ". Refrescando sitio...");
 
-                        let msg = res.message;
-                        if(res.status == 0){
-                            // caso exitoso, refrescar pagina
-                            $('#resultadoOperacion').text(msg + '. Refrescando sitio...');
-
-                            setTimeout(function(){
-                               window.location.reload();
-                            }, 1500);
-                        }
-                        else {
-                            // caso de error, no refrescar
-                            $('#resultadoOperacion').text(msg);
-                        }
-
+                        setTimeout(function(){
+                           window.location.reload();
+                        }, 1500);
                     },
                     error: function(res, error) {
+                        console.log(res);
+                        console.log(error);
                         $('#resultadoOperacion').text('Error al realizar peticion');
                     }
                 })
@@ -168,7 +159,6 @@
 
                     $('#tituloModal').text('Actualizar cliente');
                     $('#modal').modal('toggle');
-                    $('#resultadoOperacion').text('');
                 }
 
             })
@@ -189,8 +179,6 @@
             $('#localidad').val('');
             $('#email').val('');
             $('#telefono').val('');
-
-            $('#resultadoOperacion').text('');
         }
     </script>
 </body>

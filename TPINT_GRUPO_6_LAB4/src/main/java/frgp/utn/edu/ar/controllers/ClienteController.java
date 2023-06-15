@@ -8,8 +8,6 @@ import com.google.gson.Gson;
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dtos.ClienteRequest;
-import frgp.utn.edu.ar.dtos.ResponseResult;
-import frgp.utn.edu.ar.dtos.ResultStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -63,11 +61,10 @@ public class ClienteController {
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseResult crear(@ModelAttribute ClienteRequest cliente,
+	public String crear(@ModelAttribute ClienteRequest clienteRequest,
 									 BindingResult bindingResult){
 
 		String Message="";
-		ResponseResult result = new ResponseResult();
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
@@ -75,35 +72,28 @@ public class ClienteController {
 
 			System.out.println(Message);
 
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
-			return result;
+			return "Error al intentar dar de alta cliente";
 		}
 
 		try{
-			service.insertar(cliente.construirCliente());
-			result.setStatus(ResultStatus.ok);
-			result.setMessage("Cliente dado de alta exitosamente");
+			return "Cliente agregado";
+			service.insertar(clienteRequest.construirCliente());
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Error al intentar dar de alta el cliente");
+			return "No se pudo insertar el cliente";
 		}
-
-		return result;
 	}
 
 
 	@RequestMapping(value ="/modificar" , method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseResult modificarPost(@ModelAttribute ClienteRequest cliente,
+	public String modificarPost(@ModelAttribute ClienteRequest cliente,
 									 BindingResult bindingResult){
 		ModelAndView MV = new ModelAndView();
 
 		String Message="";
-		ResponseResult result = new ResponseResult();
+
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
@@ -111,24 +101,18 @@ public class ClienteController {
 
 			System.out.println(Message);
 
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
-			return result;
+			return "Hubo un error con los datos enviados. Por favor revise los campos.";
 		}
 
 		try{
 			service.actualizar(cliente.construirCliente());
-			result.setStatus(ResultStatus.ok);
-			result.setMessage("Cliente actualizado exitosamente");
+			return "Cliente actualizado exitosamente";
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Error al actualizar el cliente");
+			return "Error al actualizar el cliente";
 		}
-
-		return result;
 	}
 	
      
