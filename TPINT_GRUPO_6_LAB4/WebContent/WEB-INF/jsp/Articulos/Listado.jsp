@@ -103,26 +103,26 @@
       						<input type="hidden" id="estado" value="true" name="estado">
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
-      							<input id="nombre" type="text" name="nombre" class="form-control">
+      							<input id="nombre" type="text" name="nombre" class="form-control" required>
       						</div>
       						<div class="row">
       							<div class="col-md-6">
       								<label class="form-label">Descripcion</label>
-      								<input id="descripcion" type="text" name="descripcion" class="form-control">
+      								<input id="descripcion" type="text" name="descripcion" class="form-control" required>
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<input id="marca" type="text" name="marca" class="form-control">
+      								<input id="marca" type="text" name="marca" class="form-control" required>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Tipo</label>
-	      							<input id="tipo" type="text" name="tipo" class="form-control">
+	      							<input id="tipo" type="text" name="tipo" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
-	      							<input id="precio" type="text" name="precio" class="form-control">
+	      							<input id="precio" type="text" name="precio" class="form-control" required>
 	      						</div>
       						</div>
       						<div class="mt-5">
@@ -146,30 +146,30 @@
       					<form id="formEditar" action="${pageContext.request.contextPath}/articulos/editar" method="POST">
       						<input type="hidden" id="id" name="id">
       						
-      						<input type="hidden" id="estado" value="true" name="estado">
+      						<!-- <input type="hidden" id="estado" value="true" name="estado">-->
       						
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
-      							<input id="nombreEdit" type="text" name="nombre" class="form-control">
+      							<input id="nombreEdit" type="text" name="nombre" class="form-control" required>
       						</div>
       						<div class="row">
       							<div class="col-md-6">
       								<label class="form-label">Descripcion</label>
-      								<input id="descripcionEdit" type="text" name="descripcion" class="form-control">
+      								<input id="descripcionEdit" type="text" name="descripcion" class="form-control" required>
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<input id="marcaEdit" type="text" name="marca" class="form-control">
+      								<input id="marcaEdit" type="text" name="marca" class="form-control" required>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Tipo</label>
-	      							<input id="tipoEdit" type="text" name="tipo" class="form-control">
+	      							<input id="tipoEdit" type="text" name="tipo" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
-	      							<input id="precioEdit" type="text" name="precio" class="form-control">
+	      							<input id="precioEdit" type="text" name="precio" class="form-control" required>
 	      						</div>
       						</div>
       						<div class="mt-5">
