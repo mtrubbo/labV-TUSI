@@ -129,7 +129,7 @@
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
-	      							<input id="precio" type="text" name="precio" class="form-control" required>
+	      							<input id="precio" type="number" name="precio" class="form-control" required>
 	      						</div>
       						</div>
       						<div class="mt-5">
@@ -178,7 +178,7 @@
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
-	      							<input id="precioEdit" type="text" name="precio" class="form-control" required>
+	      							<input id="precioEdit" type="number" name="precio" class="form-control" required>
 	      						</div>
       						</div>
       						<div class="mt-5">
