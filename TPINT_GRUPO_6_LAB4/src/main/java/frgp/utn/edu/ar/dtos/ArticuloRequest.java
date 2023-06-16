@@ -78,7 +78,7 @@ public class ArticuloRequest {
 	}
 
 	public Articulo construirArticulo(){
-        Articulo  a = new Articulo(nombre, marca, descripcion, tipo, precio, estado);
+        Articulo  a = new Articulo(nombre, descripcion, marca, tipo, precio, estado);
 
         if(id != 0){
             a.setId(id);
