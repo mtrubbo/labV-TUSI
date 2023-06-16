@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/navbar.css"/>'>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg fixed-top mb-sm-5 navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="${pageContext.request.contextPath}">
     	<img class="navLogo" src='<c:url value="/resources/img/logo-navbar.png"/>'/>

@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Articulos</title>
 <!-- ContextPath setting in css, DO NOT TOUCH!!! -->
 <style>
@@ -30,10 +30,6 @@
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-brands-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-regular-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
-<!-- Agrega los estilos CSS de Toastr -->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-
 
 
 <!-- scripts -->
@@ -41,20 +37,13 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-
-
 </head>
 <body class="">
-
-
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
 	<section class="sectionTable">
-	<div class="row justify-content-around">
-		<h2>Articulos</h2>
-		<p>${Mensaje}</p>
-	</div>
-	
+	<h2>Articulos</h2>
+
 	<!-- Action Modal -->
 	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#newArt">
   		Nuevo Articulo
@@ -142,8 +131,8 @@
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
-      					<form id="formEditar" action="${pageContext.request.contextPath}/articulos/editar" method="POST">
-      						<input type="hidden" id="id" name="id">
+      					<form action="${pageContext.request.contextPath}/articulos/editar" method="POST">
+      						<input type="hidden" id="idEdit" name="id">
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
       							<input id="nombreEdit" type="text" name="nombre" class="form-control">
@@ -182,40 +171,7 @@
 <script>
 $(document).ready( function () {
     $('#tableArticulos').DataTable();
-    
-    
-    $('#formEditar').on("submit", function(e){
-        e.preventDefault();
-        let action = e.target.getAttribute('action');
-        let data = {
-            id: Number($('#id').val()),
-			nombre: $('#nombreEdit').val(),
-			descripcion: $('#descripcionEdit').val(),
-			marca: $('#marcaEdit').val(),
-		    tipo: $('#tipoEdit').val(),
-			precio: $('#precioEdit').val()
-        }
-
-        $.ajax({
-            url: action,
-            method: "POST",
-            data,
-            success: function(data){
-                console.log(data);
-                let res = JSON.parse(data);
-
-                if(res.status == 'ok'){
-                    mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
-                }
-            },
-            error: function(res, error) {
-                console.log(res);
-                console.log(error);
-                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
-            }
-        })
-	});
-});
+} );
 
 
 function editOpen(id){
@@ -225,7 +181,7 @@ function editOpen(id){
 		success: function(json){
 			let res = JSON.parse(json);
 			console.log(res);
-			$('#id').val(res.id);
+			$('#idEdit').val(res.id);
 			$('#nombreEdit').val(res.nombre);
 			$('#descripcionEdit').val(res.descripcion);
 			$('#marcaEdit').val(res.marca);
@@ -238,35 +194,7 @@ function editOpen(id){
 		
 	})
 }
-
-function mostrarNotificacionYRecargar(mensaje) {
-    // Configura la notificación Toastr
-    toastr.options = {
-        closeButton: true,
-        progressBar: true,
-        positionClass: "toast-top-right",
-        timeOut: 2000 // Duración de la notificación en milisegundos (3 segundos en este caso)
-    };
-
-    // Muestra la notificación Toastr
-    toastr.success(mensaje, "Éxito", {
-        onHidden: function () {
-            // Recarga la página después de que se cierre la notificación
-            window.location.reload();
-        }
-    });
-}
 </script>
-<c:if test="${not empty sessionScope.mensaje}">
-    <%-- Configurar la notificación Toastr --%>
-    <script>
-    mostrarNotificacionYRecargar("${sessionScope.mensaje}")
-    </script>
-
-    <%-- Limpiar el mensaje de la sesión para que no se muestre nuevamente en futuras peticiones --%>
-    <% session.removeAttribute("mensaje"); %>
-</c:if>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>
 

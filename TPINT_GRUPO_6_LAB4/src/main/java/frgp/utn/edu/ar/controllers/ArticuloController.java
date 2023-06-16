@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.controllers;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
+import frgp.utn.edu.ar.dtos.ResponseResult;
+import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 
 @Controller
@@ -74,9 +77,8 @@ public class ArticuloController {
 	}
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crearArticulo(@ModelAttribute ArticuloRequest articuloRequest,
-									 BindingResult bindingResult){
-		ModelAndView MV = new ModelAndView();
+	public String crearArticulo(@ModelAttribute ArticuloRequest articuloRequest,
+									 BindingResult bindingResult, HttpSession session){
 		
 		String Message="";
 
@@ -84,9 +86,7 @@ public class ArticuloController {
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
-
-			MV.addObject("Mensaje", Message);
-			MV.setViewName("Articulos/Listado");
+			return Message;
 		}
 
 		try{
@@ -98,9 +98,11 @@ public class ArticuloController {
 			Message = "No se pudo agregar el articulo";
 		}
 	
-		MV.addObject("Mensaje", Message);
+		/*MV.addObject("Mensaje", Message);
 		MV.setViewName("Articulos/Listado");
-		return MV;		
+		return MV;		*/
+		session.setAttribute("mensaje", Message);
+		return "redirect:/articulos";
 	}
 	
      
@@ -115,35 +117,42 @@ public class ArticuloController {
 	}
 	
 	@RequestMapping(value="/editar", method=RequestMethod.POST)
-	public ModelAndView editar(@ModelAttribute ArticuloRequest articuloRequest,
+	@ResponseBody
+	public String editar( @ModelAttribute ArticuloRequest articuloRequest,
 			 BindingResult bindingResult) {
 		
-		ModelAndView MV = new ModelAndView();
-		
-		String Message="";
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
 
+		String Message="";
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
 
-			MV.addObject("Mensaje", Message);
-			MV.setViewName("Articulos/Listado");
+			System.out.println(Message);
+
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
+			json = gson.toJson(result);
+			return json;
 		}
 
 		try{
-			service.insertar(articuloRequest.construirArticulo());
-			Message = "Articulo agregado";
+			service.actualizar(articuloRequest.construirArticulo());
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha actualizado con exito");
 		}
 		catch(Exception e)
 		{
-			Message = "No se pudo agregar el articulo";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al actualizar articulo");
+			System.out.println(e);
 		}
-	
-		MV.addObject("Mensaje", Message);
-		MV.setViewName("Articulos/Listado");
-		return MV;
 
+		json = gson.toJson(result);
+		return json;
 	}
 
 }

@@ -1,9 +1,11 @@
 package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Cliente;
 
 public class ArticuloRequest {
 	
+	private int id;
 	private String nombre;
 	private String descripcion;
 	private String marca;
@@ -22,6 +24,16 @@ public class ArticuloRequest {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDescripcion() {
@@ -57,7 +69,13 @@ public class ArticuloRequest {
 	}
 	
 	public Articulo construirArticulo(){
-        return new Articulo(nombre, descripcion, marca, tipo, precio);
+        Articulo  a = new Articulo(nombre, marca, descripcion, tipo, precio);
+
+        if(id != 0){
+            a.setId(id);
+        }
+
+        return a;
     }
 
 }
