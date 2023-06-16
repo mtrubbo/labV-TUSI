@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.dominio;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 

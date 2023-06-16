@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import frgp.utn.edu.ar.dao.ClienteDao;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
+import org.springframework.dao.DataAccessException;
 
 public class ClienteServicioImpl implements ClienteServicio {
 
@@ -30,21 +31,12 @@ public class ClienteServicioImpl implements ClienteServicio {
 	}
 
 	@Override
-	public void insertar(Cliente c) {
-		 dataAccess.insertar(c);
-		
-	}
+	public void insertar(Cliente c) { dataAccess.insertar(c); }
 
 	@Override
-	public void eliminar(int id) {
-		dataAccess.eliminar(id);
-		
-	}
+	public void eliminar(int id) { dataAccess.eliminar(id); }
 
 	@Override
-	public void actualizar(Cliente c) {
-		dataAccess.actualizar(c);
-		
-	}
+	public void actualizar(Cliente c) { dataAccess.actualizar(c); }
 
 }

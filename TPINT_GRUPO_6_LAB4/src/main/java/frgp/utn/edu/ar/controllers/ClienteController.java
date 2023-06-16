@@ -1,11 +1,13 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletConfig;
 
 import com.google.gson.Gson;
-import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dtos.ClienteRequest;
 import frgp.utn.edu.ar.dtos.ResponseResult;
@@ -56,6 +58,18 @@ public class ClienteController {
 	@ResponseBody
 	public ResponseEntity<String> obtenerClienteJSON(@PathVariable int id) {
 		Cliente c = this.service.obtenerPorId(id);
+
+		SimpleDateFormat fm = new SimpleDateFormat("mm-dd-yyyy");
+
+		try{
+			// Intento de formatear fecha para el input de editar, pero sin exito
+			String dateStr = fm.format(c.getFechaNac());
+			Date parsedDate =  fm.parse(dateStr);
+			c.setFechaNac(parsedDate);
+		} catch (ParseException e) {
+			System.out.println(e);
+		}
+
 		Gson gson = new Gson();
 		String jsonArray = gson.toJson(c);
 		return new ResponseEntity<>(jsonArray, HttpStatus.OK);
@@ -139,12 +153,18 @@ public class ClienteController {
 	}
 	
      
-	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
-	public ModelAndView eliminar(@PathVariable int id){
-		ModelAndView MV = new ModelAndView();
-		service.eliminar(id);
-		MV.setViewName("redirect:/clientes");
-		return MV;
+	@RequestMapping(value ="/eliminar/{id}")
+	@ResponseBody
+	public ResponseEntity<String> eliminar(@PathVariable int id){
+		try{
+			service.eliminar(id);
+			return new ResponseEntity<>("true", HttpStatus.OK);
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+
+		return new ResponseEntity<>("false", HttpStatus.OK);
 	}
 
 }

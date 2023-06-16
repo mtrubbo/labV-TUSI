@@ -66,9 +66,9 @@
                     <td>${item.telefono}</td>
                     <td>
                         <button class="btnTableEdit" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button>
-                        <a style="text-style: none; color: red;" href="<c:url value='/clientes/eliminar/${item.id}' />"  >
+                        <button onclick='eliminar(${item.id})'>
                             <i class="fa-solid fa-trash"></i>
-                        </a>
+                        </button>
                     </td>
                     </tr>
                 </c:forEach>
@@ -126,7 +126,7 @@
                             $('#resultadoOperacion').text(res.message + ". Refrescando sitio...");
                             setTimeout(function(){
                                window.location.reload();
-                            }, 1500);
+                            }, 1000);
                         }
                         else{
                             $('#resultadoOperacion').text(res.message);
@@ -149,12 +149,17 @@
                 success: function(json){
                     let res = JSON.parse(json);
                     console.log(res);
+
+                    // Por que no muestra la fecha en el input???????
+                    let fecha = new Date(res.fechaNac).toLocaleDateString("en-US").replace('/', '-');
+                    console.log(fecha);
+
                     $('#id').val(res.id);
                     $('#dni').val(res.dni);
                     $('#nombre').val(res.nombre);
                     $('#apellido').val(res.apellido);
                     $('#sexo').val(res.sexo);
-                    $('#fechaNac').val(res.fechaNac);
+                    $('#fechaNac').val(fecha);
                     $('#direccion').val(res.direccion);
                     $('#localidad').val(res.localidad);
                     $('#email').val(res.email);
@@ -186,6 +191,20 @@
             $('#localidad').val('');
             $('#email').val('');
             $('#telefono').val('');
+        }
+
+        function eliminar(id){
+            $.ajax({
+                url: "/clientes/eliminar/"+id,
+                method: "GET",
+                success: function(data){
+                    alert('Cliente eliminado exitosamente!');
+                    window.location.reload();
+                },
+                error: function(res, error) {
+                    console.log(res)
+                }
+            })
         }
     </script>
 </body>
