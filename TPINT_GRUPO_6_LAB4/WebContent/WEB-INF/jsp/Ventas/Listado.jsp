@@ -42,11 +42,11 @@
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
 	<section class="sectionTable">
-	<h2>Articulos</h2>
+	<h2>Ventas</h2>
 
 	<!-- Action Modal -->
 	<button type="button" class="btnNewArt " data-bs-toggle="modal" data-bs-target="#newArt">
-  		Nuevo Articulo
+  		Nueva Venta
 	</button>
 	
 	
@@ -54,12 +54,10 @@
 	<table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
 		<thead>
 			<tr>
-				<th>Nombre</th>
-				<th>Descripcion</th>
-				<th>Marca</th>
-				<th>Tipo</th>
-				<th>Precio</th>
-				<th>Acciones</th>
+				<th>Fecha venta</th>
+				<th>Cliente</th>
+				<th>Articulo</th>
+				<th>Monto Total</th>
 			</tr>
 		</thead>
 		<tbody>

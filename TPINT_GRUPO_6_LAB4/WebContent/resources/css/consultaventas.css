@@ -1,0 +1,65 @@
+@charset "ISO-8859-1";
+
+
+
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
+.consultasBody{
+	height: 100vh; 
+	width: 100%;
+	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	margin-top: 110px;
+}
+
+.sectionFormRequest{
+		z-index: 2;
+	background: #fff;
+	padding: 55px;
+	width: 70%;
+	border-radius: 10px;
+	box-shadow: 3px 2px 8px 0 #000;
+}
+
+
+.sectionTotal{
+		z-index: 2;
+	background: #fff;
+	padding: 55px;
+	width: 70%;
+	border-radius: 10px;
+	box-shadow: 3px 2px 8px 0 #000;
+}
+.sectionTable{
+	z-index: 2;
+	background: #fff;
+	padding: 55px;
+	width: 70%;
+	border-radius: 10px;
+	box-shadow: 3px 2px 8px 0 #000;
+}
+
+.btnNewArt{
+	background-color: #DAAE59;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+
+.btnTableEdit{
+	border: none;
+	color: green;
+	margin-right: 10px;
+}
+
+.btnTableDelete{
+	border: none;
+	color: red;
+	margin-right: 10px;
+}

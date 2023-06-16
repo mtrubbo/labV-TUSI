@@ -37,6 +37,11 @@
 		<property name="dataAccess" ref="dataAccessBeanStock"></property>
 	</bean>
 	
+		
+	<!-- CREO EL SERVICIO PARA Ventas -->
+	<bean id="serviceBeanVentas" class="frgp.utn.edu.ar.servicioImpl.VentasServicioImpl">
+		<property name="dataAccess" ref="dataAccessBeanVentas"></property>
+	</bean>
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
 	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
@@ -52,7 +57,11 @@
 		<bean id="dataAccessBeanStock" class="frgp.utn.edu.ar.daoImpl.StockDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
-		
+	</bean>
+	
+	<bean id="dataAccessBeanVentas" class="frgp.utn.edu.ar.daoImpl.VentasDaoImpl"
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
 
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
