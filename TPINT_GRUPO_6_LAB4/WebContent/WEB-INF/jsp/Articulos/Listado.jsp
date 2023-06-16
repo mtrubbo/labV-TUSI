@@ -76,12 +76,19 @@
 		<tbody>
 			<c:forEach items="${articulos}" var="item">
 				<tr>
-				<td>${item.nombre}</label> </td>
-				<td>${item.descripcion}</td>
-				<td>${item.marca}</td>
-				<td>${item.tipo}</td>
-				<td>${item.precio}</td>
-				<td><button class="btnTableEdit" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button><a style="text-style: none; color: red;" href="<c:url value='/articulos/eliminar/${item.id}' />"  ><i class="fa-solid fa-trash"></i></a></td>
+					<td>${item.nombre}</label> </td>
+					<td>${item.descripcion}</td>
+					<td>${item.marca}</td>
+					<td>${item.tipo}</td>
+					<td>${item.precio}</td>
+					<td>
+						<button class="btnTableEdit" onclick='editOpen(${item.id})'>
+							<i class="fa-solid fa-pencil"></i>
+						</button>
+						<button class="btnTableDelete" onclick='confirmDelete(${item.id})'>
+							<i class="fa-solid fa-trash"></i>
+						</button>
+					</td>
 				</tr>
 			</c:forEach>
 	    </tbody>
@@ -94,7 +101,7 @@
 		<div class="modal fade" id="newArt" tabindex="-1" aria-labelledby="newArtlabel" aria-hidden="true">
   			<div class="modal-dialog modal-lg">
     			<div class="modal-content">
-      				<div class="modal-header">
+      				<div class="modal-header" style="background: #DAAE59; color: #fff;">
         				<h5 class="modal-title" id="newArtlabel">Nuevo Articulo</h5>
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
@@ -127,19 +134,21 @@
       						</div>
       						<div class="mt-5">
 		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-		        				<button type="submit" class="btn btn-primary">Guardar Cambios</button>
+		        				<button type="submit" class="btn " style="background: #DAAE59; color: #fff;">Ingresar Articulo</button>
 							</div>
       					</form>
     			</div>
   			</div>
 		</div>
 		</div>
+		
+		
 		<!-- Modal EDITAR ARTICULO -->
 		<div class="modal fade" id="editArt" tabindex="-1" aria-labelledby="editArtLabel" aria-hidden="true">
   			<div class="modal-dialog modal-lg">
     			<div class="modal-content">
       				<div class="modal-header">
-        				<h5 class="modal-title" id="editArtLabel">Nuevo Articulo</h5>
+        				<h5 class="modal-title" id="editArtLabel">Editar Articulo</h5>
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
@@ -181,11 +190,64 @@
   			</div>
 		</div>
 		</div>
+		
+		<!-- Modal Borrar -->
+		<div class="modal fade" id="deleteArt" tabindex="-1" aria-labelledby="deleteArtLabel" aria-hidden="true">
+  			<div class="modal-dialog modal-lg">
+    			<div class="modal-content">
+      				<div class="modal-header" style="background: #B32D2D; color: #fff">
+        				<h5 class="modal-title" id="deleteArtLabel">Borrar Articulo</h5>
+        				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      				</div>
+      				<div class="modal-body">
+      					<form id="formDelete" action="${pageContext.request.contextPath}/articulos/eliminar" method="GET">
+      						<!-- <input type="hidden" id="estado" value="true" name="estado">-->
+      						<p style="font-weight: bold; font-size:20px;">Usted esta a punto de eliminar un articulo</p>
+      						<p>¿Seguro desea realizar la operacion?</p>
+      						<div class="mt-3">
+      							<button class="btn btn-secondary">Cancel</button>
+      							<button class="btn btn-danger" type="submit">OK</button>
+      						</div>
+      					</form>
+    			</div>
+  			</div>
+		</div>
 </main>	
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
     $('#tableArticulos').DataTable();
+    
+    $('#newArt').on("submit", function(e){
+        e.preventDefault();
+        let action = e.target.getAttribute('action');
+        let data = {
+			nombre: $('#nombre').val(),
+			descripcion: $('#descripcion').val(),
+			marca: $('#marca').val(),
+		    tipo: $('#tipo').val(),
+			precio: $('#precio').val()
+        }
+
+        $.ajax({
+            url: action,
+            method: "POST",
+            data,
+            success: function(data){
+                console.log(data);
+                let res = JSON.parse(data);
+
+                if(res.status == 'ok'){
+                    mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                }
+            },
+            error: function(res, error) {
+                console.log(res);
+                console.log(error);
+                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+            }
+        })
+	});
     
     
     $('#formEditar').on("submit", function(e){
@@ -219,6 +281,29 @@ $(document).ready( function () {
             }
         })
 	});
+    
+    $('#formDelete').on("submit", function(e){
+        e.preventDefault();
+        let action = e.target.getAttribute('action');
+
+        $.ajax({
+            url: action,
+            method: "get",
+            success: function(data){
+                console.log(data);
+                let res = JSON.parse(data);
+
+					if(res.status == 'ok')
+                    mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+            },
+            error: function(res, error) {
+                console.log(res);
+                console.log(error);
+                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+            }
+        })
+	});
+    
 });
 
 
@@ -241,6 +326,12 @@ function editOpen(id){
 		}
 		
 	})
+}
+
+
+function confirmDelete(id){
+	$('#formDelete').attr('action', '${pageContext.request.contextPath}/articulos/eliminar/'+id);
+	$('#deleteArt').modal('toggle');
 }
 
 function mostrarNotificacionYRecargar(mensaje) {

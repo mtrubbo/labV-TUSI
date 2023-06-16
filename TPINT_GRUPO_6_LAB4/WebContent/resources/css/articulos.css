@@ -38,6 +38,12 @@ body{
 	margin-right: 10px;
 }
 
+.btnTableDelete{
+	border: none;
+	color: red;
+	margin-right: 10px;
+}
+
 
 @media (min-width: 992px) {
   .articulosBody {

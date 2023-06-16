@@ -69,53 +69,72 @@ public class ArticuloController {
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 
-	@RequestMapping("/alta")
-	public ModelAndView pantallaDeAlta(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("Articulos/Alta");
-		return MV;
-	}
+
 
 	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
+	@ResponseBody
 	public String crearArticulo(@ModelAttribute ArticuloRequest articuloRequest,
 									 BindingResult bindingResult, HttpSession session){
-		
-		String Message="";
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
 
+		String Message="";
 		if(bindingResult.hasErrors()){
 			for (ObjectError error: bindingResult.getAllErrors()) {
 				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
 			}
-			return Message;
+
+			System.out.println(Message);
+
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
+			json = gson.toJson(result);
+			return json;
 		}
 
 		try{
 			service.insertar(articuloRequest.construirArticulo());
-			Message = "Articulo agregado";
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha creado con exito");
 		}
 		catch(Exception e)
 		{
-			Message = "No se pudo agregar el articulo";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al insertar el  articulo");
+			System.out.println(e);
 		}
-	
-		/*MV.addObject("Mensaje", Message);
-		MV.setViewName("Articulos/Listado");
-		return MV;		*/
-		session.setAttribute("mensaje", Message);
-		return "redirect:/articulos";
+
+		json = gson.toJson(result);
+		return json;
 	}
 	
      
 	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
-	public ModelAndView eliminar(@PathVariable int id){
-		ModelAndView MV = new ModelAndView();
-		Articulo a = service.getbyID(id);
-		a.setEstado(false);
-		service.actualizar(a);
-		MV.addObject("articulos",this.service.obtenerTodos());
-		MV.addObject("Mensaje", "Articulo eliminado");
-		MV.setViewName("Articulos/Listado");
-		return MV;
+	@ResponseBody
+	public String eliminar(@PathVariable int id){
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
+
+		String Message="";
+
+		try{
+			Articulo a = service.getbyID(id);
+			a.setEstado(false);
+			service.actualizar(a);
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha eliminado con exito con exito");
+		}
+		catch(Exception e)
+		{
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al eliminar articulo");
+			System.out.println(e);
+		}
+
+		json = gson.toJson(result);
+		return json;
 	}
 	
 	@RequestMapping(value="/editar", method=RequestMethod.POST)
