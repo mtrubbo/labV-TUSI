@@ -26,16 +26,19 @@ public class Articulo {
 	private String tipo;
 	@Column(nullable = false)
 	private float precio;
+	@Column(nullable = false)
+	private boolean estado;
 	
 	public Articulo() {}
 
-	public Articulo(String nombre, String descripcion, String marca, String tipo, float precio) {
+	public Articulo(String nombre, String descripcion, String marca, String tipo, float precio, boolean estado) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.tipo = tipo;
 		this.precio = precio;
+		this.estado = estado;
 	}
 
 	public int getId() {
@@ -84,6 +87,14 @@ public class Articulo {
 
 	public void setPrecio(float precio) {
 		this.precio = precio;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	

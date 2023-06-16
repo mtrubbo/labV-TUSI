@@ -109,7 +109,9 @@ public class ArticuloController {
 	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
 	public ModelAndView eliminar(@PathVariable int id){
 		ModelAndView MV = new ModelAndView();
-		service.eliminar(id);
+		Articulo a = service.getbyID(id);
+		a.setEstado(false);
+		service.actualizar(a);
 		MV.addObject("articulos",this.service.obtenerTodos());
 		MV.addObject("Mensaje", "Articulo eliminado");
 		MV.setViewName("Articulos/Listado");

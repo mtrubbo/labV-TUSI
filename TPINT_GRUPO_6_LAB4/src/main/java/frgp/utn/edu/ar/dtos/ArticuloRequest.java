@@ -11,6 +11,7 @@ public class ArticuloRequest {
 	private String marca;
 	private String tipo;
 	private float precio;
+	private boolean estado;
 	
 	@Override
 	public String toString() {
@@ -68,8 +69,16 @@ public class ArticuloRequest {
 		this.precio = precio;
 	}
 	
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
 	public Articulo construirArticulo(){
-        Articulo  a = new Articulo(nombre, marca, descripcion, tipo, precio);
+        Articulo  a = new Articulo(nombre, marca, descripcion, tipo, precio, estado);
 
         if(id != 0){
             a.setId(id);

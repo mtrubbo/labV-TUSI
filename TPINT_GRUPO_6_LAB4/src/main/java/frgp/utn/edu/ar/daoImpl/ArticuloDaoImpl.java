@@ -1,8 +1,11 @@
 package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +43,10 @@ public class ArticuloDaoImpl implements ArticuloDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public ArrayList<Articulo> obtenerTodos() {
-		return (ArrayList<Articulo>) this.hibernateTemplate.loadAll(Articulo.class);
+	    Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(Articulo.class);
+	    criteria.add(Restrictions.eq("estado", true));
+	    List<Articulo> resultados = criteria.list();
+	    return new ArrayList<>(resultados);
 	}
 
 	

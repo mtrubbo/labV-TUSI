@@ -100,6 +100,7 @@
       				</div>
       				<div class="modal-body">
       					<form action="${pageContext.request.contextPath}/articulos/crear" method="POST">
+      						<input type="hidden" id="estado" value="true" name="estado">
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
       							<input id="nombre" type="text" name="nombre" class="form-control">
