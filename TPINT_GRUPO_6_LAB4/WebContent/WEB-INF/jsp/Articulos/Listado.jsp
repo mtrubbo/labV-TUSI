@@ -126,8 +126,8 @@
 	      						</div>
       						</div>
       						<div class="mt-5">
-		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		        				<button type="submit" class="btn btn-primary">Save changes</button>
+		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+		        				<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
       					</form>
     			</div>
@@ -145,6 +145,9 @@
       				<div class="modal-body">
       					<form id="formEditar" action="${pageContext.request.contextPath}/articulos/editar" method="POST">
       						<input type="hidden" id="id" name="id">
+      						
+      						<input type="hidden" id="estado" value="true" name="estado">
+      						
       						<div class="col-md-12">
       							<label class="form-label">Nombre</label>
       							<input id="nombreEdit" type="text" name="nombre" class="form-control">
@@ -170,8 +173,8 @@
 	      						</div>
       						</div>
       						<div class="mt-5">
-		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		        				<button type="submit" class="btn btn-primary">Save changes</button>
+		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+		        				<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
       					</form>
     			</div>
