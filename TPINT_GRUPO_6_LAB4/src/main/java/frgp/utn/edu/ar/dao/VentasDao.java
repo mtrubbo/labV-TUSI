@@ -2,14 +2,14 @@ package frgp.utn.edu.ar.dao;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dominio.Stock;
+import frgp.utn.edu.ar.dominio.Ventas;
 
 public interface VentasDao {
-	public void insertar(Stock a);
-	public Stock obtenerPorNombre(String nombre);
-	public Stock obtenerPorId(int id);
-	public ArrayList<Stock> obtenerTodos();
+	public void insertar(Ventas a);
+	public Ventas obtenerPorId(int id);
+	public ArrayList<Ventas> obtenerTodos();
 	public void eliminar(int id);
-	public void actualizar(Stock a);
+	public void actualizar(Ventas a);
+
 
 }

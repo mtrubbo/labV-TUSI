@@ -3,15 +3,27 @@ package frgp.utn.edu.ar.controllers;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import frgp.utn.edu.ar.dominio.Ventas;
+import frgp.utn.edu.ar.dtos.ResponseResult;
+import frgp.utn.edu.ar.dtos.ResultStatus;
+import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.VentasService;
 
 @Controller
@@ -25,7 +37,7 @@ public class VentasController {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.service = (VentasService) ctx.getBean("serviceBeanArt");
+		this.service = (VentasService) ctx.getBean("serviceBeanVent");
 	}
 	
 	@RequestMapping("")
@@ -39,6 +51,71 @@ public class VentasController {
 		return MV;
 	}
 	
+	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
+	@ResponseBody
+	public String crearVenta(@ModelAttribute VentaRequest ventaRequest,
+									 BindingResult bindingResult, HttpSession session){
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
+
+		String Message="";
+		if(bindingResult.hasErrors()){
+			for (ObjectError error: bindingResult.getAllErrors()) {
+				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
+			}
+
+			System.out.println(Message);
+
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
+			json = gson.toJson(result);
+			return json;
+		}
+
+		try{
+			service.insertar(ventaRequest.construirVenta());
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha creado con exito");
+		}
+		catch(Exception e)
+		{
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al insertar el  articulo");
+			System.out.println(e);
+		}
+
+		json = gson.toJson(result);
+		return json;
+	}
+	
+     
+	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
+	@ResponseBody
+	public String eliminar(@PathVariable int id){
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
+
+		String Message="";
+
+		try{
+			Ventas a = service.getbyID(id);
+			a.setEstado(false);
+			service.actualizar(a);
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha eliminado con exito con exito");
+		}
+		catch(Exception e)
+		{
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al eliminar la venta");
+			System.out.println(e);
+		}
+
+		json = gson.toJson(result);
+		return json;
+	}
 	
 	@RequestMapping("/consultas")
 	public ModelAndView consultaVentas(){

@@ -1,7 +1,6 @@
 package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Articulo;
-import frgp.utn.edu.ar.dominio.Cliente;
 
 public class ArticuloRequest {
 	

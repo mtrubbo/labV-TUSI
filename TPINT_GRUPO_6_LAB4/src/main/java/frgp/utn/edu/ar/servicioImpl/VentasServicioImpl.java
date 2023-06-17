@@ -18,41 +18,30 @@ public class VentasServicioImpl  implements VentasService{
 	public void setDataAccess(VentasDao dataAccess) {
 		this.dataAccess = dataAccess;
 	}
-	
-	@Override
-	public ArrayList<Ventas> obtenerTodos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public Ventas obtenerPorNombre(String dni) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Ventas> obtenerTodos() {
+		return dataAccess.obtenerTodos();
 	}
 
 	@Override
 	public void insertar(Ventas a) {
-		// TODO Auto-generated method stub
-		
+		 dataAccess.insertar(a);		
 	}
 
 	@Override
 	public void eliminar(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actualizar(Ventas a) {
-		// TODO Auto-generated method stub
-		
+		dataAccess.eliminar(id);		
 	}
 
 	@Override
 	public Ventas getbyID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dataAccess.obtenerPorId(id);
 	}
 
+	@Override
+	public void actualizar(Ventas id) {
+		dataAccess.actualizar(id);		
+	}
+	
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import frgp.utn.edu.ar.dominio.Ventas;
 
 public interface ConsultasService {
-	ArrayList<> obtenerTodos();
+	ArrayList<Ventas> obtenerTodos();
 
 	Ventas obtenerPorNombre(String dni);
 

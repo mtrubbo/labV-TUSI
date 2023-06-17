@@ -24,25 +24,20 @@ public class Ventas {
 	private Date fecha;
     @Column(nullable = false)
     private double montoTotal;
-    @Column(nullable = false)
-    private int cantidadVendida;
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name="id_articulo")
-    private Articulo art;
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
+    @Column(nullable = false)
+	private boolean estado;
     
     public Ventas() {}
 
-	public Ventas(int id, Date fecha, double montoTotal, int cantidadVendida, Articulo art, Cliente cliente) {
+	public Ventas(Date fecha, double montoTotal, Cliente cliente, boolean estado) {
 		super();
-		this.id = id;
 		this.fecha = fecha;
 		this.montoTotal = montoTotal;
-		this.cantidadVendida = cantidadVendida;
-		this.art = art;
 		this.cliente = cliente;
+		this.estado = estado;
 	}
 
 	public int getId() {
@@ -69,29 +64,23 @@ public class Ventas {
 		this.montoTotal = montoTotal;
 	}
 
-	public int getCantidadVendida() {
-		return cantidadVendida;
-	}
-
-	public void setCantidadVendida(int cantidadVendida) {
-		this.cantidadVendida = cantidadVendida;
-	}
-
-	public Articulo getArt() {
-		return art;
-	}
-
-	public void setArt(Articulo art) {
-		this.art = art;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	};
+	
+	
     
     
     	

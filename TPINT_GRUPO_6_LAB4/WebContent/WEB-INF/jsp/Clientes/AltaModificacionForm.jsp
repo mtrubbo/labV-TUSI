@@ -3,7 +3,7 @@
 
     <div class="row">
         <label class="form-label" for="dni">DNI: </label>
-        <input class="form-control" id="dni" name="dni" />
+        <input class="form-control" type="number" id="dni" name="dni" />
     </div>
     <div class="row">
         <label class="form-label" for="nombre">Nombre: </label>
@@ -39,7 +39,7 @@
     </div>
     <div class="row">
         <label class="form-label" for="telefono">Telefono: </label>
-        <input class="form-control" id="telefono" name="telefono" />
+        <input class="form-control" type="number" id="telefono" name="telefono" />
     </div>
     <div class="mt-5">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
