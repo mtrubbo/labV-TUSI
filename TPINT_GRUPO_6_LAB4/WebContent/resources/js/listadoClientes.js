@@ -91,12 +91,20 @@ function crearOpen(){
 }
 
 function eliminar(id){
+    let eliminar = confirm("Desea eliminar el cliente?");
+    if(!eliminar) return;
+
     $.ajax({
         url: "/clientes/eliminar/"+id,
         method: "GET",
         success: function(data){
-            alert('Cliente eliminado exitosamente!');
-            window.location.reload();
+            if(data == "true"){
+                alert('Cliente eliminado exitosamente.');
+                window.location.reload();
+            }
+            else {
+                alert('Error al eliminar cliente.');
+            }
         },
         error: function(res, error) {
             console.log(res)
