@@ -59,19 +59,8 @@ public class ClienteController {
 	public ResponseEntity<String> obtenerClienteJSON(@PathVariable int id) {
 		Cliente c = this.service.obtenerPorId(id);
 
-		SimpleDateFormat fm = new SimpleDateFormat("mm-dd-yyyy");
-
-		try{
-			// Intento de formatear fecha para el input de editar, pero sin exito
-			String dateStr = fm.format(c.getFechaNac());
-			Date parsedDate =  fm.parse(dateStr);
-			c.setFechaNac(parsedDate);
-		} catch (ParseException e) {
-			System.out.println(e);
-		}
-
 		Gson gson = new Gson();
-		String jsonArray = gson.toJson(c);
+		String jsonArray = gson.toJson(c.construirDtoClienteRequest());
 		return new ResponseEntity<>(jsonArray, HttpStatus.OK);
 	}
 

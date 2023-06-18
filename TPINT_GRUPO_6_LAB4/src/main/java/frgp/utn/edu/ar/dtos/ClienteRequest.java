@@ -2,8 +2,11 @@ package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Cliente;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.datetime.DateFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ClienteRequest {
 
@@ -13,12 +16,36 @@ public class ClienteRequest {
     private String nombre;
     private String apellido;
     private String sexo;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fechaNac;
+    private String fechaNac;
     private String direccion;
     private String localidad;
     private String email;
     private String telefono;
+
+    public ClienteRequest(){ }
+
+    public ClienteRequest(
+            int id,
+            String dni,
+            String nombre,
+            String apellido,
+            String sexo,
+            String fechaNac,
+            String direccion,
+            String localidad,
+            String email,
+            String telefono){
+        this.id = id;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sexo = sexo;
+        this.fechaNac = fechaNac;
+        this.direccion = direccion;
+        this.localidad = localidad;
+        this.email = email;
+        this.telefono = telefono;
+    }
 
     @Override
     public String toString() {
@@ -71,11 +98,11 @@ public class ClienteRequest {
         this.sexo = sexo;
     }
 
-    public Date getFechaNac() {
+    public String getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date fechaNac) {
+    public void setFechaNac(String fechaNac) {
         this.fechaNac = fechaNac;
     }
 
@@ -112,7 +139,16 @@ public class ClienteRequest {
     }
 
     public Cliente construirCliente(){
-        Cliente c = new Cliente(dni, nombre, apellido, sexo, fechaNac, direccion, localidad, email, telefono);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        try{
+            fecha = df.parse(this.fechaNac);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
+        Cliente c = new Cliente(dni, nombre, apellido, sexo, fecha, direccion, localidad, email, telefono);
 
         if(id != 0){
             c.setId(id);

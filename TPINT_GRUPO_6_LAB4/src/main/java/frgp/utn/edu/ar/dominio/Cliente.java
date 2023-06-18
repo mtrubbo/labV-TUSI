@@ -1,9 +1,13 @@
 package frgp.utn.edu.ar.dominio;
 
+import frgp.utn.edu.ar.dtos.ClienteRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.datetime.DateFormatter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 @Entity
@@ -138,5 +142,17 @@ public class Cliente {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public ClienteRequest construirDtoClienteRequest(){
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = formatter.format(fechaNac);
+
+		ClienteRequest c = new ClienteRequest
+				(this.id, this.dni, this.nombre, this.apellido,
+				this.sexo, fecha, this.direccion, this.localidad, this.email, this.telefono);
+
+		return c;
 	}
 }
