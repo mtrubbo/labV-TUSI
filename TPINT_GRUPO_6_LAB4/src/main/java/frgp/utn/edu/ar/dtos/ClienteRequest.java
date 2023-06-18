@@ -1,16 +1,10 @@
 package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Cliente;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.datetime.DateFormatter;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class ClienteRequest {
-
-
     private int id;
     private String dni;
     private String nombre;

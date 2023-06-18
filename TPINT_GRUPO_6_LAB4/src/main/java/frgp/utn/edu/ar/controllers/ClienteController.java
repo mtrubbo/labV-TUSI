@@ -1,10 +1,6 @@
 package frgp.utn.edu.ar.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.servlet.ServletConfig;
 
 import com.google.gson.Gson;
@@ -47,7 +43,7 @@ public class ClienteController {
 	public ModelAndView lista(){
 		ModelAndView MV = new ModelAndView();
 		ArrayList<Cliente> listar = this.service.obtenerTodos();
-		if(listar != null) {			
+		if(listar != null) {
 			MV.addObject("clientes", listar);
 		}
 		MV.setViewName("Clientes/Listado");
@@ -140,8 +136,8 @@ public class ClienteController {
 		json = gson.toJson(result);
 		return json;
 	}
-	
-     
+
+
 	@RequestMapping(value ="/eliminar/{id}")
 	@ResponseBody
 	public ResponseEntity<String> eliminar(@PathVariable int id){

@@ -18,7 +18,7 @@ public class Cliente {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String dni;
 	@Column(nullable = false)
 	private String nombre;
@@ -32,9 +32,12 @@ public class Cliente {
 	private String direccion;
 	@Column(nullable = false)
 	private String localidad;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
+	@Column
 	private String telefono;
+	@Column(nullable = false)
+	private Boolean eliminado;
 
 	public Cliente() { }
 
@@ -59,6 +62,8 @@ public class Cliente {
 		this.localidad = localidad;
 		this.email = email;
 		this.telefono = telefono;
+
+		this.eliminado = false;
 	}
 
 
@@ -143,6 +148,10 @@ public class Cliente {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+
+	public Boolean getEliminado() { return eliminado; }
+
+	public void setEliminado(Boolean eliminado) { this.eliminado = eliminado; }
 
 	public ClienteRequest construirDtoClienteRequest(){
 

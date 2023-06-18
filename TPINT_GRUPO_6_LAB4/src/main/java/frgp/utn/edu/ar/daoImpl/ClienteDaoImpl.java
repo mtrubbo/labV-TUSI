@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,27 +29,42 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public Cliente obtenerPorDni(String dni) {
-		return this.hibernateTemplate.get(Cliente.class, dni);
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from Cliente where dni= :dni and eliminado=false");
+
+		query.setParameter("dni", dni);
+		return (Cliente)query.uniqueResult();
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public Cliente obtenerPorId(int id) {
-		return this.hibernateTemplate.get(Cliente.class, id);
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from Cliente where id= :id and eliminado=false");
+
+		query.setParameter("id", id);
+		return (Cliente)query.uniqueResult();
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public ArrayList<Cliente> obtenerTodos() {
-		return (ArrayList<Cliente>) this.hibernateTemplate.loadAll(Cliente.class);
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from Cliente where eliminado=false");
+
+		return (ArrayList<Cliente>)query.list();
 	}
 
 	
 	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void eliminar(int id) {
 		Cliente c = obtenerPorId(id);
-		this.hibernateTemplate.delete(c);
+		c.setEliminado(true);
+		this.hibernateTemplate.update(c);
 	}
 
 	@Override
