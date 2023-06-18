@@ -42,6 +42,16 @@
 	<bean id="serviceBeanVentas" class="frgp.utn.edu.ar.servicioImpl.VentasServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanVentas"></property>
 	</bean>
+		
+	<!-- CREO EL SERVICE PARA TipoArticulo -->
+	<bean id="tipoArticuloService" class="frgp.utn.edu.ar.servicioImpl.TipoArticuloServicioImpl">
+		<property name="dataAccess" ref="dataAccessBeanTipoArticulo" />
+	</bean>
+		
+	<!-- CREO EL SERVICE PARA Marca -->
+	<bean id="marcaService" class="frgp.utn.edu.ar.servicioImpl.MarcasServicioImpl">
+		<property name="dataAccess" ref="dataAccessBeanMarca" />
+	</bean>
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
 	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
@@ -63,7 +73,24 @@
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
-
+	
+			
+			<!-- CREO EL DAO PARA TipoArticulo -->
+		<bean id="dataAccessBeanTipoArticulo" class="frgp.utn.edu.ar.daoImpl.TipoArticuloDaoImpl">
+		    <property name="sessionFactory" ref="sessionFactoryBean" />
+		</bean>
+		
+		<!-- CREO EL DAO PARA Marca -->
+		<bean id="dataAccessBeanMarca" class="frgp.utn.edu.ar.daoImpl.MarcasDaoImpl">
+		    <property name="sessionFactory" ref="sessionFactoryBean" />
+		</bean>
+		
+		<!-- Bean para inicializar los datos en la base de datos -->
+		<bean id="dataInitializer" class="initializer.DataInitializer">
+		    <property name="tipoArticuloService" ref="tipoArticuloService" />
+		    <property name="marcaService" ref="marcaService" />
+		</bean>
+	
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
