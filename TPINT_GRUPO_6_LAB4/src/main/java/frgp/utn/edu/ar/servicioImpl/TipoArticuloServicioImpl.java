@@ -22,32 +22,8 @@ public class TipoArticuloServicioImpl implements TipoArticuloServicio {
 	}
 
 	@Override
-	public TipoArticulo obtenerPorDni(String dni) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TipoArticulo obtenerPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void insertar(TipoArticulo c) {
 		dataAccess.insertar(c);
-	}
-
-	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actualizar(TipoArticulo c) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

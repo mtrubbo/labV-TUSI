@@ -29,32 +29,8 @@ public class TipoArticuloDaoImpl implements TipoArticuloDao{
 	}
 
 	@Override
-	public TipoArticulo obtenerPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TipoArticulo obtenerPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<TipoArticulo> obtenerTodos() {
 		return (ArrayList<TipoArticulo>) this.hibernateTemplate.loadAll(TipoArticulo.class);
-	}
-
-	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actualizar(TipoArticulo a) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

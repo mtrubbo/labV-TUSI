@@ -24,32 +24,8 @@ public class MarcasDaoImpl implements MarcasDao {
 	}
 
 	@Override
-	public Marcas obtenerPorDni(String dni) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Marcas obtenerPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<Marcas> obtenerTodos() {
 		return (ArrayList<Marcas>) this.hibernateTemplate.loadAll(Marcas.class);
-	}
-
-	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actualizar(Marcas c) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
