@@ -86,7 +86,7 @@
 		</bean>
 		
 		<!-- Bean para inicializar los datos en la base de datos -->
-		<bean id="dataInitializer" class="initializer.DataInitializer">
+		<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer">
 		    <property name="tipoArticuloService" ref="tipoArticuloService" />
 		    <property name="marcaService" ref="marcaService" />
 		</bean>
@@ -114,6 +114,9 @@
 				<value>frgp.utn.edu.ar.dominio.Ventas</value>
 				<value>frgp.utn.edu.ar.dominio.Usuario</value>
 				<value>frgp.utn.edu.ar.dominio.RolUsuario</value>
+				<value>frgp.utn.edu.ar.dominio.TipoArticulo</value>
+				<value>frgp.utn.edu.ar.dominio.Marcas</value>
+				<value>frgp.utn.edu.ar.initializer.DataInitializer</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

@@ -1,4 +1,4 @@
-package initializer;
+package frgp.utn.edu.ar.initializer;
 
 import javax.annotation.PostConstruct;
 
@@ -6,6 +6,8 @@ import frgp.utn.edu.ar.dominio.Marcas;
 import frgp.utn.edu.ar.dominio.TipoArticulo;
 import frgp.utn.edu.ar.servicio.MarcasServicio;
 import frgp.utn.edu.ar.servicio.TipoArticuloServicio;
+import frgp.utn.edu.ar.servicioImpl.MarcasServicioImpl;
+import frgp.utn.edu.ar.servicioImpl.TipoArticuloServicioImpl;
 
 public class DataInitializer {
 	

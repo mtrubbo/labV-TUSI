@@ -7,6 +7,8 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.TipoArticuloDao;
 import frgp.utn.edu.ar.dominio.Articulo;
@@ -23,6 +25,7 @@ public class TipoArticuloDaoImpl implements TipoArticuloDao{
 	
 	
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void insertar(TipoArticulo a) {
 		// TODO Auto-generated method stub
 		this.hibernateTemplate.save(a);
