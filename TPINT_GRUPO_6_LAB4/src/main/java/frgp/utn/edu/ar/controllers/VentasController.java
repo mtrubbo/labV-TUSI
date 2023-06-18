@@ -37,7 +37,7 @@ public class VentasController {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.service = (VentasService) ctx.getBean("serviceBeanVent");
+		this.service = (VentasService) ctx.getBean("serviceBeanVentas");
 	}
 	
 	@RequestMapping("")

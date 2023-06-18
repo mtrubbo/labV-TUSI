@@ -111,6 +111,7 @@
 				<value>frgp.utn.edu.ar.dominio.Cliente</value>
 				<value>frgp.utn.edu.ar.dominio.Articulo</value>
 				<value>frgp.utn.edu.ar.dominio.Stock</value>
+				<value>frgp.utn.edu.ar.dominio.Ventas</value>
 				<value>frgp.utn.edu.ar.dominio.Usuario</value>
 				<value>frgp.utn.edu.ar.dominio.RolUsuario</value>
 			</list>
