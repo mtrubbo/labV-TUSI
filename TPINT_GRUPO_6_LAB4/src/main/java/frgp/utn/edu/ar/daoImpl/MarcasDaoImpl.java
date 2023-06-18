@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.MarcasDao;
 import frgp.utn.edu.ar.dominio.Cliente;
@@ -19,6 +21,7 @@ public class MarcasDaoImpl implements MarcasDao {
 
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void insertar(Marcas c) {
 		this.hibernateTemplate.save(c);
 	}
