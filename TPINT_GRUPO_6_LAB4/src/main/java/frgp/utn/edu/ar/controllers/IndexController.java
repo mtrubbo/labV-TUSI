@@ -12,6 +12,7 @@ public class IndexController {
     @RequestMapping("")
     public ModelAndView index(){
         ModelAndView MV = new ModelAndView();
+        MV.setViewName("Index");
         return MV;
     }
     
