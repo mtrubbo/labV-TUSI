@@ -1,14 +1,16 @@
 package frgp.utn.edu.ar.dtos;
 
 import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Marcas;
+import frgp.utn.edu.ar.dominio.TipoArticulo;
 
 public class ArticuloRequest {
 	
 	private int id;
 	private String nombre;
 	private String descripcion;
-	private String marca;
-	private String tipo;
+	private Marcas marca;
+	private TipoArticulo tipo;
 	private float precio;
 	private boolean estado;
 	
@@ -44,19 +46,19 @@ public class ArticuloRequest {
 		this.descripcion = descripcion;
 	}
 
-	public String getMarca() {
+	public Marcas getMarca() {
 		return marca;
 	}
 
-	public void setMarca(String marca) {
+	public void setMarca(Marcas marca) {
 		this.marca = marca;
 	}
 	
-	public String getTipo() {
+	public TipoArticulo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoArticulo tipo) {
 		this.tipo = tipo;
 	}
 

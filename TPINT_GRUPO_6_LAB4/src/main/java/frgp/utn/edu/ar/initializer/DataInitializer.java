@@ -1,40 +1,33 @@
 package frgp.utn.edu.ar.initializer;
 
-import javax.annotation.PostConstruct;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import frgp.utn.edu.ar.dominio.Marcas;
-import frgp.utn.edu.ar.dominio.TipoArticulo;
-import frgp.utn.edu.ar.servicio.MarcasServicio;
-import frgp.utn.edu.ar.servicio.TipoArticuloServicio;
-import frgp.utn.edu.ar.servicioImpl.MarcasServicioImpl;
-import frgp.utn.edu.ar.servicioImpl.TipoArticuloServicioImpl;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DataInitializer {
-	
-    private TipoArticuloServicio tipoArticuloService;
-    private MarcasServicio marcaService;
 
-    public void setTipoArticuloService(TipoArticuloServicio tipoArticuloService) {
-        this.tipoArticuloService = tipoArticuloService;
-    }
+    private final JdbcTemplate jdbcTemplate;
 
-    public void setMarcaService(MarcasServicio marcaService) {
-        this.marcaService = marcaService;
+	public DataInitializer(JdbcTemplate dataSource) {
+        this.jdbcTemplate = dataSource;
     }
 
     @PostConstruct
     public void initializeData() {
-        // Código para inicializar los datos en la base de datos utilizando los servicios
-        TipoArticulo tipoArticulo1 = new TipoArticulo();
-        tipoArticulo1.setDescripcion("Indumentaria");
-        
-        // Inicializar datos para TipoArticulo
-        tipoArticuloService.insertar(tipoArticulo1);
+        try {
+            ClassPathResource resource = new ClassPathResource("datainit.sql");
+            byte[] scriptBytes = Files.readAllBytes(Paths.get(resource.getURI()));
+            String scriptContent = new String(scriptBytes, StandardCharsets.UTF_8);
 
-        Marcas marca1 = new Marcas();
-        marca1.setNombre("Nike");
-        // Inicializar datos para Marca
-        
-        marcaService.insertar(marca1);
+            jdbcTemplate.execute(scriptContent);
+        } catch (IOException e) {
+            // Manejar cualquier excepción
+        }
     }
 }
+

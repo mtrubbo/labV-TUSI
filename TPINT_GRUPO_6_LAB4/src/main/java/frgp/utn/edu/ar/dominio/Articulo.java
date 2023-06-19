@@ -1,10 +1,13 @@
 package frgp.utn.edu.ar.dominio;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,20 +21,27 @@ public class Articulo {
 	
 	@Column(nullable = false)
 	private String nombre;
+	
 	@Column(nullable = false)
 	private String descripcion;
-	@Column(nullable = false)
-	private String marca;
-	@Column(nullable = false)
-	private String tipo;
+	
+	@ManyToOne(cascade= {CascadeType.ALL})
+	@JoinColumn(name="idmarca")
+	private Marcas marca;
+	
+	@ManyToOne(cascade= {CascadeType.ALL})
+	@JoinColumn(name="idtipo")
+	private TipoArticulo tipo;
+	
 	@Column(nullable = false)
 	private float precio;
+	
 	@Column(nullable = false)
 	private boolean estado;
 	
 	public Articulo() {}
 
-	public Articulo(String nombre, String descripcion, String marca, String tipo, float precio, boolean estado) {
+	public Articulo(String nombre, String descripcion, Marcas marca, TipoArticulo tipo, float precio, boolean estado) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -65,19 +75,19 @@ public class Articulo {
 		this.descripcion = descripcion;
 	}
 
-	public String getMarca() {
+	public Marcas getMarca() {
 		return marca;
 	}
 
-	public void setMarca(String marca) {
+	public void setMarca(Marcas marca) {
 		this.marca = marca;
 	}
 
-	public String getTipo() {
+	public TipoArticulo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoArticulo tipo) {
 		this.tipo = tipo;
 	}
 	

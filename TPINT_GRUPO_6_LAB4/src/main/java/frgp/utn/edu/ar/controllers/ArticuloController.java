@@ -26,10 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Marcas;
+import frgp.utn.edu.ar.dominio.TipoArticulo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
+import frgp.utn.edu.ar.servicio.MarcasServicio;
+import frgp.utn.edu.ar.servicio.TipoArticuloServicio;
 
 @Controller
 @RequestMapping("/articulos")
@@ -37,6 +41,12 @@ public class ArticuloController {
 	
 	@Autowired
 	public ArticuloServicio service;
+	
+	@Autowired
+	public TipoArticuloServicio taService;
+	
+	@Autowired
+	public MarcasServicio mService;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -55,6 +65,17 @@ public class ArticuloController {
 		if(listarr != null) {			
 			MV.addObject("articulos", listarr);
 		}
+		
+		ArrayList<TipoArticulo> listTA = this.taService.obtenerTodos();
+		if(listTA != null) {			
+			MV.addObject("tipoArticulos", listTA);
+		}
+		
+		ArrayList<Marcas> lMarcas = this.mService.obtenerTodos();
+		if(lMarcas != null) {			
+			MV.addObject("listaMarcas", lMarcas);
+		}
+		
 		MV.setViewName("Articulos/Listado");
 		return MV;
 	}

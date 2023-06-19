@@ -119,13 +119,21 @@
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<input id="marca" type="text" name="marca" class="form-control" required>
+      								<select id="marca" name="marca" class="form-control">
+   							 			<c:forEach items="${listaMarcas}" var="marca">
+      										<option value="${marca.idmarca}">${marca.nombre}</option>
+   								 		</c:forEach>
+  									</select>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
-	      							<label class="form-label">Tipo</label>
-	      							<input id="tipo" type="text" name="tipo" class="form-control" required>
+	      							<label class="form-label">Tipo Articulos</label>
+	      							<select id="tipo" name="tipo" class="form-control">
+   							 			<c:forEach items="${tipoArticulos}" var="item">
+      										<option value="${item.idtipo}">${item.descripcion}</option>
+   								 		</c:forEach>
+  									</select>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>
@@ -168,13 +176,21 @@
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<input id="marcaEdit" type="text" name="marca" class="form-control" required>
+      								<select id="marca" name="marca" class="form-control">
+   							 			<c:forEach items="${listaMarcas}" var="marca">
+      										<option value="${marca.idmarca}">${marca.nombre}</option>
+   								 		</c:forEach>
+  									</select>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
-	      							<label class="form-label">Tipo</label>
-	      							<input id="tipoEdit" type="text" name="tipo" class="form-control" required>
+	      							<label class="form-label">Tipo Articulos</label>
+	      							<select id="tipo" name="tipo" class="form-control">
+   							 			<c:forEach items="${tipoArticulos}" var="item">
+      										<option value="${item.idtipo}">${item.descripcion}</option>
+   								 		</c:forEach>
+  									</select>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio</label>

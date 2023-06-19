@@ -85,12 +85,11 @@
 		    <property name="sessionFactory" ref="sessionFactoryBean" />
 		</bean>
 		
-		<!-- Bean para inicializar los datos en la base de datos -->
-		<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer">
-		    <property name="tipoArticuloService" ref="tipoArticuloService" />
-		    <property name="marcaService" ref="marcaService" />
+		<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer" scope="prototype">
+			<constructor-arg ref="jdbcTemplateBean" />
 		</bean>
-	
+		
+		
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -99,6 +98,10 @@
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSourceBean" />
+</bean>
 
 	<!-- Session factory de Hibernate -->
 	<bean id="sessionFactoryBean"
