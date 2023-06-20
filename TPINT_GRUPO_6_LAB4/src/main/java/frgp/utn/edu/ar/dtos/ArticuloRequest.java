@@ -17,8 +17,8 @@ public class ArticuloRequest {
 	
 	@Override
 	public String toString() {
-		return "Nombre: " + nombre + ", Descripcion: " + descripcion + ", Marca: " + marca
-				+ ", Tipo: " + tipo + ", Precio: " + precio + "";
+		return "Nombre: " + nombre + ", Descripcion: " + descripcion + ", Marca: " + marca.toString()
+				+ ", Tipo: " + tipo.toString() + ", Precio: " + precio + "";
 	}
 
 	public String getNombre() {

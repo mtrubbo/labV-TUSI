@@ -176,7 +176,7 @@
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
-      								<select id="marca" name="marca" class="form-control">
+      								<select id="marcaEdit" name="marca" class="form-control">
    							 			<c:forEach items="${listaMarcas}" var="marca">
       										<option value="${marca.idmarca}">${marca.nombre}</option>
    								 		</c:forEach>
@@ -186,7 +186,7 @@
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Tipo Articulos</label>
-	      							<select id="tipo" name="tipo" class="form-control">
+	      							<select id="tipoEdit" name="tipo" class="form-control">
    							 			<c:forEach items="${tipoArticulos}" var="item">
       										<option value="${item.idtipo}">${item.descripcion}</option>
    								 		</c:forEach>
@@ -283,8 +283,8 @@ $(document).ready( function () {
         }
 
         $.ajax({
-            url: action,
-            method: "POST",
+            url: action +"/"+data.id+"/"+data.nombre+"/"+data.descripcion+"/"+data.marca+"/"+data.tipo+"/"+data.precio,
+            method: "GET",
             data,
             success: function(data){
                 console.log(data);
@@ -292,6 +292,9 @@ $(document).ready( function () {
 
                 if(res.status == 'ok'){
                     mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                }
+                if(res.status == 'error'){
+                	errorNotification(res.message)
                 }
             },
             error: function(res, error) {
@@ -337,8 +340,8 @@ function editOpen(id){
 			$('#id').val(res.id);
 			$('#nombreEdit').val(res.nombre);
 			$('#descripcionEdit').val(res.descripcion);
-			$('#marcaEdit').val(res.marca);
-			$('#tipoEdit').val(res.tipo);
+			$('#marcaEdit').val(res.marca.idmarca);
+			$('#tipoEdit').val(res.tipo.idtipo);
 			$('#precioEdit').val(res.precio);
 		},
 		complete: function() {

@@ -156,31 +156,29 @@ public class ArticuloController {
 		return json;
 	}
 	
-	@RequestMapping(value="/editar", method=RequestMethod.POST)
+	@RequestMapping(value="/editar/{id}/{nombre}/{descripcion}/{marca}/{tipo}/{precio}", method=RequestMethod.GET)
 	@ResponseBody
-	public String editar( @ModelAttribute ArticuloRequest articuloRequest,
-			 BindingResult bindingResult) {
+	public String editar( @PathVariable int id, @PathVariable String nombre, @PathVariable String descripcion, @PathVariable int marca, @PathVariable int tipo, 
+			@PathVariable float precio) {
 		
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
 
 		String Message="";
-		if(bindingResult.hasErrors()){
-			for (ObjectError error: bindingResult.getAllErrors()) {
-				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
-			}
-
-			System.out.println(Message);
-
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
-			json = gson.toJson(result);
-			return json;
-		}
+		ArticuloRequest ar = new ArticuloRequest();
+		
+		ar.setId(id);
+		ar.setNombre(nombre);
+		ar.setDescripcion(descripcion);
+		ar.setPrecio(precio);
+		ar.setMarca(mService.getbyID(marca));
+		ar.setTipo(taService.getbyID(tipo));
+		
+		System.out.println(ar.toString());
 
 		try{
-			service.actualizar(articuloRequest.construirArticulo());
+			service.actualizar(ar.construirArticulo());
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha actualizado con exito");
 		}

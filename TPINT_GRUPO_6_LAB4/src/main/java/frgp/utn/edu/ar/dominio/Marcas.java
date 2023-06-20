@@ -42,4 +42,11 @@ public class Marcas {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+	public String toString() {
+		return "Marcas [idmarca=" + idmarca + ", nombre=" + nombre + "]";
+	}
+	
+	
 }
