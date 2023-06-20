@@ -8,4 +8,7 @@ public interface TipoArticuloDao {
 	
 	public void insertar(TipoArticulo a);
 	public ArrayList<TipoArticulo> obtenerTodos();
+
+
+	public TipoArticulo getbyID(int id);
 }

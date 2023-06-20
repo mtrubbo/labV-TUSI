@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.initializer;
 
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -9,10 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class DataInitializer {
+public class DataInitializer implements InitializingBean  {
 
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
 	public DataInitializer(JdbcTemplate dataSource) {
         this.jdbcTemplate = dataSource;
     }
@@ -29,5 +32,11 @@ public class DataInitializer {
             // Manejar cualquier excepción
         }
     }
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		// TODO Auto-generated method stub
+		initializeData();
+	}
 }
 

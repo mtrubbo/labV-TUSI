@@ -85,10 +85,9 @@
 		    <property name="sessionFactory" ref="sessionFactoryBean" />
 		</bean>
 		
-		<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer" scope="prototype">
-			<constructor-arg ref="jdbcTemplateBean" />
-		</bean>
-		
+<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer" scope="prototype">
+    <constructor-arg ref="jdbcTemplate" />
+</bean>
 		
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
 	<bean id="dataSourceBean"

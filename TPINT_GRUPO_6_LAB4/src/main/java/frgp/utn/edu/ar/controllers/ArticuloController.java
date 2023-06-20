@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.controllers;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +32,7 @@ import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Marcas;
 import frgp.utn.edu.ar.dominio.TipoArticulo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
+import frgp.utn.edu.ar.dtos.MarcasRequest;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
@@ -91,30 +95,25 @@ public class ArticuloController {
 
 
 
-	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
+	@RequestMapping(value ="/crear/{nombre}/{descripcion}/{marca}/{tipo}/{precio}" , method = RequestMethod.GET)
 	@ResponseBody
-	public String crearArticulo(@ModelAttribute ArticuloRequest articuloRequest,
-									 BindingResult bindingResult, HttpSession session){
+	public String crearArticulo(@PathVariable String nombre, @PathVariable String descripcion, @PathVariable int marca, @PathVariable int tipo, 
+		@PathVariable float precio){
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
-
 		String Message="";
-		if(bindingResult.hasErrors()){
-			for (ObjectError error: bindingResult.getAllErrors()) {
-				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
-			}
-
-			System.out.println(Message);
-
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
-			json = gson.toJson(result);
-			return json;
-		}
-
+		ArticuloRequest ar = new ArticuloRequest();
+		
+		ar.setNombre(nombre);
+		ar.setDescripcion(descripcion);
+		ar.setPrecio(precio);
+		ar.setMarca(mService.getbyID(marca));
+		ar.setTipo(taService.getbyID(tipo));
+		
+		System.out.println(ar.toString());
 		try{
-			service.insertar(articuloRequest.construirArticulo());
+			this.service.insertar(ar.construirArticulo());
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha creado con exito");
 		}

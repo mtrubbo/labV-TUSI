@@ -25,4 +25,9 @@ public class MarcasServicioImpl implements MarcasServicio{
 		dataAccess.insertar(c);
 	}
 
+	@Override
+	public Marcas getbyID(int id) {
+		return dataAccess.getbyID(id);
+	}
+
 }

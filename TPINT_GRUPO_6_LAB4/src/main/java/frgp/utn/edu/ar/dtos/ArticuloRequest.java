@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.dtos;
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Marcas;
 import frgp.utn.edu.ar.dominio.TipoArticulo;
+import frgp.utn.edu.ar.helpers.ArticulosHelper;
 
 public class ArticuloRequest {
 	
@@ -50,16 +51,16 @@ public class ArticuloRequest {
 		return marca;
 	}
 
-	public void setMarca(Marcas marca) {
-		this.marca = marca;
+	public void setMarca(Marcas m) {
+		this.marca = m;
 	}
 	
 	public TipoArticulo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoArticulo tipo) {
-		this.tipo = tipo;
+	public void setTipo(TipoArticulo ta) {
+		this.tipo = ta;
 	}
 
 	public float getPrecio() {
@@ -87,5 +88,7 @@ public class ArticuloRequest {
 
         return a;
     }
+	
+	
 
 }

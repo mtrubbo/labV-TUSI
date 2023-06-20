@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.MarcasDao;
-import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Marcas;
 
 public class MarcasDaoImpl implements MarcasDao {
@@ -27,8 +26,16 @@ public class MarcasDaoImpl implements MarcasDao {
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public ArrayList<Marcas> obtenerTodos() {
 		return (ArrayList<Marcas>) this.hibernateTemplate.loadAll(Marcas.class);
+	}
+
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Marcas getbyID(int id) {
+		return this.hibernateTemplate.get(Marcas.class, id);
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import frgp.utn.edu.ar.dao.TipoArticuloDao;
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
+import frgp.utn.edu.ar.dominio.Marcas;
 import frgp.utn.edu.ar.dominio.TipoArticulo;
 
 public class TipoArticuloDaoImpl implements TipoArticuloDao{
@@ -34,6 +35,13 @@ public class TipoArticuloDaoImpl implements TipoArticuloDao{
 	@Override
 	public ArrayList<TipoArticulo> obtenerTodos() {
 		return (ArrayList<TipoArticulo>) this.hibernateTemplate.loadAll(TipoArticulo.class);
+	}
+
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public TipoArticulo getbyID(int id) {
+		return this.hibernateTemplate.get(TipoArticulo.class, id);
 	}
 
 }

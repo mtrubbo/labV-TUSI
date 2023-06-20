@@ -78,8 +78,8 @@
 				<tr>
 					<td>${item.nombre}</label> </td>
 					<td>${item.descripcion}</td>
-					<td>${item.marca}</td>
-					<td>${item.tipo}</td>
+					<td>${item.marca.nombre}</td>
+					<td>${item.tipo.descripcion}</td>
 					<td>${item.precio}</td>
 					<td>
 						<button class="btnTableEdit" onclick='editOpen(${item.id})'>
@@ -120,8 +120,8 @@
       							<div class="col-md-6">
       								<label class="form-label">Marca</label>
       								<select id="marca" name="marca" class="form-control">
-   							 			<c:forEach items="${listaMarcas}" var="marca">
-      										<option value="${marca.idmarca}">${marca.nombre}</option>
+   							 			<c:forEach items="${listaMarcas}" var="item">
+      										<option value="${item.idmarca}">${item.nombre}</option>
    								 		</c:forEach>
   									</select>
       							</div>
@@ -234,20 +234,20 @@
 $(document).ready( function () {
     $('#tableArticulos').DataTable();
     
-    $('#newArt').on("submit", function(e){
+  $('#newArt').on("submit", function(e){
         e.preventDefault();
         let action = e.target.getAttribute('action');
         let data = {
 			nombre: $('#nombre').val(),
 			descripcion: $('#descripcion').val(),
-			marca: $('#marca').val(),
-		    tipo: $('#tipo').val(),
+			marca: Number($('#marca').val()),
+		    tipo: Number($('#tipo').val()),
 			precio: $('#precio').val()
         }
-
+		
         $.ajax({
-            url: action,
-            method: "POST",
+            url: action +"/"+data.nombre+"/"+data.descripcion+"/"+data.marca+"/"+data.tipo+"/"+data.precio,
+            method: "GET",
             data,
             success: function(data){
                 console.log(data);
@@ -256,11 +256,15 @@ $(document).ready( function () {
                 if(res.status == 'ok'){
                     mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
                 }
+                if(res.status == 'error'){
+                	errorNotification(res.message)
+                }
+
             },
             error: function(res, error) {
                 console.log(res);
                 console.log(error);
-                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                errorNotification(res.message + ". Refrescando sitio...");
             }
         })
 	});
@@ -293,7 +297,7 @@ $(document).ready( function () {
             error: function(res, error) {
                 console.log(res);
                 console.log(error);
-                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                errorNotification(res.message + ". Refrescando sitio...");
             }
         })
 	});
@@ -315,7 +319,7 @@ $(document).ready( function () {
             error: function(res, error) {
                 console.log(res);
                 console.log(error);
-                mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                errorNotification(res.message + ". Refrescando sitio...");
             }
         })
 	});
@@ -366,6 +370,20 @@ function mostrarNotificacionYRecargar(mensaje) {
             window.location.reload();
         }
     });
+}
+
+function errorNotification(mensaje){
+	toastr.options = {
+	        closeButton: true,
+	        progressBar: true,
+	        positionClass: "toast-top-right",
+	        timeOut: 2000 // Duración de la notificación en milisegundos (3 segundos en este caso)
+	    };
+
+	    // Muestra la notificación Toastr
+	    toastr.error(mensaje, "Error", {
+	    });
+	
 }
 </script>
 <c:if test="${not empty sessionScope.mensaje}">

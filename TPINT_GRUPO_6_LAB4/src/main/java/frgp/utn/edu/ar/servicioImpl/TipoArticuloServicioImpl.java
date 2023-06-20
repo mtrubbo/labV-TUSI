@@ -26,4 +26,9 @@ public class TipoArticuloServicioImpl implements TipoArticuloServicio {
 		dataAccess.insertar(c);
 	}
 
+	@Override
+	public TipoArticulo getbyID(int id) {
+		return dataAccess.getbyID(id);
+	}
+
 }
