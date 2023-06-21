@@ -20,10 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
+import frgp.utn.edu.ar.servicio.ArticuloServicio;
+import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.VentasService;
 
 @Controller
@@ -32,6 +36,12 @@ public class VentasController {
 	
 	@Autowired
 	public VentasService  service;
+	
+	@Autowired
+	public ArticuloServicio artService;
+	
+	@Autowired
+	public ClienteServicio cService;
 	
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -46,6 +56,16 @@ public class VentasController {
 		ArrayList<Ventas> listarr = this.service.obtenerTodos();
 		if(listarr != null) {			
 			MV.addObject("ventas", listarr);
+		}
+		
+		ArrayList<Cliente> lClientes = this.cService.obtenerTodos();
+		if(lClientes != null) {			
+			MV.addObject("clientes", lClientes);
+		}
+		
+		ArrayList<Articulo> lArt = this.artService.obtenerTodos();
+		if(lArt != null) {			
+			MV.addObject("Articulos", lArt);
 		}
 		MV.setViewName("Ventas/Listado");
 		return MV;
