@@ -205,7 +205,7 @@
       						<p style="font-weight: bold; font-size:20px;">Usted esta a punto de eliminar un articulo</p>
       						<p>¿Seguro desea realizar la operacion?</p>
       						<div class="mt-3">
-      							<button class="btn btn-secondary">Cancel</button>
+      							<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
       							<button class="btn btn-danger" type="submit">OK</button>
       						</div>
       					</form>
