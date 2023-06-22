@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
@@ -87,6 +87,7 @@
       				</div>
       				<div class="modal-body">
       					<form action="${pageContext.request.contextPath}/stocks/crear" method="POST">
+      					
       						<div class="col-md-12">
  							 <label class="form-label">Articulo</label>
   								<select id="articulo" name="articulo" class="form-control">
@@ -114,7 +115,7 @@
       						</div>
       						<div class="mt-5">
 		        				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-		        				<button type="submit" class="btn btn-success">Agregar</button>
+		        				<button type="submit" class="btn " style="background: #DAAE59; color: #fff;">Ingresar Stock</button>
 							</div>
       					</form>
     			</div>
@@ -124,15 +125,92 @@
 		
 		
 </main>	
+
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
     $('#tableStocks').DataTable();
-} );
+    
+  $('#newStock').on("submit", function(e){
+        e.preventDefault();
+        let action = e.target.getAttribute('action');
+        let data = {
+			articulo: $('#articulo').val(),
+			fechaIngreso: $('#fechaIngreso').val(),
+			precioCompra: $('#precioCompra').val(),
+		    cantidad: $('#cantidad').val(),
+			
+        }
+		
+        $.ajax({
+            url: action +"/"+data.articulo+"/"+data.fechaIngreso+"/"+data.precioCompra+"/"+data.cantidad,
+            method: "GET",
+            data,
+            success: function(data){
+                console.log(data);
+                let res = JSON.parse(data);
+
+                if(res.status == 'ok'){
+                    mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
+                }
+                if(res.status == 'error'){
+                	errorNotification(res.message)
+                }
+
+            },
+            error: function(res, error) {
+                console.log(res);
+                console.log(error);
+                errorNotification(res.message + ". Refrescando sitio...");
+            }
+        })
+	});
+    
+  function mostrarNotificacionYRecargar(mensaje) {
+	    // Configura la notificación Toastr
+	    toastr.options = {
+	        closeButton: true,
+	        progressBar: true,
+	        positionClass: "toast-top-right",
+	        timeOut: 2000 // Duración de la notificación en milisegundos (3 segundos en este caso)
+	    };
+
+	    // Muestra la notificación Toastr
+	    toastr.success(mensaje, "Éxito", {
+	        onHidden: function () {
+	            // Recarga la página después de que se cierre la notificación
+	            window.location.reload();
+	        }
+	    });
+	}
+
+	function errorNotification(mensaje){
+		toastr.options = {
+		        closeButton: true,
+		        progressBar: true,
+		        positionClass: "toast-top-right",
+		        timeOut: 2000 // Duración de la notificación en milisegundos (3 segundos en este caso)
+		    };
+
+		    // Muestra la notificación Toastr
+		    toastr.error(mensaje, "Error", {
+		    });
+		
+	}
 
 
 
-</script>
+	</script>
+	<c:if test="${not empty sessionScope.mensaje}">
+    <%-- Configurar la notificación Toastr --%>
+    <script>
+    mostrarNotificacionYRecargar("${sessionScope.mensaje}")
+    </script>
+
+    <%-- Limpiar el mensaje de la sesión para que no se muestre nuevamente en futuras peticiones --%>
+    <% session.removeAttribute("mensaje"); %>
+</c:if>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>
 

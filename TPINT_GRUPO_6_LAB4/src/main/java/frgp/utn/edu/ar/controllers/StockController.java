@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletConfig;
 
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
+import frgp.utn.edu.ar.dtos.ResponseResult;
+import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 
 import frgp.utn.edu.ar.dominio.Stock;
@@ -40,7 +43,10 @@ public class StockController {
 	public StockServicio service;
 	
 	@Autowired
-	private ArticuloController articuloController;
+	public ArticuloServicio serviceArticulo;
+	
+	@Autowired
+	public ArticuloController articuloController;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -84,41 +90,43 @@ public class StockController {
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 
-	@RequestMapping("/alta")
+	/*@RequestMapping("/alta")
 	public ModelAndView pantallaDeAlta(){
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Stocks/Alta");
 		return MV;
-	}
+	}*/
 
-	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
-	public ModelAndView crearStock(@ModelAttribute StockRequest stockRequest,
-									 BindingResult bindingResult){
-		ModelAndView MV = new ModelAndView();
-		
+	@RequestMapping(value ="/crear/{articulo}/{fechaIngreso}/{precioCompra}/{cantidad}" , method = RequestMethod.GET)
+	@ResponseBody
+	public String crearStock(@PathVariable int articulo, @PathVariable Date fechaIngreso, @PathVariable float precioCompra, @PathVariable int cantidad){
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
 		String Message="";
+		StockRequest stock = new StockRequest();
+		
+		stock.setArticulo(serviceArticulo.getbyID(articulo));
+		stock.setFechaIngreso(fechaIngreso);
+		stock.setPrecioCompra(precioCompra);
+		stock.setCantidad(cantidad);
 
-		if(bindingResult.hasErrors()){
-			for (ObjectError error: bindingResult.getAllErrors()) {
-				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
-			}
-
-			MV.addObject("Mensaje", Message);
-			MV.setViewName("Stocks/Listado");
-		}
-
+		
+		System.out.println(stock.toString());
 		try{
-			service.insertar(stockRequest.construirStock());
-			Message = "Stock agregado";
+			this.service.insertar(stock.construirStock());
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha creado con exito");
 		}
 		catch(Exception e)
 		{
-			Message = "No se pudo agregar el stock";
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al insertar el  stock");
+			System.out.println(e);
 		}
-	
-		MV.addObject("Mensaje", Message);
-		MV.setViewName("Stocks/Listado");
-		return MV;		
+
+		json = gson.toJson(result);
+		return json;
 	}
 	
      

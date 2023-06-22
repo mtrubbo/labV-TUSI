@@ -99,7 +99,7 @@ public class StockRequest {
 
 
 
-	public void setPrecioVenta(float precioCompra) {
+	public void setPrecioCompra(float precioCompra) {
 		this.precioCompra = precioCompra;
 	}
 
