@@ -149,4 +149,16 @@ public class VentasController {
 	}
 	
 	
+	//recibir el articulo, buscar s
+	@RequestMapping(value ="/agregarItem/{idArt}" , method= { RequestMethod.GET })
+	public ModelAndView agregarItem(@PathVariable int id){
+		ModelAndView MV = new ModelAndView();
+		Articulo art = artService.getbyID(id);
+		MV.addObject("articulo",art);
+		MV.addObject("cantArt",1);
+		MV.setViewName("Ventas/Listado");
+		return MV;
+	}
+	
+	
 }
