@@ -12,6 +12,25 @@
 </context:component-scan>
 <mvc:annotation-driven />
 
+<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:mapping path="/**"/>
+		<mvc:exclude-mapping path="/login"/>
+		<bean class="frgp.utn.edu.ar.interceptors.SessionManager"/>
+	</mvc:interceptor>
+	<mvc:interceptor>
+		<mvc:mapping path="/clientes/**"/>
+		<mvc:mapping path="/articulos/**"/>
+		<mvc:mapping path="/stocks/**"/>
+
+		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionContador"/>
+	</mvc:interceptor>
+	<mvc:interceptor>
+		<mvc:mapping path="/ventas/**"/>
+		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionVendedor"/>
+	</mvc:interceptor>
+</mvc:interceptors>
+
 <mvc:resources mapping="/resources/**" location="/resources/" />
 
 <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">

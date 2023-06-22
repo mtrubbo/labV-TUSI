@@ -1,5 +1,6 @@
 $(document).ready( function () {
     $('#formulario').on("submit", (e) => {
+    	let pathAction = $('#pathGlobal').val(); 
         e.preventDefault();
         let action = e.target.getAttribute('action');
         let data = {
@@ -16,7 +17,7 @@ $(document).ready( function () {
         }
 
         $.ajax({
-            url: action,
+            url: pathAction+action,
             method: "POST",
             data,
             success: function(data){
@@ -44,8 +45,9 @@ $(document).ready( function () {
 });
 
 function editOpen(id){
+	let pathAction = $('#pathGlobal').val(); 
     $.ajax({
-        url: "/clientes/"+id,
+        url: pathAction+"/clientes/"+id,
         method: "GET",
         success: function(json){
             let res = JSON.parse(json);
@@ -74,9 +76,11 @@ function editOpen(id){
 }
 
 function crearOpen(){
+	
+	let pathAction = $('#pathGlobal').val(); 
     $('#tituloModal').text('Nuevo cliente');
     document.getElementById('formulario')
-      .setAttribute('action', '/clientes/crear');
+      .setAttribute('action', pathAction + '/clientes/crear');
 
     $('#id').val('');
     $('#dni').val('');
@@ -91,11 +95,12 @@ function crearOpen(){
 }
 
 function eliminar(id){
+	let pathAction = $('#pathGlobal').val(); 
     let eliminar = confirm("Desea eliminar el cliente?");
     if(!eliminar) return;
 
     $.ajax({
-        url: "/clientes/eliminar/"+id,
+        url: pathAction+"/clientes/eliminar/"+id,
         method: "GET",
         success: function(data){
             if(data == "true"){

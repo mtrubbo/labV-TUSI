@@ -22,9 +22,14 @@
 	
 	
 
-	<!-- CREO EL SERVICIO PARA USUARIO -->
+	<!-- CREO EL SERVICIO PARA CLIENTE -->
 	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.ClienteServicioImpl">
 		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+
+	<!-- CREO EL SERVICIO PARA LOGIN -->
+	<bean id="loginService" class="frgp.utn.edu.ar.servicioImpl.LoginServicioImpl">
+		<property name="dataAccess" ref="usuarioDao"></property>
 	</bean>
 	
 	<!-- CREO EL SERVICIO PARA ARTICULO -->
@@ -57,6 +62,11 @@
 	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.ClienteDaoImpl"
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+	<bean id="usuarioDao" class="frgp.utn.edu.ar.daoImpl.UsuarioDaoImpl"
+		  scope="singleton">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property>
 	</bean>
 	
 	<bean id="dataAccessBeanArt" class="frgp.utn.edu.ar.daoImpl.ArticuloDaoImpl"

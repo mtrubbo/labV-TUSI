@@ -17,7 +17,21 @@ public class Usuario {
     @JoinColumn(name="id_rol")
     private RolUsuario rol;
 
+    public String getNombrePublico() {
+        return nombrePublico;
+    }
 
+    public void setNombrePublico(String nombrePublico) {
+        this.nombrePublico = nombrePublico;
+    }
+
+    public RolUsuario getRol() {
+        return rol;
+    }
+
+    public void setRol(RolUsuario rol) {
+        this.rol = rol;
+    }
 
     public int getId() {
         return id;

@@ -105,29 +105,63 @@
       				<div class="modal-body">
       					<form action="${pageContext.request.contextPath}/ventas/crear" method="POST">
       						<input type="hidden" id="estado" value="true" name="estado">
-      						<div class="col-md-12">
-      							<label class="form-label">Fecha</label>
-      							<input id="fecha" type="date" name="fecha" class="form-control" required>
-      						</div>
-      						<div class="row">
-      							<div class="col-md-6">
-      								<label class="form-label">Cliente</label>
-      								<input id="dni" type="number" name="dni" class="form-control" required>
-      							</div>
-      							<div class="col-md-6">
-      								<label class="form-label">Producto</label>
-      								<input id="producto" type="number" name="producto" class="form-control" required>
-      							</div>
-      						</div>
-      						<div class="row">
-	      						<div class="col-md-6">
-	      							<label class="form-label">Precio</label>
-	      							<input id="precio" type="number" name="precio" class="form-control" required>
+      						<div class="row mb-5">
+      							<h5>Clientes</h5>
+	      						<div class="col-md-4">
+	      							<label class="form-label">Fecha Venta</label>
+	      							<input id="fecha" type="date" name="fecha" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6">
+      								<label class="form-label">Cliente</label>
+	      							<select id="tipo" name="tipo" class="form-control">
+   							 			<c:forEach items="${clientes}" var="item">
+      										<option value="${item.id}">${item.nombre} ${item.apellido}</option>
+   								 		</c:forEach>
+  									</select>
+      							</div>
+      						</div>
+      						<div class="row mb-5">
+      						<h5>Articulos</h5>
+      							<div class="col-md-6">
+      								<label class="form-label">Articulos</label>
+      								<select id="selectArt" name="tipo"  class="form-control">
+      									<option value="-1">Seleccionar un articulo...</option>
+   							 			<c:forEach items="${Articulos}" var="item">
+      										<option value="${item.id}">${item.nombre}</option>
+   								 		</c:forEach>
+  									</select>
+      							</div>
+      							<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
 	      							<input id="cantidad" type="number" name="cantidad" class="form-control" required>
 	      						</div>
+      							<div class="col-md-6">
+	      							<label class="form-label">Precio Unitario</label>
+	      							<input id="precio" disabled type="number" name="precio" class="form-control" required>
+	      						</div>
+	      						<div class="col-md-6">
+	      							<label class="form-label">Precio Total</label>
+	      							<input id="precioTotal" disabled type="number" name="precio" class="form-control" required>
+	      						</div>
+	      						<div class="col-md-6 mx-auto mt-3 text-center">
+		      						<button class="btn btn-primary">Agregar </button>
+	      						</div>
+	      					</div>	
+      						<div class="row">
+							<h5>Articulos Agregados</h5>
+								<div class="borders">
+								</div>
+      						</div>
+      						<div class="row">
+      						<h5>Totales y subtotales</h5>
+      							<div class="col-md-6">
+      								<label class="form-label">Cantidad total de articulos</label>
+	      							<input id="precio" type="number" name="precio" class="form-control" required>
+      							</div>
+      							<div class="col-md-6">
+      								<label class="form-label">Monto total de compra</label>
+	      							<input id="precio" type="number" name="precio" class="form-control" required>
+      							</div>
       						</div>
       						<div class="mt-5">
 		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -166,6 +200,39 @@
 <script>
 $(document).ready( function () {
     $('#tableVentas').DataTable();
+    
+
+    $('#selectArt').on('change', function(){
+    	let idArt = $(this).val();
+    	
+    	$.ajax({
+    		url: "${pageContext.request.contextPath}/ventas/getArticulo_by_venta/"+idArt,
+            method: "GET",
+            success: function(data){
+                let res = JSON.parse(data);
+                $('#precio').val(res.precio)
+            },
+            error: function(res, error) {
+                console.log(res);
+                console.log(error);
+                
+            }
+    	})
+    })
+    
+    $('#cantidad').on('change', function(e){
+    	if($('#selectArt').val() != -1){
+    		
+    		let price = Number($('#precio').val());
+    		let totalPrice = price*Number($(this).val());
+    		
+    		$('#precioTotal').val(totalPrice);
+    		
+    	}
+    	else{
+    		$(this).val("");
+    	}
+    })
     
     $('#newVent').on("submit", function(e){
         e.preventDefault();
@@ -220,6 +287,7 @@ $(document).ready( function () {
 	});
     
 });
+
 
 function confirmDelete(id){
 	$('#formDelete').attr('action', '${pageContext.request.contextPath}/ventas/eliminar/'+id);

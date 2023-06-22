@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -20,10 +22,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
+import frgp.utn.edu.ar.servicio.ArticuloServicio;
+import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.VentasService;
 
 @Controller
@@ -32,6 +38,12 @@ public class VentasController {
 	
 	@Autowired
 	public VentasService  service;
+	
+	@Autowired
+	public ArticuloServicio artService;
+	
+	@Autowired
+	public ClienteServicio cService;
 	
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -47,6 +59,18 @@ public class VentasController {
 		if(listarr != null) {			
 			MV.addObject("ventas", listarr);
 		}
+		
+		ArrayList<Cliente> lClientes = this.cService.obtenerTodos();
+		if(lClientes != null) {			
+			MV.addObject("clientes", lClientes);
+		}
+		
+		ArrayList<Articulo> lArt = this.artService.obtenerTodos();
+		if(lArt != null) {			
+			MV.addObject("Articulos", lArt);
+		}
+		
+		
 		MV.setViewName("Ventas/Listado");
 		return MV;
 	}
@@ -127,6 +151,16 @@ public class VentasController {
 		MV.setViewName("Consultas/HomeConsultas");
 		return MV;
 	}
+	
+	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)
+	@ResponseBody
+    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
+		Articulo articulo = this.artService.getbyID(id);
+	    Gson gson = new Gson();
+	    String jsonArray = gson.toJson(articulo);
+	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+    }
+
 	
 	
 }

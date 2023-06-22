@@ -20,11 +20,4 @@ public class IndexController {
         return MV;
     }
     
-    @RequestMapping("/login")
-    public ModelAndView login() {
-    	ModelAndView vw = new ModelAndView();
-    	vw.setViewName("Login");
-    	
-    	return vw;
-    }
 }
