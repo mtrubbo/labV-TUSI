@@ -32,7 +32,7 @@
           <a class="nav-link" href="${pageContext.request.contextPath}/ventas">Ventas</a>
         </li>
                 <li class="nav-item">
-          <a class="nav-link btn" href="${pageContext.request.contextPath}/Login">Login</a>
+          <a class="nav-link btn btn-success" href="${pageContext.request.contextPath}/login">Login</a>
         </li>
       </ul>
     </div>
