@@ -19,4 +19,5 @@ public class IndexController {
         MV.setViewName("Index");
         return MV;
     }
+    
 }

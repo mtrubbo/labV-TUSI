@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -67,6 +69,8 @@ public class VentasController {
 		if(lArt != null) {			
 			MV.addObject("Articulos", lArt);
 		}
+		
+		
 		MV.setViewName("Ventas/Listado");
 		return MV;
 	}
@@ -147,6 +151,16 @@ public class VentasController {
 		MV.setViewName("Consultas/HomeConsultas");
 		return MV;
 	}
+	
+	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)
+	@ResponseBody
+    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
+		Articulo articulo = this.artService.getbyID(id);
+	    Gson gson = new Gson();
+	    String jsonArray = gson.toJson(articulo);
+	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+    }
+
 	
 	
 }

@@ -17,7 +17,8 @@ public class LoginServicioImpl implements LoginServicio {
     @Override
     public Usuario autenticar(LoginRequest datosLogin) {
         Usuario usuario = dataAccess.obtenerUsuario(datosLogin.getUsuario());
-
+        System.out.println(usuario.toString());
+        
         if(usuario == null) {
             System.out.println("No se encontro usuario");
             return null;

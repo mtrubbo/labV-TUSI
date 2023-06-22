@@ -124,7 +124,8 @@
       						<h5>Articulos</h5>
       							<div class="col-md-6">
       								<label class="form-label">Articulos</label>
-      								<select id="tipo" name="tipo" class="form-control">
+      								<select id="selectArt" name="tipo"  class="form-control">
+      									<option value="-1">Seleccionar un articulo...</option>
    							 			<c:forEach items="${Articulos}" var="item">
       										<option value="${item.id}">${item.nombre}</option>
    								 		</c:forEach>
@@ -136,11 +137,11 @@
 	      						</div>
       							<div class="col-md-6">
 	      							<label class="form-label">Precio Unitario</label>
-	      							<input id="precio" type="number" name="precio" class="form-control" required>
+	      							<input id="precio" disabled type="number" name="precio" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio Total</label>
-	      							<input id="precio" type="number" name="precio" class="form-control" required>
+	      							<input id="precioTotal" disabled type="number" name="precio" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6 mx-auto mt-3 text-center">
 		      						<button class="btn btn-primary">Agregar </button>
@@ -200,6 +201,39 @@
 $(document).ready( function () {
     $('#tableVentas').DataTable();
     
+
+    $('#selectArt').on('change', function(){
+    	let idArt = $(this).val();
+    	
+    	$.ajax({
+    		url: "${pageContext.request.contextPath}/ventas/getArticulo_by_venta/"+idArt,
+            method: "GET",
+            success: function(data){
+                let res = JSON.parse(data);
+                $('#precio').val(res.precio)
+            },
+            error: function(res, error) {
+                console.log(res);
+                console.log(error);
+                
+            }
+    	})
+    })
+    
+    $('#cantidad').on('change', function(e){
+    	if($('#selectArt').val() != -1){
+    		
+    		let price = Number($('#precio').val());
+    		let totalPrice = price*Number($(this).val());
+    		
+    		$('#precioTotal').val(totalPrice);
+    		
+    	}
+    	else{
+    		$(this).val("");
+    	}
+    })
+    
     $('#newVent').on("submit", function(e){
         e.preventDefault();
         let action = e.target.getAttribute('action');
@@ -253,6 +287,7 @@ $(document).ready( function () {
 	});
     
 });
+
 
 function confirmDelete(id){
 	$('#formDelete').attr('action', '${pageContext.request.contextPath}/ventas/eliminar/'+id);

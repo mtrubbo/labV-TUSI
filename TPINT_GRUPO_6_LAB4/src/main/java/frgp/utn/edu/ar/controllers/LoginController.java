@@ -40,6 +40,8 @@ public class LoginController {
     public ModelAndView login(@ModelAttribute LoginRequest login,
                               BindingResult bindingresult, HttpSession session ) {
         ModelAndView view = new ModelAndView("Login");
+        
+        System.out.println(login);
         if(!bindingresult.hasErrors()){
             Usuario usuario = loginService.autenticar(login);
 
