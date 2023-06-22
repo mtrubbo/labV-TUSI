@@ -29,8 +29,16 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public ModelAndView loginForm() {
+    public ModelAndView loginForm(HttpSession session) {
         ModelAndView vw = new ModelAndView();
+
+        Object user = session.getAttribute("usuario");
+        if(user != null) {
+            // Ya se inicio sesion, redirigir a pantalla principal
+            vw.setViewName("redirect:/");
+            return vw;
+        }
+
         vw.setViewName("Login");
 
         return vw;
