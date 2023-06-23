@@ -13,8 +13,22 @@
 	<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 </head>
 <body>
+
+<style>
+        .logueado{
+        display:block;
+        padding:0.2rem;
+        }
+        .logueado *{
+        background-color:#83e69b;
+        margin:0;
+        padding:0;        
+        text-align:center
+        }
+ </style>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Banco</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +46,11 @@
     </div>
   </div>
 </nav>
+
+
+          <div class="logueado">
+			<p>${logueado}</p>
+		</div>
 
 
 
