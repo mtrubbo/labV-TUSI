@@ -1,6 +1,8 @@
 package frgp.utn.edu.ar.dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,6 +28,15 @@ public class Ventas {
 	private Date fecha;
     @Column(nullable = false)
     private double montoTotal;
+    
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+        name = "ventas_articulos",
+        joinColumns = {@JoinColumn(name = "venta_id")},
+        inverseJoinColumns = {@JoinColumn(name = "articulo_id")}
+    )
+    private List<Articulo> listaArticulos;
+    
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
@@ -36,6 +49,19 @@ public class Ventas {
 		super();
 		this.fecha = fecha;
 		this.montoTotal = montoTotal;
+		this.cliente = cliente;
+		this.estado = estado;
+	}
+	
+	
+
+	public Ventas(int id, Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente,
+			boolean estado) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.montoTotal = montoTotal;
+		this.listaArticulos = listaArticulos;
 		this.cliente = cliente;
 		this.estado = estado;
 	}
@@ -78,11 +104,15 @@ public class Ventas {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	public List<Articulo> getListaArticulos() {
+		return listaArticulos;
+	}
+
+	public void setListaArticulos(List<Articulo> listaArticulos) {
+		this.listaArticulos = listaArticulos;
 	};
 	
 	
-    
-    
-    	
-    
 }
