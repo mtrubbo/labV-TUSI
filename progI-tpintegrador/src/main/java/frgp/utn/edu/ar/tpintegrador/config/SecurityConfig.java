@@ -36,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER")
+                .withUser("user").password("{noop}user").roles("USER")
                 .and()
-                .withUser("admin").password("{noop}password").roles("ADMIN");
+                .withUser("admin").password("{noop}admin").roles("ADMIN");
     }
     
 /*  Paso 3: Configurar URLs y permisos
