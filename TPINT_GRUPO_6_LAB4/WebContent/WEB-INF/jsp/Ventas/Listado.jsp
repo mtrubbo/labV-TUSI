@@ -17,7 +17,7 @@
 
 <!-- STYLESHEETS -->
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
-<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/articulos.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/stock.css"/>'>
 <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,12 +144,12 @@
 	      							<input id="precioTotal" disabled type="number" name="precio" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6 mx-auto mt-3 text-center">
-		      						<button class="btn btn-primary">Agregar </button>
+		      						<button type="button" class="btn btn-primary" id="addArtToList">Agregar </button>
 	      						</div>
 	      					</div>	
       						<div class="row">
 							<h5>Articulos Agregados</h5>
-								<div class="borders">
+								<div id="addings" class="border mb-4">
 								</div>
       						</div>
       						<div class="row">
@@ -232,6 +232,22 @@ $(document).ready( function () {
     	else{
     		$(this).val("");
     	}
+    });
+    
+    $('#addArtToList').on('click', function(e){
+    	let item = "";
+    	let infoSelect = $('select[id="selectArt"] option:selected').text();
+    	let qt = $('#cantidad').val();
+    	let total = $('#precioTotal').val();
+    	
+    	item += '<div class="cardAddedArt">';
+    	item += '<p>'+infoSelect+'</p>';
+    	item += "<p> x"+qt+"</p>";
+    	item += "<p> Total por seleccion: "+total+"</p>";
+    	item += "</div>";
+    	
+    	$('#addings').append(item);
+    	
     })
     
     $('#newVent').on("submit", function(e){
