@@ -11,11 +11,7 @@
 </head>
 <body>
 
-    <%
-    HttpSession session2 = request.getSession();
-    String atributo = (String) session.getAttribute("usuarioRol");
-    %>
-
+    <%String atributo = (String) request.getSession().getAttribute("usuarioRol");%>
 
 <nav class="navbar navbar-expand-lg fixed-top mb-sm-5 navbar-dark bg-dark">
   <div class="container-fluid">
@@ -29,7 +25,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ms-auto navbar-text">
-        <li class="nav-item">
+      
+      	<%
+		if (atributo.equalsIgnoreCase("vendedor")) {
+	%>
+	        <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/clientes">Clientes</a>
         </li>
         <li class="nav-item">
@@ -41,7 +41,19 @@
         <li class="nav-item">
           <a class="nav-link" href="${pageContext.request.contextPath}/ventas">Ventas</a>
         </li>
-                <li class="nav-item">
+	<%} %>
+	
+	
+	      	<%
+		if (atributo.equalsIgnoreCase("contador")) {
+	%>
+	        <li class="nav-item">
+          <a class="nav-link" href="${pageContext.request.contextPath}/consultas">Consultas</a>
+        </li>
+	<%} %>
+	
+
+         <li class="nav-item">
           <a class="nav-link btn btn-success" href="${pageContext.request.contextPath}/logout">Salir</a>
         </li>
       </ul>
