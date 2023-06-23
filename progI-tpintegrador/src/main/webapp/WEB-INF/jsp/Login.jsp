@@ -54,6 +54,12 @@
         .form-group input[type="submit"]:hover {
             background-color: #45a049;
         }
+        
+        .error{
+        display:block;
+        color:#f74848;
+        padding:0.3rem;
+        }
     </style>
 </head>
 <body>
@@ -72,6 +78,12 @@
                 <input type="submit" value="Iniciar sesión">
             </div>
         </form>
+        
+        <div class="error">
+			<p>${error}</p>
+		</div>
     </div>
+    
+    
 </body>
 </html>
