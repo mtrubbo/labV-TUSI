@@ -23,11 +23,11 @@
 		<mvc:mapping path="/articulos/**"/>
 		<mvc:mapping path="/stocks/**"/>
 
-		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionContador"/>
+		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionVendedor"/>
 	</mvc:interceptor>
 	<mvc:interceptor>
 		<mvc:mapping path="/ventas/**"/>
-		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionVendedor"/>
+		<bean class="frgp.utn.edu.ar.interceptors.AutorizacionContador"/>
 	</mvc:interceptor>
 </mvc:interceptors>
 
