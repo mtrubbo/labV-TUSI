@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TestController {
     @GetMapping("/test")
     public ModelAndView test(){
-        ModelAndView mv = new ModelAndView("prueba");
+        ModelAndView mv = new ModelAndView("Clientes");
         return mv;
     }
 }

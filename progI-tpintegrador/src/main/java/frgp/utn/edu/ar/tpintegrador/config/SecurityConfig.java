@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/private").authenticated()
             .and()
             .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/dashboard")
+                .loginPage("/")
+                .defaultSuccessUrl("/clientes", true)
                 .permitAll()
             .and()
             .logout()
@@ -32,7 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Configuración de autenticación
+        auth
+            .inMemoryAuthentication()
+                .withUser("user").password("{noop}password").roles("USER")
+                .and()
+                .withUser("admin").password("{noop}password").roles("ADMIN");
     }
     
 /*  Paso 3: Configurar URLs y permisos
