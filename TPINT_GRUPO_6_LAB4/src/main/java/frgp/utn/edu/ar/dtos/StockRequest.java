@@ -107,7 +107,7 @@ public class StockRequest {
 
 
 	public Stock construirStock(){
-        Stock s = new Stock(articulo, fechaIngreso, precioCompra, cantidad);
+        Stock s = new Stock(articulo, fechaIngreso, cantidad, precioCompra);
         
         if(id != 0){
             s.setId(id);

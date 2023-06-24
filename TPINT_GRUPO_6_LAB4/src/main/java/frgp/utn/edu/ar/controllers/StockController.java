@@ -45,7 +45,8 @@ public class StockController {
 	@Autowired
 	public ArticuloServicio serviceArticulo;
 	
-
+	@Autowired
+	public ArticuloController articuloController;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -68,7 +69,7 @@ public class StockController {
 		
 		//LISTA LOS ARTICULOS EN EL DROPDOWNLIST
 		
-		ArrayList<Articulo> listaArticulos = serviceArticulo.obtenerTodos();
+		ArrayList<Articulo> listaArticulos = articuloController.service.obtenerTodos();
 		if(listaArticulos != null) {			
 			MV.addObject("articulos", listaArticulos);
 		}
@@ -89,11 +90,16 @@ public class StockController {
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 
+	/*@RequestMapping("/alta")
+	public ModelAndView pantallaDeAlta(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("Stocks/Alta");
+		return MV;
+	}*/
 
 	@RequestMapping(value ="/crear/{articulo}/{fechaIngreso}/{precioCompra}/{cantidad}" , method = RequestMethod.GET)
 	@ResponseBody
-	public String crear(@PathVariable int articulo, @PathVariable Date fechaIngreso, @PathVariable float precioCompra, @PathVariable int cantidad){
-		System.out.println("llego acá");
+	public String crearStock(@PathVariable int articulo, @PathVariable Date fechaIngreso, @PathVariable float precioCompra, @PathVariable int cantidad){
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
@@ -107,7 +113,6 @@ public class StockController {
 
 		
 		System.out.println(stock.toString());
-		
 		try{
 			this.service.insertar(stock.construirStock());
 			result.setStatus(ResultStatus.ok);

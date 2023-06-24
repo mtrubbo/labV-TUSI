@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Stocks</title>
 <!-- ContextPath setting in css, DO NOT TOUCH!!! -->
 <style>
@@ -30,10 +30,6 @@
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-brands-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-regular-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
-<!-- Agrega los estilos CSS de Toastr -->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-
 
 
 <!-- scripts -->
@@ -41,19 +37,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-
 </head>
 <body class="">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
 	<section class="sectionTable">
-	
-	<div class="row justify-content-around">
-		<h2>Stocks</h2>
-		<p>${Mensaje}</p>
-	</div>
-	
-
+	<h2>Gestion de Stock</h2>
 
 	<!-- Action Modal -->
 	<button type="button" class="btnNewStock " data-bs-toggle="modal" data-bs-target="#newStock">
@@ -97,7 +86,7 @@
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
-      					<form action="${pageContext.request.contextPath}/stocks/crear" method="GET">
+      					<form action="${pageContext.request.contextPath}/stocks/crear" method="POST">
       					
       						<div class="col-md-12">
  							 <label class="form-label">Articulo</label>
@@ -110,17 +99,17 @@
       						<div class="row">
       							<div class="col-md-6">
       								<label class="form-label">Fecha de Ingreso</label>
-      								<input id="fechaIngreso" type="date" name="fechaIngreso" class="form-control" required>
+      								<input id="fechaIngreso" type="date" name="fechaIngreso" class="form-control">
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Precio de Compra</label>
-      								<input id="precioCompra" type="number" name="precioCompra" class="form-control" required>
+      								<input id="precioCompra" type="number" name="precioCompra" class="form-control">
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
-	      							<input id="cantidad" type="number" name="cantidad" class="form-control" required>
+	      							<input id="cantidad" type="number" name="cantidad" class="form-control">
 	      						</div>
 	      						
       						</div>

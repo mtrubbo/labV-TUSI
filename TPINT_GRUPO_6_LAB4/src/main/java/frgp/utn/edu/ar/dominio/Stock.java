@@ -42,7 +42,7 @@ public class Stock {
 		
 	}
 
-	public Stock(Articulo articulo, Date fechaIngreso, float precioCompra, int cantidad) {
+	public Stock(Articulo articulo, Date fechaIngreso, int cantidad, float precioCompra) {
 		super();
 		this.articulo = articulo;
 		this.fechaIngreso = fechaIngreso;

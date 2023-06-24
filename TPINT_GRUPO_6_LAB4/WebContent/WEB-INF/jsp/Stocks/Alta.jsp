@@ -7,29 +7,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Alta de stock</title>
+<title>Alta de articulo</title>
 </head>
 <body>
 
-<h2>Alta de stock</h2>
+<h2>Alta de articulo</h2>
 </br>
-<form action="/stocks/crear" method="POST">
-    <label for="articulo">Articulo: </label>
-    <input id="articulo" name="articulo" />
+<form action="/articulos/crear" method="POST">
+    <label for="nombre">Nombre: </label>
+    <input id="nombre" name="nombre" />
 
     </br>
-    <label for="fechaIngreso">Fecha de Ingreso: </label>
-    <input id="fechaIngreso" name="fechaIngreso" />
+    <label for="descripcion">Descripcion: </label>
+    <input id="descripcion" name="descripcion" />
 
     </br>
-    <label for="precioCompra">Precio de Compra: $ </label>
-    <input id="precioCompra" name="precioCompra" />
+    <label for="marca">Marca: </label>
+    <input id="marca" name="marca" />
     
     </br>
-    <label for="cantidad">Cantidad: </label>
-    <input id="cantidad" name="cantidad" />
+    <label for="tipo">Tipo: </label>
+    <input id="tipo" name="tipo" />
     
-   
+    </br>
+    <label for="precio">Precio: </label>
+    <input id="precio" name="precio" />
+
+    </br>
     </br>
     <input type="submit" value="Aceptar" />
 </form>
