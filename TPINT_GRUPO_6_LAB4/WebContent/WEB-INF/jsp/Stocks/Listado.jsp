@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Stocks</title>
 <!-- ContextPath setting in css, DO NOT TOUCH!!! -->
 <style>
@@ -30,6 +30,10 @@
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-brands-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-regular-400.woff2"/>'>
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
+<!-- Agrega los estilos CSS de Toastr -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
 
 
 <!-- scripts -->
@@ -37,12 +41,19 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
+
 </head>
 <body class="">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
 	<section class="sectionTable">
-	<h2>Gestion de Stock</h2>
+	
+	<div class="row justify-content-around">
+		<h2>Stocks</h2>
+		<p>${Mensaje}</p>
+	</div>
+	
+
 
 	<!-- Action Modal -->
 	<button type="button" class="btnNewStock " data-bs-toggle="modal" data-bs-target="#newStock">
@@ -86,7 +97,7 @@
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
-      					<form action="${pageContext.request.contextPath}/stocks/crear" method="POST">
+      					<form action="${pageContext.request.contextPath}/stocks/adding" method="GET">
       					
       						<div class="col-md-12">
  							 <label class="form-label">Articulo</label>
@@ -99,17 +110,17 @@
       						<div class="row">
       							<div class="col-md-6">
       								<label class="form-label">Fecha de Ingreso</label>
-      								<input id="fechaIngreso" type="date" name="fechaIngreso" class="form-control">
+      								<input id="fechaIngreso" type="date" name="fechaIngreso" class="form-control" required>
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Precio de Compra</label>
-      								<input id="precioCompra" type="number" name="precioCompra" class="form-control">
+      								<input id="precioCompra" type="number" name="precioCompra" class="form-control" required>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
-	      							<input id="cantidad" type="number" name="cantidad" class="form-control">
+	      							<input id="cantidad" type="number" name="cantidad" class="form-control" required>
 	      						</div>
 	      						
       						</div>
@@ -145,7 +156,6 @@ $(document).ready( function () {
         $.ajax({
             url: action +"/"+data.articulo+"/"+data.fechaIngreso+"/"+data.precioCompra+"/"+data.cantidad,
             method: "GET",
-            data,
             success: function(data){
                 console.log(data);
                 let res = JSON.parse(data);
@@ -165,6 +175,7 @@ $(document).ready( function () {
             }
         })
 	});
+ });
     
   function mostrarNotificacionYRecargar(mensaje) {
 	    // Configura la notificación Toastr
@@ -197,19 +208,7 @@ $(document).ready( function () {
 		    });
 		
 	}
-
-
-
-	</script>
-	<c:if test="${not empty sessionScope.mensaje}">
-    <%-- Configurar la notificación Toastr --%>
-    <script>
-    mostrarNotificacionYRecargar("${sessionScope.mensaje}")
-    </script>
-
-    <%-- Limpiar el mensaje de la sesión para que no se muestre nuevamente en futuras peticiones --%>
-    <% session.removeAttribute("mensaje"); %>
-</c:if>
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>

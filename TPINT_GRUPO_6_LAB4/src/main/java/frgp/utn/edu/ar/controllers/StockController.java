@@ -1,5 +1,10 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import frgp.utn.edu.ar.dominio.Articulo;
-import frgp.utn.edu.ar.dtos.ArticuloRequest;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
@@ -45,8 +49,6 @@ public class StockController {
 	@Autowired
 	public ArticuloServicio serviceArticulo;
 	
-	@Autowired
-	public ArticuloController articuloController;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -69,7 +71,7 @@ public class StockController {
 		
 		//LISTA LOS ARTICULOS EN EL DROPDOWNLIST
 		
-		ArrayList<Articulo> listaArticulos = articuloController.service.obtenerTodos();
+		ArrayList<Articulo> listaArticulos = serviceArticulo.obtenerTodos();
 		if(listaArticulos != null) {			
 			MV.addObject("articulos", listaArticulos);
 		}
@@ -90,46 +92,43 @@ public class StockController {
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 
-	/*@RequestMapping("/alta")
-	public ModelAndView pantallaDeAlta(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("Stocks/Alta");
-		return MV;
-	}*/
 
-	@RequestMapping(value ="/crear/{articulo}/{fechaIngreso}/{precioCompra}/{cantidad}" , method = RequestMethod.GET)
+	@RequestMapping(value = "/adding/{articulo}/{fechaIngreso}/{precioCompra}/{cantidad}", method = RequestMethod.GET)
 	@ResponseBody
-	public String crearStock(@PathVariable int articulo, @PathVariable Date fechaIngreso, @PathVariable float precioCompra, @PathVariable int cantidad){
-		Gson gson = new Gson();
-		ResponseResult result = new ResponseResult();
-		String json = "";
-		String Message="";
-		StockRequest stock = new StockRequest();
-		
-		stock.setArticulo(serviceArticulo.getbyID(articulo));
-		stock.setFechaIngreso(fechaIngreso);
-		stock.setPrecioCompra(precioCompra);
-		stock.setCantidad(cantidad);
+	public String crear(@PathVariable int articulo, @PathVariable String fechaIngreso, 
+			@PathVariable float precioCompra, @PathVariable int cantidad) {
+	    System.out.println("llego aquí");
+	    Gson gson = new Gson();
+	    ResponseResult result = new ResponseResult();
+	    String json = "";
 
-		
-		System.out.println(stock.toString());
-		try{
-			this.service.insertar(stock.construirStock());
-			result.setStatus(ResultStatus.ok);
-			result.setMessage("Se ha creado con exito");
-		}
-		catch(Exception e)
-		{
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Error al insertar el  stock");
-			System.out.println(e);
-		}
+	    try {
+	        StockRequest stock = new StockRequest();
+	        stock.setArticulo(serviceArticulo.getbyID(articulo));
+	        
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate ingresoDate = LocalDate.parse(fechaIngreso, formatter);
+	        LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
+	        Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
+	        stock.setFechaIngreso(Date.from(instant));
+	        
+	        stock.setPrecioCompra(precioCompra);
+	        stock.setCantidad(cantidad);
 
-		json = gson.toJson(result);
-		return json;
+	        System.out.println(stock.toString());
+
+	        this.service.insertar(stock.construirStock());
+
+	        result.setStatus(ResultStatus.ok);
+	        result.setMessage("Se ha creado con éxito");
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	        result.setStatus(ResultStatus.error);
+	        result.setMessage("Error al insertar el stock");
+	        e.printStackTrace();
+	    }
+
+	    json = gson.toJson(result);
+	    return json;
 	}
-	
-     
-	
-
 }
