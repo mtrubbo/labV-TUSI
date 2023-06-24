@@ -27,6 +27,7 @@
         }
  </style>
     
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     
   <div class="container-fluid">
@@ -37,10 +38,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.html">Clientes</a>
+          <a class="nav-link active" aria-current="page" href="#">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="prestamos.html">Prestamos</a>
+          <a class="nav-link" href="Prestamos.jsp">Prestamos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
       </ul>
     </div>
