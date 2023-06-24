@@ -17,7 +17,7 @@
 
 <!-- STYLESHEETS -->
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/bootstrap.css"/>'>
-<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/stock.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/ventas.css"/>'>
 <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -237,10 +237,12 @@ $(document).ready( function () {
     $('#addArtToList').on('click', function(e){
     	let item = "";
     	let infoSelect = $('select[id="selectArt"] option:selected').text();
+    	let idSelect = $('#selectArt').val();
     	let qt = $('#cantidad').val();
     	let total = $('#precioTotal').val();
     	
-    	item += '<div class="cardAddedArt">';
+    	item += '<div id="'+idSelect+'" class="cardAddedArt">';
+    	item += '<button class="eraseButton" onclick="eraseArt('+idSelect+')">x</button>';
     	item += '<p>'+infoSelect+'</p>';
     	item += "<p> x"+qt+"</p>";
     	item += "<p> Total por seleccion: "+total+"</p>";
@@ -248,7 +250,9 @@ $(document).ready( function () {
     	
     	$('#addings').append(item);
     	
-    })
+    });
+    
+    
     
     $('#newVent').on("submit", function(e){
         e.preventDefault();
@@ -304,6 +308,9 @@ $(document).ready( function () {
     
 });
 
+function eraseArt(id){
+	 $('#' + id).remove();
+}
 
 function confirmDelete(id){
 	$('#formDelete').attr('action', '${pageContext.request.contextPath}/ventas/eliminar/'+id);

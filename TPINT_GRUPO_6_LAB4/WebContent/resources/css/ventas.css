@@ -31,6 +31,23 @@ body{
 	margin: 2px 5px;
 }
 
+.info{
+	color: #fff;
+}
+
 .cardAddedArt > p{
 	color: #fff;
+}
+
+.eraseButton{
+	border: none;
+	background: none;
+	color: #fff;
+	margin-left: 80%;
+	font-size: 20px;
+}
+
+.eraseButton:hover{
+	color: #000;
+	transition: 1s all ease;
 }
