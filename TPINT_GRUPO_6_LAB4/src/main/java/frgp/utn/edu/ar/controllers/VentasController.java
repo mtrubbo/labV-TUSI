@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -24,12 +25,14 @@ import com.google.gson.Gson;
 
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
+import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
+import frgp.utn.edu.ar.servicio.StockServicio;
 import frgp.utn.edu.ar.servicio.VentasService;
 
 @Controller
@@ -44,6 +47,9 @@ public class VentasController {
 	
 	@Autowired
 	public ClienteServicio cService;
+	
+	@Autowired
+	public StockServicio sService;
 	
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -159,6 +165,29 @@ public class VentasController {
 	    Gson gson = new Gson();
 	    String jsonArray = gson.toJson(articulo);
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/hasStock_by_id/{id}/{qt}", method = RequestMethod.GET)
+	@ResponseBody
+    public String hasStock(@PathVariable int id, @PathVariable int qt) {
+	    Gson gson = new Gson();
+	    String json;
+		Stock s = sService.artByID(id);
+		ResponseResult result = new ResponseResult();
+		
+		if(s.getCantidad() - qt >=0) {
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Con stock!");
+			json = gson.toJson(result);
+			return json;
+		}
+		else {
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Sin stock!");
+			json = gson.toJson(result);
+			return json;
+		}
+		
     }
 
 	

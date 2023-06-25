@@ -46,5 +46,10 @@ public class StockServicioImpl implements StockServicio {
 	public Stock getbyID(int id) {
 		return dataAccess.obtenerPorId(id);
 	}
+
+	@Override
+	public Stock artByID(int id) {
+		return dataAccess.artByID(id);
+	}
 	
 }

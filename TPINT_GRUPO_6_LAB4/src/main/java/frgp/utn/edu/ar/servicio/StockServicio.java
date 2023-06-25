@@ -17,5 +17,7 @@ public interface StockServicio {
 	void actualizar(Stock a);
 
 	Stock getbyID(int id);
+	
+	Stock artByID(int id);
 
 }

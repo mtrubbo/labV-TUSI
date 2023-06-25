@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Ventas {
     @Column(nullable = false)
     private double montoTotal;
     
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
         name = "ventas_articulos",
         joinColumns = {@JoinColumn(name = "venta_id")},
@@ -53,8 +54,6 @@ public class Ventas {
 		this.estado = estado;
 	}
 	
-	
-
 	public Ventas(int id, Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente,
 			boolean estado) {
 		super();
@@ -65,6 +64,8 @@ public class Ventas {
 		this.cliente = cliente;
 		this.estado = estado;
 	}
+	
+	
 
 	public int getId() {
 		return id;

@@ -144,7 +144,7 @@
 	      							<input id="precioTotal" disabled type="number" name="precio" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6 mx-auto mt-3 text-center">
-		      						<button type="button" class="btn btn-primary" id="addArtToList">Agregar </button>
+		      						<button type="button" class="btn btn-primary" id="addArtToList">Agregar</button>
 	      						</div>
 	      					</div>	
       						<div class="row">
@@ -241,15 +241,30 @@ $(document).ready( function () {
     	let qt = $('#cantidad').val();
     	let total = $('#precioTotal').val();
     	
-    	item += '<div id="'+idSelect+'" class="cardAddedArt">';
-    	item += '<button class="eraseButton" onclick="eraseArt('+idSelect+')">x</button>';
-    	item += '<p>'+infoSelect+'</p>';
-    	item += "<p> x"+qt+"</p>";
-    	item += "<p> Total por seleccion: "+total+"</p>";
-    	item += "</div>";
+	 	$.ajax({
+    		url: "/ventas/hasStock_by_id/"+idSelect+"/"+qt,
+    		method: "GET",
+    		success: function(res){
+    			let response = JSON.parse(res);
+    			
+    			if(response.status == "ok"){
+    		    	item += '<div id="'+idSelect+'" class="cardAddedArt">';
+    		    	item += '<button class="eraseButton" onclick="eraseArt('+idSelect+')">x</button>';
+    		    	item += '<p>'+infoSelect+'</p>';
+    		    	item += "<p> x"+qt+"</p>";
+    		    	item += "<p> Total por seleccion: "+total+"</p>";
+    		    	item += "</div>";
+    		    	
+    		    	$('#addings').append(item);
+    			}
+    			else{
+    				alert(response.message);
+    			}
+    		}
+    	});
+
     	
-    	$('#addings').append(item);
-    	
+
     });
     
     

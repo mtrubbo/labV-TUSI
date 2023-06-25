@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -56,6 +57,16 @@ public class StockDaoImpl implements StockDao {
 	public void actualizar(Stock a) {
 		this.hibernateTemplate.update(a);
 	}
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Stock artByID(int id) {
+        String hql = "FROM Stock s WHERE s.articulo.id = :idArticulo";
+        Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setParameter("idArticulo", id);
+        query.setMaxResults(1);
+        return (Stock) query.uniqueResult();
+    }
 
 
 }

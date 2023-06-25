@@ -89,9 +89,4 @@ public class Stock {
 	public void setPrecioCompra(float precioCompra) {
 		this.precioCompra = precioCompra;
 	}
-	
-	
-	
-	
-
 }
