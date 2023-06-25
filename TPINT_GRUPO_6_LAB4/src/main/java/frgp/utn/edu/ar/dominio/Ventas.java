@@ -54,10 +54,9 @@ public class Ventas {
 		this.estado = estado;
 	}
 	
-	public Ventas(int id, Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente,
+	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente,
 			boolean estado) {
 		super();
-		this.id = id;
 		this.fecha = fecha;
 		this.montoTotal = montoTotal;
 		this.listaArticulos = listaArticulos;

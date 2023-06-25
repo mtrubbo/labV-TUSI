@@ -1,7 +1,9 @@
 package frgp.utn.edu.ar.dtos;
 
 import java.util.Date;
+import java.util.List;
 
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Ventas;
 
@@ -12,6 +14,7 @@ public class VentaRequest {
     private double montoTotal;
     private Cliente cliente;
 	private boolean estado;
+    private List<Articulo> listaArticulos;
 	
 	@Override
 	public String toString() {
@@ -43,8 +46,25 @@ public class VentaRequest {
 		this.estado = estado;
 	}
 	
+	
+	
+	public List<Articulo> getListaArticulos() {
+		return listaArticulos;
+	}
+	public void setListaArticulos(List<Articulo> listaArticulos) {
+		this.listaArticulos = listaArticulos;
+	}
 	public Ventas construirVenta(){
 		Ventas  a = new Ventas(fecha, montoTotal, cliente, estado);
+
+        if(id != 0){
+            a.setId(id);
+        }
+        return a;
+    }
+	
+	public Ventas construirVentaConArts(){
+		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, true);
 
         if(id != 0){
             a.setId(id);

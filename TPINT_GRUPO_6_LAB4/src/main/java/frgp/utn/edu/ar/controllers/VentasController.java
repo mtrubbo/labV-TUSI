@@ -1,6 +1,13 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
@@ -15,8 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -81,42 +90,48 @@ public class VentasController {
 		return MV;
 	}
 	
-	@RequestMapping(value ="/crear" , method = RequestMethod.POST)
+	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}", method = RequestMethod.GET)
 	@ResponseBody
-	public String crearVenta(@ModelAttribute VentaRequest ventaRequest,
-									 BindingResult bindingResult, HttpSession session){
-		Gson gson = new Gson();
-		ResponseResult result = new ResponseResult();
-		String json = "";
+	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta,
+			@PathVariable("cliente") int cliente,
+			@PathVariable("montoTotal") Double montoTotal,
+			@PathVariable("listaArticulos") List<String> listaArticulos,
+	                         HttpSession session) {
+	    Gson gson = new Gson();
+	    ResponseResult result = new ResponseResult();
+	    String json = "";
+	    VentaRequest vreq = new VentaRequest();
 
-		String Message="";
-		if(bindingResult.hasErrors()){
-			for (ObjectError error: bindingResult.getAllErrors()) {
-				Message += error.getObjectName() + ": " + error.getDefaultMessage() + "\n";
-			}
+	    try {
+	    	vreq.setListaArticulos(new ArrayList<Articulo>());
+	    		for (String item : listaArticulos) {
+						Articulo a  = artService.getbyID(Integer.parseInt(item));
+						vreq.getListaArticulos().add(a);
+				}
+	    		
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		        LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
+		        LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
+		        Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
+		        vreq.setFecha(Date.from(instant));
+		        
+		        vreq.setCliente(cService.obtenerPorId(cliente));
+		        
+		        vreq.setMontoTotal(montoTotal);
+	        
+		        service.insertar(vreq.construirVentaConArts());
+	        result.setStatus(ResultStatus.ok);
+	        result.setMessage("Se ha creado con éxito");
+	    } catch (Exception e) {
+	        result.setStatus(ResultStatus.error);
+	        result.setMessage("Error al insertar el artículo");
+	        System.out.println(e.getMessage());
+	        System.out.println(e.getCause());
+	        e.printStackTrace();
+	    }
 
-			System.out.println(Message);
-
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Hubo un error con los datos enviados. Por favor revise los campos.");
-			json = gson.toJson(result);
-			return json;
-		}
-
-		try{
-			service.insertar(ventaRequest.construirVenta());
-			result.setStatus(ResultStatus.ok);
-			result.setMessage("Se ha creado con exito");
-		}
-		catch(Exception e)
-		{
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Error al insertar el  articulo");
-			System.out.println(e);
-		}
-
-		json = gson.toJson(result);
-		return json;
+	    json = gson.toJson(result);
+	    return json;
 	}
 	
      
