@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ventas")
@@ -37,6 +38,7 @@ public class Ventas {
         inverseJoinColumns = {@JoinColumn(name = "articulo_id")}
     )
     private List<Articulo> listaArticulos;
+   
     
     @ManyToOne
     @JoinColumn(name="id_cliente")
@@ -62,9 +64,14 @@ public class Ventas {
 		this.listaArticulos = listaArticulos;
 		this.cliente = cliente;
 		this.estado = estado;
-	}
-	
-	
+	}    @Transient
+    public List<Integer> getListaArticulosIds() {
+        List<Integer> articuloIds = new ArrayList<>();
+        for (Articulo articulo : listaArticulos) {
+            articuloIds.add(articulo.getId());
+        }
+        return articuloIds;
+    }
 
 	public int getId() {
 		return id;

@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import frgp.utn.edu.ar.dtos.ArticuloInfo;
 
 @Entity
 @Table(name = "articulos")
@@ -135,5 +138,10 @@ public class Articulo {
 	public void setvLista(List<Ventas> vLista) {
 		this.vLista = vLista;
 	}
+	
+	 @Transient
+	    public ArticuloInfo getArticuloInfo() {
+	        return new ArticuloInfo(id, nombre, descripcion, marca, tipo, precio, estado);
+	    }
 
 }

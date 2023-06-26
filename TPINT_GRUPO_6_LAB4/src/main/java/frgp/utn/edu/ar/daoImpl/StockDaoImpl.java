@@ -60,7 +60,7 @@ public class StockDaoImpl implements StockDao {
 		this.hibernateTemplate.update(a);
 	}
 
-    @Override
+	@Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Stock artByID(int id) {
         String hql = "FROM Stock s WHERE s.articulo.id = :idArticulo";
@@ -71,6 +71,4 @@ public class StockDaoImpl implements StockDao {
         	return (Stock) query.uniqueResult();
         return new Stock();
     }
-
-
 }

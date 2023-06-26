@@ -36,6 +36,7 @@ import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.dominio.Ventas;
+import frgp.utn.edu.ar.dtos.ArticuloInfo;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
@@ -177,8 +178,9 @@ public class VentasController {
 	@ResponseBody
     public ResponseEntity<String> getArticuloById(@PathVariable int id) {
 		Articulo articulo = this.artService.getbyID(id);
+		ArticuloInfo aif = articulo.getArticuloInfo();
 	    Gson gson = new Gson();
-	    String jsonArray = gson.toJson(articulo);
+	    String jsonArray = gson.toJson(aif);
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 	
