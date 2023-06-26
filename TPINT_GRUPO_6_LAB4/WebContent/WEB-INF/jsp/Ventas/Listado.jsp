@@ -134,11 +134,11 @@
       							</div>
       							<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
-	      							<input id="cantidad" type="number" name="cantidad" class="form-control" required>
+	      							<input id="cantidad" type="number" min="0" name="cantidad" class="form-control" required>
 	      						</div>
       							<div class="col-md-6">
 	      							<label class="form-label">Precio Unitario</label>
-	      							<input id="precio" disabled type="number" name="precio" class="form-control" required>
+	      							<input id="precio" disabled type="number" min="0" name="precio" class="form-control" required>
 	      						</div>
 	      						<div class="col-md-6">
 	      							<label class="form-label">Precio Total</label>

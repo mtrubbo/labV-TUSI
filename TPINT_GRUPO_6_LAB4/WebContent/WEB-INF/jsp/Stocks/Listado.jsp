@@ -114,13 +114,13 @@
       							</div>
       							<div class="col-md-6">
       								<label class="form-label">Precio de Compra</label>
-      								<input id="precioCompra" type="number" name="precioCompra" class="form-control" required>
+      								<input id="precioCompra" type="number" min="0" name="precioCompra" class="form-control" required>
       							</div>
       						</div>
       						<div class="row">
 	      						<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
-	      							<input id="cantidad" type="number" name="cantidad" class="form-control" required>
+	      							<input id="cantidad" type="number" min="0" name="cantidad" class="form-control" required>
 	      						</div>
 	      						
       						</div>

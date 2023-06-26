@@ -31,7 +31,7 @@
     
     </br>
     <label for="precio">Precio: </label>
-    <input id="precio" name="precio" />
+    <input id="precio"  name="precio" />
 
     </br>
     </br>
