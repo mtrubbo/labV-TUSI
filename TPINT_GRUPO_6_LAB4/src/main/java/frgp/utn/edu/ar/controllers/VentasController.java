@@ -190,18 +190,19 @@ public class VentasController {
 		Stock s = sService.artByID(id);
 		ResponseResult result = new ResponseResult();
 		
-		if(s.getCantidad() - qt >=0) {
+		if(s.getCantidad() - qt >=0 && s!=null) {
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Con stock!");
 			json = gson.toJson(result);
 			return json;
-		}
-		else {
-			result.setStatus(ResultStatus.error);
-			result.setMessage("Sin stock!");
-			json = gson.toJson(result);
-			return json;
-		}
+		}				
+		
+		System.out.println("NO HAY STOCK");
+		result.setStatus(ResultStatus.error);
+		result.setMessage("Sin stock!");
+		json = gson.toJson(result);
+		return json;
+
 		
     }
 

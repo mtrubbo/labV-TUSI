@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.StockDao;
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Stock;
 
 public class StockDaoImpl implements StockDao {
@@ -65,7 +67,9 @@ public class StockDaoImpl implements StockDao {
         Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
         query.setParameter("idArticulo", id);
         query.setMaxResults(1);
-        return (Stock) query.uniqueResult();
+        if(query.uniqueResult()!=null)
+        	return (Stock) query.uniqueResult();
+        return new Stock();
     }
 
 

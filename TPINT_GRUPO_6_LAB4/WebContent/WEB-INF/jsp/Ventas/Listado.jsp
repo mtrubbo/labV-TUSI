@@ -242,10 +242,12 @@ $(document).ready( function () {
     	      let res = JSON.parse(response);
     	      
     	      if(res.status == "ok"){
-    	    	  alert("insertado");
+    	    	  //alert("insertado");
+                  mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
     	      }
     	      else{
-    	    	  alert("Ha ocurrido un error");
+    	    	  //alert("Ha ocurrido un error");
+    	    	  mostrarNotificacionYRecargar(res.message + ". Refrescando sitio...");
     	      }
     	    },
     	    error: function(error) {
