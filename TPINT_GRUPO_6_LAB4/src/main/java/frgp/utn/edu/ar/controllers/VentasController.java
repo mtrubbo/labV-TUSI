@@ -97,13 +97,13 @@ public class VentasController {
 	
 	
 	
-	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}/{listaCantidades}", method = RequestMethod.GET)
+	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}", method = RequestMethod.GET)
 	@ResponseBody
 	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta,
 			@PathVariable("cliente") int cliente,
 			@PathVariable("montoTotal") Double montoTotal,
 			@PathVariable("listaArticulos") List<Integer> listaArticulos,
-			@PathVariable("listaCantidades") List<Integer> listaCantidades,
+			/*@PathVariable("listaCantidades") List<Integer> listaCantidades,*/
 	                         HttpSession session) {
 	    Gson gson = new Gson();
 	    ResponseResult result = new ResponseResult();
@@ -122,11 +122,11 @@ public class VentasController {
 	    		for (Integer item : listaArticulos) {
 	    				
 						Articulo a  = artService.getbyID(item);
-						System.out.println(a.getNombre());
+						//System.out.println(a.getNombre());
 						vreq.getListaArticulos().add(a);
-						Integer c = (Integer)listaCantidades.get(cont);
-						System.out.println("CANTIDAD: " + c);
-						sService.deducirStock(a, c);
+						//Integer c = (Integer)listaCantidades.get(cont);
+						//System.out.println("CANTIDAD: " + c);
+						//sService.deducirStock(a, c);
 						cont++;
 				}
 	    		
