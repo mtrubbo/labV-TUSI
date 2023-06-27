@@ -4,16 +4,15 @@
 
 body{
 	font-family: 'Montserrat', sans-serif;
+	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
 .consultasBody{
-	height: 100vh; 
-	width: 100%;
-	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
-	margin-top: 110px;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
 }
 
 .sectionFormRequest{
