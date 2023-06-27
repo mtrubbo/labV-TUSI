@@ -286,7 +286,6 @@ $(document).ready( function () {
     		url: "${pageContext.request.contextPath}/ventas/getArticulo_by_venta/"+idArt,
             method: "GET",
             success: function(data){    	
-            	console.log("my success");
                 let res = JSON.parse(data);
                 $('#precio').val(res.precio)
             },
@@ -311,17 +310,12 @@ $(document).ready( function () {
     	    var id = $(this).attr('id');
       	    console.log('Articulo guarda: ' + id);     	 
     	    selectedIDs.push(id);
-    	  
-    	  });
-    	  
-    	  /*$('#addings .cardAddedArt').each(function(index, element) {      	   
+    	    
       	    var cant = $(this).find('[name]').attr('name');   
       	    console.log('Cantidad guarda: ' + cant);     	 
       	    cantidadesxart.push(cant);
-      	  });*/
-      	     
-    	  
-    	  
+    	  });
+    	      	      	         	     	  
 
     	  let data = {
     	    	  fechaVenta: encodeURIComponent($('#fechaVenta').val()),
@@ -331,7 +325,7 @@ $(document).ready( function () {
     	  }
     	  
     	  $.ajax({
-    	    url: action +"/"+ data.fechaVenta + '/' + data.cliente + '/' + data.montoTotal + /*'/' + cantidadesxart.join(',') +*/ '/' + selectedIDs.join(','),
+    	    url: action +"/"+ data.fechaVenta + '/' + data.cliente + '/' + data.montoTotal + '/' + selectedIDs.join(',') + '/' + cantidadesxart.join(','),
     	    type: 'GET',
     	    success: function(response) {
     	      let res = JSON.parse(response);

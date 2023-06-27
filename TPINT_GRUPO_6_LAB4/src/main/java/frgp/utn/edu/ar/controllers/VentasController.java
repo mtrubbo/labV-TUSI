@@ -97,21 +97,21 @@ public class VentasController {
 	
 	
 	
-	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}", method = RequestMethod.GET)
+	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}/{listaCantidades}", method = RequestMethod.GET)
 	@ResponseBody
 	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta,
 			@PathVariable("cliente") int cliente,
 			@PathVariable("montoTotal") Double montoTotal,
-			@PathVariable("listaArticulos") List<Integer> listaArticulos,
-			/*@PathVariable("listaCantidades") List<Integer> listaCantidades,*/
+			@PathVariable("listaArticulos") List<String> listaArticulos,
+			@PathVariable("listaCantidades") List<String> listaCantidades,
 	                         HttpSession session) {
 	    Gson gson = new Gson();
 	    ResponseResult result = new ResponseResult();
 	    String json = "";
 	    VentaRequest vreq = new VentaRequest();	    
 	  
-	    //SE ESTA MANDANDO MAL
-	    System.out.println(listaArticulos.toString());
+
+	    System.out.println("LISTA ART: "+listaArticulos.toString());
 	   
 	    try {
 	    	vreq.setListaArticulos(new ArrayList<Articulo>());
@@ -119,14 +119,14 @@ public class VentasController {
 	    		Integer cont = 0;
 	    		
 				
-	    		for (Integer item : listaArticulos) {
+	    		for (String item : listaArticulos) { //item recibe los ids de listaarticulos
 	    				
-						Articulo a  = artService.getbyID(item);
+						Articulo a  = artService.getbyID(Integer.parseInt(item)); //buscamos objeto con ese id
 						//System.out.println(a.getNombre());
 						vreq.getListaArticulos().add(a);
-						//Integer c = (Integer)listaCantidades.get(cont);
-						//System.out.println("CANTIDAD: " + c);
-						//sService.deducirStock(a, c);
+						Integer c = Integer.parseInt(listaCantidades.get(cont));
+						System.out.println("CANTIDAD: " + c);
+						sService.deducirStock(a, c);
 						cont++;
 				}
 	    		
