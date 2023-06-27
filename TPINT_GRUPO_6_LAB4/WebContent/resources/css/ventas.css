@@ -5,7 +5,6 @@ body{
 }
 
 body{
-    height: 100vh;
 	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
