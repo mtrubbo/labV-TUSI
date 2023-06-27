@@ -222,21 +222,35 @@ $(document).ready( function () {
     	  e.preventDefault();
           let action = e.target.getAttribute('action');
     	  let selectedIDs = [];
+    	  let cantidadesxart = [];
+    	  
+    	  /*ES ACA*/
     	  
     	  $('#addings .cardAddedArt').each(function(index, element) {
     	    var id = $(this).attr('id');
+      	    console.log('Articulo guarda: ' + id);     	 
     	    selectedIDs.push(id);
+    	  
     	  });
+    	  
+    	  /*$('#addings .cardAddedArt').each(function(index, element) {      	   
+      	    var cant = $(this).find('[name]').attr('name');   
+      	    console.log('Cantidad guarda: ' + cant);     	 
+      	    cantidadesxart.push(cant);
+      	  });*/
+      	     
+    	  
     	  
 
     	  let data = {
     	    	  fechaVenta: encodeURIComponent($('#fechaVenta').val()),
     	    	  cliente: encodeURIComponent($('#cliente').val()),
     	    	  montoTotal: encodeURIComponent($('#montoTotal').val()),
+    	    	 
     	  }
     	  
     	  $.ajax({
-    	    url: action +"/"+ data.fechaVenta + '/' + data.cliente + '/' + data.montoTotal + '/' + selectedIDs.join(','),
+    	    url: action +"/"+ data.fechaVenta + '/' + data.cliente + '/' + data.montoTotal + /*'/' + cantidadesxart.join(',') +*/ '/' + selectedIDs.join(','),
     	    type: 'GET',
     	    success: function(response) {
     	      let res = JSON.parse(response);
@@ -305,7 +319,7 @@ $(document).ready( function () {
     		    	item += '<div id="'+idSelect+'" class="cardAddedArt">';
     		    	item += '<button class="eraseButton" onclick="eraseArt('+idSelect+')">x</button>';
     		    	item += '<p>'+infoSelect+'</p>';
-    		    	item += "<p> x"+qt+"</p>";
+    		    	item += "<p name="+qt+"> x"+qt+"</p>";
     		    	item += "<p id='total'> Total por seleccion: "+total+"</p>";
     		    	item += "</div>";
     		    	

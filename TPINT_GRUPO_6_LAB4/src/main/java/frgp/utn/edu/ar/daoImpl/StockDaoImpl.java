@@ -71,4 +71,32 @@ public class StockDaoImpl implements StockDao {
         	return (Stock) query.uniqueResult();
         return new Stock();
     }
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deducirStock(Articulo articulo, int cantidad) {
+	    // Consultar los registros de stock ordenados por fecha de ingreso ascendente (FIFO)
+	    String hql = "FROM Stock s WHERE s.articulo = :articulo ORDER BY s.fechaIngreso ASC";
+	    Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
+	    query.setParameter("articulo", articulo);
+	    query.setMaxResults(1); // Obtener el registro de stock más antiguo
+	    Stock stock = (Stock) query.uniqueResult();
+
+	    if (stock != null) {
+	        int stockDisponible = stock.getCantidad();
+	        if (stockDisponible >= cantidad) {
+	            // Si hay suficiente stock disponible, deducir la cantidad solicitada
+	            stock.setCantidad(stockDisponible - cantidad);
+	            this.hibernateTemplate.update(stock);
+	        } else {
+	            // Si no hay suficiente stock disponible, lanzar una excepción o manejar el caso según sea necesario
+	            throw new RuntimeException("No hay suficiente stock disponible para deducir");
+	        }
+	    } else {
+	        // Si no se encuentra ningún registro de stock, lanzar una excepción o manejar el caso según sea necesario
+	        throw new RuntimeException("No se encontró ningún registro de stock para el artículo");
+	    }
+	}
+	
+	
 }

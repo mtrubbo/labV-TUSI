@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.servicioImpl;
 import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dao.StockDao;
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.servicio.StockServicio;
 
@@ -50,6 +51,11 @@ public class StockServicioImpl implements StockServicio {
 	@Override
 	public Stock artByID(int id) {
 		return dataAccess.artByID(id);
+	}
+	
+	@Override
+	public void deducirStock(Articulo articulo, int cantidad) {
+		dataAccess.deducirStock(articulo, cantidad);	
 	}
 	
 }

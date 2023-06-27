@@ -91,24 +91,43 @@ public class VentasController {
 		return MV;
 	}
 	
-	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}", method = RequestMethod.GET)
+	
+	
+	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}/{listaCantidades}", method = RequestMethod.GET)
 	@ResponseBody
 	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta,
 			@PathVariable("cliente") int cliente,
 			@PathVariable("montoTotal") Double montoTotal,
-			@PathVariable("listaArticulos") List<String> listaArticulos,
+			@PathVariable("listaArticulos") List<Integer> listaArticulos,
+			@PathVariable("listaCantidades") List<Integer> listaCantidades,
 	                         HttpSession session) {
 	    Gson gson = new Gson();
 	    ResponseResult result = new ResponseResult();
 	    String json = "";
-	    VentaRequest vreq = new VentaRequest();
-
+	    VentaRequest vreq = new VentaRequest();	    
+	  
+	    //SE ESTA MANDANDO MAL
+	    System.out.println(listaArticulos.toString());
+	   
 	    try {
 	    	vreq.setListaArticulos(new ArrayList<Articulo>());
-	    		for (String item : listaArticulos) {
-						Articulo a  = artService.getbyID(Integer.parseInt(item));
+	    	
+	    		Integer cont = 0;
+	    		
+				
+	    		for (Integer item : listaArticulos) {
+	    				
+						Articulo a  = artService.getbyID(item);
+						System.out.println(a.getNombre());
 						vreq.getListaArticulos().add(a);
+						Integer c = (Integer)listaCantidades.get(cont);
+						System.out.println("CANTIDAD: " + c);
+						sService.deducirStock(a, c);
+						cont++;
 				}
+	    		
+	    		    		
+	    	
 	    		
 		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		        LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
@@ -119,13 +138,15 @@ public class VentasController {
 		        vreq.setCliente(cService.obtenerPorId(cliente));
 		        
 		        vreq.setMontoTotal(montoTotal);
+		        
+		       
 	        
 		        service.insertar(vreq.construirVentaConArts());
 	        result.setStatus(ResultStatus.ok);
 	        result.setMessage("Se ha creado con éxito");
 	    } catch (Exception e) {
 	        result.setStatus(ResultStatus.error);
-	        result.setMessage("Error al insertar el artículo");
+	        result.setMessage("Error al insertar venta");
 	        System.out.println(e.getMessage());
 	        System.out.println(e.getCause());
 	        e.printStackTrace();
@@ -134,6 +155,9 @@ public class VentasController {
 	    json = gson.toJson(result);
 	    return json;
 	}
+	
+
+	
 	
      
 	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
@@ -207,6 +231,8 @@ public class VentasController {
 
 		
     }
+	
+	
 
 	
 	

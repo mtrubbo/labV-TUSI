@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.servicio;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Stock;
 
 public interface StockServicio {
@@ -19,5 +20,8 @@ public interface StockServicio {
 	Stock getbyID(int id);
 	
 	Stock artByID(int id);
+	
+	void deducirStock(Articulo articulo, int cantidad);
+
 
 }

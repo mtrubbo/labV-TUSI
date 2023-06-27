@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.dao;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Stock;
 
 public interface StockDao {
@@ -14,5 +15,6 @@ public interface StockDao {
 	public void actualizar(Stock a);
 	
 	public Stock artByID(int id);
+	public void deducirStock(Articulo articulo, int cantidad);
 
 }
