@@ -4,6 +4,10 @@ body{
 	font-family: 'Montserrat', sans-serif;
 }
 
+.navLogo{
+	height: 85px;
+}
+
 .articulosBody{
     padding-top: 4rem;
 	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");

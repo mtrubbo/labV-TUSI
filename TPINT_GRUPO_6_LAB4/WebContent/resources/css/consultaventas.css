@@ -1,8 +1,5 @@
-@charset "ISO-8859-1";
-
-
-
 body{
+    height: 100vh;
 	font-family: 'Montserrat', sans-serif;
 	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
     background-repeat: no-repeat;
@@ -10,13 +7,18 @@ body{
     background-position: center center;
 }
 
+.navLogo{
+	height: 85px;
+}
+
 .consultasBody{
+    height: 100%;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 }
 
 .sectionFormRequest{
-		z-index: 2;
+    z-index: 2;
 	background: #fff;
 	padding: 55px;
 	width: 100%;

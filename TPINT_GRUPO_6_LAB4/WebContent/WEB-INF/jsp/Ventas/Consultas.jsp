@@ -77,7 +77,7 @@
 </head>
 <body class="">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
-<main class="consultasBody d-flex justify-content-center align-items-center flex-column w-100 " style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+<main class="consultasBody d-flex justify-content-center align-items-center flex-column w-100 " style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');  background-repeat: no-repeat; background-size: cover; background-position: center center;">
 	
 
 	
