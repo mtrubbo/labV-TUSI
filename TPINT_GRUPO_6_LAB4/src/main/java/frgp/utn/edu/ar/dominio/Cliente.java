@@ -153,6 +153,10 @@ public class Cliente {
 
 	public void setEliminado(Boolean eliminado) { this.eliminado = eliminado; }
 
+	public String getNombreCompleto(){
+		return this.nombre + " " + this.apellido;
+	}
+
 	public ClienteRequest construirDtoClienteRequest(){
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

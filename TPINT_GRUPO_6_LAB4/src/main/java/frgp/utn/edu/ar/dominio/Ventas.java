@@ -120,6 +120,16 @@ public class Ventas {
 	public void setListaArticulos(List<Articulo> listaArticulos) {
 		this.listaArticulos = listaArticulos;
 	};
-	
+
+
+	public double calcularMontoTotal() {
+		double suma = 0;
+		for (Articulo art :
+				this.listaArticulos) {
+			suma += art.getPrecio();
+		}
+
+		return suma;
+	}
 	
 }
