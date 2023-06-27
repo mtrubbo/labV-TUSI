@@ -224,7 +224,7 @@ public class VentasController {
 	@RequestMapping(value = "/consultas/detalles/{id}", method = RequestMethod.GET)
 	public ModelAndView detallesVenta(@PathVariable int id)
 			throws ParseException {
-		ModelAndView vm = new ModelAndView("Ventas/Detalles");
+		ModelAndView vm = new ModelAndView("Ventas/DetallesConsulta");
 		vm.addObject("articulos", this.service.getbyID(id).getListaArticulos());
 
 		return vm;
