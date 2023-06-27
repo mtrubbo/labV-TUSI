@@ -43,10 +43,43 @@
 
 
 
+<!-- 
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Language', 'Speakers (in millions)'],
+          ['German',  5.85],
+          ['French',  1.66],
+          ['Italian', 0.316],
+          ['Romansh', 0.0791]
+        ]);
+
+      var options = {
+        legend: 'none',
+        pieSliceText: 'label',
+        title: 'Productos mas vendidos',
+        pieStartAngle: 100,
+      };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script> -->
+
+
+
+
+
 </head>
 <body class="">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="consultasBody d-flex justify-content-center align-items-center flex-column w-100 " style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+	
+
 	
 	<div class="d-flex flex-row justify-content-around align-items-center">
 		<div class="col-md-12">
@@ -61,11 +94,17 @@
                 </div>
 
 			</section>
+			
+	
 		</div>
 	</div>
+	
+	
+	
     <section style="margin-top: 1.5rem;" class="sectionTable">
-        <div class="row justify-content-around">
+        <div class="row justify-content-around" style="display:flex; justify-content:space-around">
             <h2>Listado de Ventas</h2>
+            <h3 class="bg-success text-white"><span>Total General: $</span>${montoTotal}</h3>
         </div>
 
 

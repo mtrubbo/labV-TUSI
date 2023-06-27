@@ -111,7 +111,7 @@ public class VentasController {
 	    VentaRequest vreq = new VentaRequest();	    
 	  
 
-	    System.out.println("LISTA ART: "+listaArticulos.toString());
+	    //System.out.println("LISTA ART: "+listaArticulos.toString());
 	   
 	    try {
 	    	vreq.setListaArticulos(new ArrayList<Articulo>());
@@ -122,30 +122,27 @@ public class VentasController {
 	    		for (String item : listaArticulos) { //item recibe los ids de listaarticulos
 	    				
 						Articulo a  = artService.getbyID(Integer.parseInt(item)); //buscamos objeto con ese id
-						//System.out.println(a.getNombre());
 						vreq.getListaArticulos().add(a);
 						Integer c = Integer.parseInt(listaCantidades.get(cont));
-						System.out.println("CANTIDAD: " + c);
+						System.out.println("ARTICULO: "+a.getNombre() + " - CANTIDAD: " + c);
 						sService.deducirStock(a, c);
 						cont++;
 				}
-	    		
-	    		    		
-	    	
-	    		
+	    			    			    		    		
+	  	    		
 		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		        LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
 		        LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
 		        Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
+		        
+		        
 		        vreq.setFecha(Date.from(instant));
-		        
 		        vreq.setCliente(cService.obtenerPorId(cliente));
-		        
 		        vreq.setMontoTotal(montoTotal);
-		        
-		       
-	        
+		                    
 		        service.insertar(vreq.construirVentaConArts());
+		        
+		        System.out.println("TEST6");
 	        result.setStatus(ResultStatus.ok);
 	        result.setMessage("Se ha creado con �xito");
 	    } catch (Exception e) {
@@ -195,6 +192,14 @@ public class VentasController {
 	public ModelAndView consultaVentas(){
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Ventas/Consultas");
+		
+		float suma=0;
+		ArrayList<Ventas> list = service.obtenerTodos();
+		for (Ventas v : list) {
+			suma += v.getMontoTotal();
+		}
+		MV.addObject("montoTotal", suma);
+		
 		return MV;
 	}
 
