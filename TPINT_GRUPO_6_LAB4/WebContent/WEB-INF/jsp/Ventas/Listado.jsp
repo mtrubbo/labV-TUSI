@@ -107,7 +107,7 @@
       					<form id="ingresarventa" action="${pageContext.request.contextPath}/ventas/crear" method="GET">
       						<input type="hidden" id="estado" value="true" name="estado">
       						<div class="row mb-5">
-      							<h5>Clientes</h5>
+      							<h5>Cliente</h5>
 	      						<div class="col-md-4">
 	      							<label class="form-label">Fecha Venta</label>
 	      							<input id="fechaVenta" type="date" name="fecha" class="form-control" required>
@@ -134,7 +134,7 @@
       							</div>
       							<div class="col-md-6">
 	      							<label class="form-label">Cantidad</label>
-	      							<input id="cantidad" type="number" min="0" name="cantidad" class="form-control" required>
+	      							<input id="cantidad" type="number" min="1" name="cantidad" class="form-control" required>
 	      						</div>
       							<div class="col-md-6">
 	      							<label class="form-label">Precio Unitario</label>
@@ -192,6 +192,85 @@
     			</div>
   			</div>
 		</div>
+		</div>
+		
+		
+		<!-- MODAL DETALLE -->
+		<div class="modal fade" id="detalleVent" tabindex="-1" aria-labelledby="detalleVentlabel" aria-hidden="true">
+  			<div class="modal-dialog modal-lg">
+    			<div class="modal-content">
+      				<div class="modal-header" style="background: #DAAE59; color: #fff;">
+        				<h5 class="modal-title" id="newVentlabel">Detalle de Venta</h5>
+        				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      				</div>
+      				<div class="modal-body">
+      					<form id="formDetalle" action="${pageContext.request.contextPath}/ventas/detalle" method="GET">
+      						<input type="hidden" id="estado" value="true" name="estado">
+      						<div class="row mb-5">
+      							<h5>Cliente</h5>
+	      						<div class="col-md-4">
+	      							<label class="form-label">Fecha Venta</label>
+	      							<input id="dfechaVenta" type="date" name="fecha" class="form-control" required disabled>
+	      						</div>
+	      						<div class="col-md-6">
+      								<label class="form-label">Cliente</label>
+
+			
+      										<input id="dcliente" name="cliente" class="form-control" type="text" value="${item.id}" disabled>${item.nombre} ${item.apellido}</input>
+
+
+      							</div>
+      						</div>
+      						
+      						<!--
+      						<div class="row mb-5">
+      						<h5>Articulos</h5>
+      							<div class="col-md-6">
+      								<label class="form-label">Articulos</label>
+      								<input id="darticulos" name="articulos" class="form-control" type="text" value="${item.id}" disabled>${item.nombre}</input>
+      							</div>
+								      							
+								<div class="col-md-6">
+	      							<label class="form-label">Cantidad</label>
+	      							<input id="dcantidad" disabled type="number" min="1" name="cantidad" class="form-control" required>
+	      						</div>
+      							<div class="col-md-6">
+	      							<label class="form-label">Precio Unitario</label>
+	      							<input id="dprecio" disabled type="number" min="0" name="precio" class="form-control" required>
+	      						</div>
+	      						<div class="col-md-6">
+	      							<label class="form-label">Precio Total</label>
+	      							<input id="dprecioTotal" disabled type="number" name="precio" class="form-control" required>
+	      						</div> 
+
+								<div class="col-md-6 mx-auto mt-3 text-center">
+		      						<button type="button" class="btn btn-primary" id="addArtToList">Agregar</button>
+	      						</div>
+	      						 
+	      					</div>	
+	      					-->
+	      					
+      						<div class="row">
+							<h5>Articulos Agregados</h5>
+								<div id="daddings" class="border mb-4">
+								</div>
+      						</div>
+      						<div class="row">
+      						<h5>Totales y subtotales</h5>
+      							<div class="col-md-6">
+      								<label class="form-label">Monto total de compra</label>
+	      							<input id="dmontoTotal" disabled type="number" name="precio" class="form-control" required>
+      							</div>
+      						</div>
+      						<div class="mt-5">
+		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+		        				<!-- <button type="submit" class="btn " style="background: #DAAE59; color: #fff;">Ingresar Venta</button> -->
+							</div>
+      					</form>
+    			</div>
+  			</div>
+		</div>
+		</div>
 </main>	
 <!-- SCRIPTS INIT -->
 <script>
@@ -201,11 +280,13 @@ $(document).ready( function () {
 
     $('#selectArt').on('change', function(){
     	let idArt = $(this).val();
+    	console.log(idArt);
     	
     	$.ajax({
     		url: "${pageContext.request.contextPath}/ventas/getArticulo_by_venta/"+idArt,
             method: "GET",
-            success: function(data){
+            success: function(data){    	
+            	console.log("my success");
                 let res = JSON.parse(data);
                 $('#precio').val(res.precio)
             },
@@ -367,6 +448,74 @@ function confirmDelete(id){
 	$('#formDelete').attr('action', '${pageContext.request.contextPath}/ventas/eliminar/'+id);
 	$('#deleteVent').modal('toggle');
 }
+
+function detalleOpen(id){
+	window.location.href = "${pageContext.request.contextPath}/ventas/detalle/"+id;
+    /*
+    $.ajax({
+        url: "${pageContext.request.contextPath}/ventas/detalle/"+id,
+        method: "GET",
+        
+        success: function(json){
+            let res = JSON.parse(json);
+            console.log(res);
+            
+        	//$('#dfechaVenta').val(res);
+        	//$('#dcliente').val(res.cliente);
+        	//$('#dmontoTotal').val(res.montoTotal);	
+        },        
+        complete: function() {
+        	//limpiar
+        	//$('#daddings').append(item);
+        	let item="";
+        	item += '<div id="'+20+'" class="cardAddedArt">';
+        	item += '<p>'+'Producto: '+'leche'+'</p>';
+        	item += "<p id='total'> Total del producto: $<b>"+22050+"</b></p>";
+        	item += "</div>";	
+        	$('#daddings').append(item);
+      		$('#detalleVent').modal('toggle');
+      }
+	})*/
+        
+}
+
+
+
+
+function editOpen(id){
+	let pathAction = $('#pathGlobal').val(); 
+    $.ajax({
+        url: pathAction+"/clientes/"+id,
+        method: "GET",
+        success: function(json){
+            let res = JSON.parse(json);
+            console.log(res);
+
+            $('#id').val(res.id);
+            $('#dni').val(res.dni);
+            $('#nombre').val(res.nombre);
+            $('#apellido').val(res.apellido);
+            $('#sexo').val(res.sexo);
+            $('#fechaNac').val(res.fechaNac);
+            $('#direccion').val(res.direccion);
+            $('#localidad').val(res.localidad);
+            $('#email').val(res.email);
+            $('#telefono').val(res.telefono);
+        },
+        complete: function() {
+            document.getElementById('formulario')
+              .setAttribute('action', '/clientes/modificar');
+
+            $('#tituloModal').text('Actualizar cliente');
+            $('#modal').modal('toggle');
+        }
+
+    })
+}
+
+
+
+
 
 function mostrarNotificacionYRecargar(mensaje) {
     // Configura la notificación Toastr

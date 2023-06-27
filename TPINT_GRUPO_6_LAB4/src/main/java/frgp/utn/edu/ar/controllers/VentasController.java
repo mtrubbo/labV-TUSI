@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +41,7 @@ import frgp.utn.edu.ar.dtos.ArticuloInfo;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
+import frgp.utn.edu.ar.helpers.JsonUtils;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.StockServicio;
@@ -173,6 +175,22 @@ public class VentasController {
 		MV.setViewName("Consultas/HomeConsultas");
 		return MV;
 	}
+	
+	
+	@RequestMapping(value = "/detalle/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView getDetalle(@PathVariable int id) {
+		Ventas venta = this.service.getbyID(id);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("venta", venta.getId());
+		mv.addObject("fecha", venta.getFecha());
+		mv.addObject("cliente", venta.getCliente().getNombre() + " "+venta.getCliente().getApellido());
+		mv.addObject("articulos", venta.getListaArticulos());
+		mv.addObject("monto", venta.getMontoTotal());
+		mv.setViewName("Ventas/Detalle");
+		return mv;	 
+    }
 	
 	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)
 	@ResponseBody
