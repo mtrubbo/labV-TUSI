@@ -116,7 +116,7 @@
       								<label class="form-label">Cliente</label>
 	      							<select id="cliente" name="tipo" class="form-control">
    							 			<c:forEach items="${clientes}" var="item">
-      										<option value="${item.id}">${item.nombre} ${item.apellido}</option>
+      										<option value="${item.id}">${item.dni} - ${item.nombre} ${item.apellido}</option>
    								 		</c:forEach>
   									</select>
       							</div>
