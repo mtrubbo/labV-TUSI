@@ -12,12 +12,13 @@ body{
 }
 
 .sectionTable{
+	z-index: 0;
 	background: #fff;
 	padding: 55px;
 	width: 70%;
 	border-radius: 10px;
 	box-shadow: 3px 2px 8px 0 #000;
-	margin-top: 4rem;
+	margin-top: 300px
 }
 
 .cardAddedArt{

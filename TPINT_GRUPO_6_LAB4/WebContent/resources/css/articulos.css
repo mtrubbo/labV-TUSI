@@ -5,7 +5,8 @@ body{
 }
 
 .articulosBody{
-    padding-top: 4rem;
+	height: 100vh; 
+	width: 100%;
 	background-image: url(var(--contextPath)"/resources/img/home-background.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -41,4 +42,11 @@ body{
 	border: none;
 	color: red;
 	margin-right: 10px;
+}
+
+
+@media (min-width: 992px) {
+  .articulosBody {
+    margin-top: 100px;
+  }
 }

@@ -30,7 +30,7 @@
 <body>
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
 <main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
-	<section style="width:90%;" class="sectionTable">
+	<section style="width:90%" class="sectionTable">
 		<input type="hidden" id="pathGlobal" value="${pageContext.request.contextPath}">
         <h2>Clientes</h2>
 
