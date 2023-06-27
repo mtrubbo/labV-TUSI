@@ -51,6 +51,7 @@
                     <th>Localidad</th>
                     <th>Email</th>
                     <th>Telefono</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>

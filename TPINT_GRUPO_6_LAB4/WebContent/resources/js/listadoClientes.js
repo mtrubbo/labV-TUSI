@@ -1,4 +1,6 @@
 $(document).ready( function () {
+    $('#tableArticulos').DataTable();
+
     $('#formulario').on("submit", (e) => {
     	let pathAction = $('#pathGlobal').val(); 
         e.preventDefault();
