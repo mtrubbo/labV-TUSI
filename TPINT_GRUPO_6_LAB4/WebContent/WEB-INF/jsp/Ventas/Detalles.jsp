@@ -83,12 +83,12 @@
 <script type="text/javascript" src='<c:url value="/resources/js/consultaVentas.js"/>'></script>
 
 <c:if test="${not empty sessionScope.mensaje}">
-    <%-- Configurar la notificación Toastr --%>
+    <%-- Configurar la notificaciï¿½n Toastr --%>
     <script>
     mostrarNotificacionYRecargar("${sessionScope.mensaje}")
     </script>
 
-    <%-- Limpiar el mensaje de la sesión para que no se muestre nuevamente en futuras peticiones --%>
+    <%-- Limpiar el mensaje de la sesiï¿½n para que no se muestre nuevamente en futuras peticiones --%>
     <% session.removeAttribute("mensaje"); %>
 </c:if>
 

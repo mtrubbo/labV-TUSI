@@ -92,8 +92,6 @@
 
 
 				<h3><span>$ </span>${monto}</h3>
-
-				<button class="btn btn-primary">Volver</button>
 	</div>
 </body>
 </html>
