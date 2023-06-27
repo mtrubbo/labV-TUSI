@@ -48,7 +48,7 @@
 		if (atributo.equalsIgnoreCase("contador")) {
 	%>
 	        <li class="nav-item">
-          <a class="nav-link" href="${pageContext.request.contextPath}/consultas">Consultas</a>
+          <a class="nav-link" href="${pageContext.request.contextPath}/ventas/consultas">Consultas</a>
         </li>
 	<%} %>
 	

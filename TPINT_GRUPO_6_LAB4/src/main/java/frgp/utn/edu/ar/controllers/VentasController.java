@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -122,10 +124,10 @@ public class VentasController {
 	        
 		        service.insertar(vreq.construirVentaConArts());
 	        result.setStatus(ResultStatus.ok);
-	        result.setMessage("Se ha creado con éxito");
+	        result.setMessage("Se ha creado con ï¿½xito");
 	    } catch (Exception e) {
 	        result.setStatus(ResultStatus.error);
-	        result.setMessage("Error al insertar el artículo");
+	        result.setMessage("Error al insertar el artï¿½culo");
 	        System.out.println(e.getMessage());
 	        System.out.println(e.getCause());
 	        e.printStackTrace();
@@ -162,16 +164,39 @@ public class VentasController {
 		json = gson.toJson(result);
 		return json;
 	}
-	
+
 	@RequestMapping("/consultas")
 	public ModelAndView consultaVentas(){
 		ModelAndView MV = new ModelAndView();
-		ArrayList<Ventas> listarr = this.service.obtenerTodos();
-		if(listarr != null) {			
-			MV.addObject("ventas", listarr);
-		}
-		MV.setViewName("Consultas/HomeConsultas");
+		MV.setViewName("Ventas/Consultas");
 		return MV;
+	}
+
+	@RequestMapping(value = "/consultas/{fechaInicio}/{fechaFin}", method = RequestMethod.GET)
+	public ModelAndView listaPorfecha(@PathVariable("fechaInicio") String fechaInicio, @PathVariable("fechaFin") String fechaFin)
+			throws ParseException {
+
+		ModelAndView vm = new ModelAndView("Ventas/Consultas");
+
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
+		SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date fechaIni = dateFmt.parse(fechaInicio);
+		Date fechaFinal = dateFmt.parse(fechaFin);
+
+		vm.addObject("Ventas", this.service.obtenerPorRangoDeFechas(fechaIni, fechaFinal));
+
+		return vm;
+	}
+
+	@RequestMapping(value = "/consultas/detalles/{id}", method = RequestMethod.GET)
+	public ModelAndView detallesVenta(@PathVariable int id)
+			throws ParseException {
+		ModelAndView vm = new ModelAndView("Ventas/Detalles");
+		vm.addObject("articulos", this.service.getbyID(id).getListaArticulos());
+
+		return vm;
 	}
 	
 	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)

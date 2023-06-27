@@ -1,9 +1,12 @@
 package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import frgp.utn.edu.ar.dominio.Cliente;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
@@ -40,6 +43,20 @@ public class VentasDaoImpl  implements VentasDao{
 	    criteria.add(Restrictions.eq("estado", true));
 	    List<Ventas> resultados = criteria.list();
 	    return new ArrayList<>(resultados);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Ventas> obtenerPorRangoFechas(Date fechaIni, Date fechaFin) {
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from Ventas " +
+						"where estado=true and fecha between :fechaIni and :fechaFin");
+
+		query.setParameter("fechaIni", fechaIni);
+		query.setParameter("fechaFin", fechaFin);
+
+		return (ArrayList<Ventas>)query.list();
 	}
 
 	@Override
