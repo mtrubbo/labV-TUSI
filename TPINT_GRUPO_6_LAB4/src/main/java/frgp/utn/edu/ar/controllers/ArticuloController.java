@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Marcas;
 import frgp.utn.edu.ar.dominio.TipoArticulo;
+import frgp.utn.edu.ar.dtos.ArticuloInfo;
 import frgp.utn.edu.ar.dtos.ArticuloRequest;
 import frgp.utn.edu.ar.dtos.MarcasRequest;
 import frgp.utn.edu.ar.dtos.ResponseResult;
@@ -88,8 +89,9 @@ public class ArticuloController {
 	@ResponseBody
     public ResponseEntity<String> getArticuloById(@PathVariable int id) {
 		Articulo articulo = this.service.getbyID(id);
+		ArticuloInfo aif = articulo.getArticuloInfo();
 	    Gson gson = new Gson();
-	    String jsonArray = gson.toJson(articulo);
+	    String jsonArray = gson.toJson(aif);
 	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
     }
 
