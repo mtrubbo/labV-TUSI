@@ -82,8 +82,7 @@
                 <input type="submit" value="Iniciar sesión">
             </div>
         </form>
-        
-        
+        <a href="/oauth2/authorization/google">Iniciar sesión con Google</a>
         <div class="error">
 			<p class="text-danger">${error}</p>
 			<p class="deslogueado text-success">${deslogueado}</p>

@@ -25,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/clientes.html", true)
                 .permitAll()
             .and()
+                .oauth2Login()
+            .and()
             .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/?logout")
@@ -35,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .sessionFixation()
              .migrateSession()
              .maximumSessions(1)
-             .maxSessionsPreventsLogin(true)
+//             .maxSessionsPreventsLogin(true)
              .expiredUrl("/login?expired");
     }
 
