@@ -2,12 +2,16 @@ package frgp.utn.edu.ar.tpintegrador.controllers;
 
 import java.security.Principal;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -29,6 +33,15 @@ public class LoginController {
     	
     	return "Login"; // retornar el nombre de la vista del formulario de inicio de sesión
     }
+
+	@GetMapping("/setDetails")
+	public String showLoginForm(HttpSession session) {
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+
+		session.setAttribute("userName", ((DefaultOidcUser) principal).getAttributes().get("name"));
+		return "redirect:/clientes";
+	}
     
     //Alternativa de deslogueo a la que hay en securityconfig .logout
     /* 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -28,7 +28,7 @@
  </style>
     
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Banco</a>
@@ -45,6 +45,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          Usuario: <span th:text="${#authentication.name}"></span>
         </li>
       </ul>
     </div>
