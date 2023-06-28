@@ -19,7 +19,7 @@ public interface StockServicio {
 
 	Stock getbyID(int id);
 	
-	Stock artByID(int id);
+	long artByID(int id);
 	
 	void deducirStock(Articulo articulo, int cantidad);
 
