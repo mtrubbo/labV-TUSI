@@ -49,7 +49,7 @@ public class StockServicioImpl implements StockServicio {
 	}
 
 	@Override
-	public Stock artByID(int id) {
+	public long artByID(int id) {
 		return dataAccess.artByID(id);
 	}
 	

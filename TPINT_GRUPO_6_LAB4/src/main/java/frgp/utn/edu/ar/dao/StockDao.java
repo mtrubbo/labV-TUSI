@@ -14,7 +14,7 @@ public interface StockDao {
 	public void eliminar(int id);
 	public void actualizar(Stock a);
 	
-	public Stock artByID(int id);
+	public long artByID(int id);
 	public void deducirStock(Articulo articulo, int cantidad);
 
 }

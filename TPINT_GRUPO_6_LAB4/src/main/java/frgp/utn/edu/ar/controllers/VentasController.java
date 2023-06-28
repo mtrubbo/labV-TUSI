@@ -261,17 +261,17 @@ public class VentasController {
     public String hasStock(@PathVariable int id, @PathVariable int qt) {
 	    Gson gson = new Gson();
 	    String json;
-		Stock s = sService.artByID(id);
+		long quantity = sService.artByID(id);
 		ResponseResult result = new ResponseResult();
+		System.out.println(String.valueOf(quantity));
 		
-		if(s.getCantidad() - qt >=0 && s!=null) {
+		if(quantity - qt >= 0 && quantity != 0) {
 			result.setStatus(ResultStatus.ok);
-			result.setMessage("Con stock!");
+			result.setMessage(String.valueOf(quantity));
 			json = gson.toJson(result);
 			return json;
 		}				
 		
-		System.out.println("NO HAY STOCK");
 		result.setStatus(ResultStatus.error);
 		result.setMessage("Sin stock!");
 		json = gson.toJson(result);

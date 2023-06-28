@@ -62,14 +62,14 @@ public class StockDaoImpl implements StockDao {
 
 	@Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Stock artByID(int id) {
-        String hql = "FROM Stock s WHERE s.articulo.id = :idArticulo";
+    public long artByID(int id) {
+        String hql = "Select SUM(s.cantidad)FROM Stock s WHERE s.articulo.id = :idArticulo";
         Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
         query.setParameter("idArticulo", id);
         query.setMaxResults(1);
         if(query.uniqueResult()!=null)
-        	return (Stock) query.uniqueResult();
-        return new Stock();
+        	return (long) query.uniqueResult();
+        return  0;
     }
 	
 	@Override
