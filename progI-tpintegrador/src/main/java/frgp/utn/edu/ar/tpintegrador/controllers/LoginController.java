@@ -33,15 +33,6 @@ public class LoginController {
     	
     	return "Login"; // retornar el nombre de la vista del formulario de inicio de sesión
     }
-
-	@GetMapping("/setDetails")
-	public String showLoginForm(HttpSession session) {
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-
-		session.setAttribute("userName", ((DefaultOidcUser) principal).getAttributes().get("name"));
-		return "redirect:/clientes";
-	}
     
     //Alternativa de deslogueo a la que hay en securityconfig .logout
     /* 
