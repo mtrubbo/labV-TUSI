@@ -82,7 +82,12 @@
                 <input type="submit" value="Iniciar sesión">
             </div>
         </form>
-        <a href="/oauth2/authorization/google">Iniciar sesión con Google</a>
+        
+        <div style="display:flex;justify-content:space-around">
+        	<img width="10%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png">
+        	<a href="/oauth2/authorization/google" style="color:#000">Iniciar sesión con Google</a>
+        </div>
+        
         <div class="error">
 			<p class="text-danger">${error}</p>
 			<p class="deslogueado text-success">${deslogueado}</p>
