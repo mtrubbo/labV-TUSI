@@ -1,5 +1,8 @@
 $(document).ready( function () {
-    $('#tableArticulos').DataTable();
+    $('#tableArticulos').DataTable({
+        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma
+								// descendente
+    });
 
     $('#formulario').on("submit", (e) => {
     	let pathAction = $('#pathGlobal').val(); 

@@ -140,7 +140,9 @@
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
-    $('#tableStocks').DataTable();
+    $('#tableStocks').DataTable({
+        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
+    });
     
   $('#newStock').on("submit", function(e){
         e.preventDefault();

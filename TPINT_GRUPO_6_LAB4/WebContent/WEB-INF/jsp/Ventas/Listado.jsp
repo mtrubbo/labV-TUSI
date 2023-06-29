@@ -275,7 +275,9 @@
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
-    $('#tableVentas').DataTable();
+    $('#tableVentas').DataTable({
+        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
+    });
     
 
     $('#selectArt').on('change', function(){

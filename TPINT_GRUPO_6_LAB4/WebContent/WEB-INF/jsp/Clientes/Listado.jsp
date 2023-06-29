@@ -39,9 +39,10 @@
           		Nuevo cliente
         	</button>
 
-        <table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
+        <table id="tableClientes" class="responsive table table-striped dataTables_wraper">
             <thead>
                 <tr>
+                	<th>ID</th>
                     <th>DNI</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -57,6 +58,7 @@
             <tbody>
                 <c:forEach items="${clientes}" var="item">
                     <tr>
+                    <td>${item.id}</label> </td>
                     <td>${item.dni}</label> </td>
                     <td>${item.nombre}</td>
                     <td>${item.apellido}</td>
@@ -95,6 +97,13 @@
     </div>
 
 	<!-- scripts -->
+	<script type="text/javascript">
+		$(document).ready( function () {
+	    $('#tableClientes').DataTable({
+	        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma
+									// descendente
+	    });
+    </script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src='<c:url value="/resources/js/listadoClientes.js"/>'></script>

@@ -1,7 +1,6 @@
 package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import org.hibernate.Query;
@@ -44,9 +43,7 @@ public class StockDaoImpl implements StockDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public ArrayList<Stock> obtenerTodos() {
-		ArrayList<Stock> stockList= (ArrayList<Stock>) this.hibernateTemplate.loadAll(Stock.class);
-		Collections.reverse(stockList); // Ordenar en orden descendente 
-		return stockList;
+		return (ArrayList<Stock>) this.hibernateTemplate.loadAll(Stock.class);
 	}
 
 	

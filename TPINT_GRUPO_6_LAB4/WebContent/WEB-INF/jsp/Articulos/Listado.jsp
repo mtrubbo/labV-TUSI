@@ -65,6 +65,7 @@
 	<table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
 		<thead>
 			<tr>
+				<th>ID</th>
 				<th>Nombre</th>
 				<th>Descripcion</th>
 				<th>Marca</th>
@@ -76,6 +77,7 @@
 		<tbody>
 			<c:forEach items="${articulos}" var="item">
 				<tr>
+					<td>${item.id}</label> </td>
 					<td>${item.nombre}</label> </td>
 					<td>${item.descripcion}</td>
 					<td>${item.marca.nombre}</td>
@@ -232,7 +234,9 @@
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
-    $('#tableArticulos').DataTable();
+    $('#tableArticulos').DataTable({
+        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
+    });
     
   $('#newArt').on("submit", function(e){
         e.preventDefault();
