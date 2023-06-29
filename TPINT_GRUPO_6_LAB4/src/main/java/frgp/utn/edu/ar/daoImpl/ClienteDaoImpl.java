@@ -53,7 +53,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	public ArrayList<Cliente> obtenerTodos() {
 		Query query = this.hibernateTemplate.getSessionFactory()
 				.getCurrentSession()
-				.createQuery("from Cliente where eliminado=false");
+				.createQuery("from Cliente where eliminado=false ORDER BY id DESC");
 
 		return (ArrayList<Cliente>)query.list();
 	}

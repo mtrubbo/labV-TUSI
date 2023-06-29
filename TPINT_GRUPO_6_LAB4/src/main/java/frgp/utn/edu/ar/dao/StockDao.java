@@ -13,8 +13,8 @@ public interface StockDao {
 	public ArrayList<Stock> obtenerTodos();
 	public void eliminar(int id);
 	public void actualizar(Stock a);
-	
 	public long artByID(int id);
+	public Integer stockArtByID(int id);
 	public void deducirStock(Articulo articulo, int cantidad);
 
 }

@@ -57,5 +57,10 @@ public class StockServicioImpl implements StockServicio {
 	public void deducirStock(Articulo articulo, int cantidad) {
 		dataAccess.deducirStock(articulo, cantidad);	
 	}
+
+	@Override
+	public Integer stockArtByID(int id) {
+		return dataAccess.stockArtByID(id);
+	}
 	
 }

@@ -52,133 +52,148 @@ import frgp.utn.edu.ar.servicio.VentasService;
 @Controller
 @RequestMapping("/ventas")
 public class VentasController {
-	
+
 	@Autowired
-	public VentasService  service;
-	
+	public VentasService service;
+
 	@Autowired
 	public ArticuloServicio artService;
-	
+
 	@Autowired
 	public ClienteServicio cService;
-	
+
 	@Autowired
 	public StockServicio sService;
-	
+
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
 		this.service = (VentasService) ctx.getBean("serviceBeanVentas");
 	}
-	
+
 	@RequestMapping("")
-	public ModelAndView lista(){
+	public ModelAndView lista() {
 		ModelAndView MV = new ModelAndView();
 		ArrayList<Ventas> listarr = this.service.obtenerTodos();
-		if(listarr != null) {			
+		if (listarr != null) {
 			MV.addObject("ventas", listarr);
 		}
-		
+
 		ArrayList<Cliente> lClientes = this.cService.obtenerTodos();
-		if(lClientes != null) {			
+		if (lClientes != null) {
 			MV.addObject("clientes", lClientes);
 		}
-		
+
 		ArrayList<Articulo> lArt = this.artService.obtenerTodos();
-		if(lArt != null) {			
+		if (lArt != null) {
 			MV.addObject("Articulos", lArt);
 		}
-		
-		
+
 		MV.setViewName("Ventas/Listado");
 		return MV;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}/{listaCantidades}", method = RequestMethod.GET)
 	@ResponseBody
-	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta,
-			@PathVariable("cliente") int cliente,
-			@PathVariable("montoTotal") Double montoTotal,
-			@PathVariable("listaArticulos") List<String> listaArticulos,
-			@PathVariable("listaCantidades") List<String> listaCantidades,
-	                         HttpSession session) {
-	    Gson gson = new Gson();
-	    ResponseResult result = new ResponseResult();
-	    String json = "";
-	    VentaRequest vreq = new VentaRequest();	    
-	  
+	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta, @PathVariable("cliente") int cliente,
+			@PathVariable("montoTotal") Double montoTotal, @PathVariable("listaArticulos") List<String> listaArticulos,
+			@PathVariable("listaCantidades") List<String> listaCantidades, HttpSession session) {
+		Gson gson = new Gson();
+		ResponseResult result = new ResponseResult();
+		String json = "";
+		VentaRequest vreq = new VentaRequest();
 
-	    //System.out.println("LISTA ART: "+listaArticulos.toString());
-	   
-	    try {
-	    	vreq.setListaArticulos(new ArrayList<Articulo>());
-	    	
-	    		Integer cont = 0;
-	    		
-				
-	    		for (String item : listaArticulos) { //item recibe los ids de listaarticulos
-	    				
-						Articulo a  = artService.getbyID(Integer.parseInt(item)); //buscamos objeto con ese id
-						vreq.getListaArticulos().add(a);
-						Integer c = Integer.parseInt(listaCantidades.get(cont));
-						System.out.println("ARTICULO: "+a.getNombre() + " - CANTIDAD: " + c);
-						sService.deducirStock(a, c);
-						cont++;
+		// System.out.println("LISTA ART: "+listaArticulos.toString());
+
+		try {
+			vreq.setListaArticulos(new ArrayList<Articulo>());
+
+			Integer cont = 0;
+
+			for (String item : listaArticulos) { // item recibe los ids de listaarticulos
+
+				Articulo a = artService.getbyID(Integer.parseInt(item)); // buscamos objeto con ese id
+				vreq.getListaArticulos().add(a);
+				Integer suma = Integer.parseInt(listaCantidades.get(cont));
+				System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + suma);
+
+				Boolean seguir = true;
+				// me alcanza con 1 art
+				// comparar con el stock del ultimo articulo con stock > 0
+				// si el articulo mas viejo tiene stock suficiente
+				if (suma <= sService.stockArtByID(a.getId())) {
+					// get articulo mas viejo
+					sService.deducirStock(a, suma); // restarle stock al mas viejo
+					seguir = false; // que no entre al while
 				}
-	    			    			    		    		
-	  	    		
-		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		        LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
-		        LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
-		        Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
-		        
-		        
-		        vreq.setFecha(Date.from(instant));
-		        vreq.setCliente(cService.obtenerPorId(cliente));
-		        vreq.setMontoTotal(montoTotal);
-		                    
-		        service.insertar(vreq.construirVentaConArts());
-		        
-		        System.out.println("TEST6");
-	        result.setStatus(ResultStatus.ok);
-	        result.setMessage("Se ha creado con �xito");
-	    } catch (Exception e) {
-	        result.setStatus(ResultStatus.error);
-	        result.setMessage("Error al insertar venta");
-	        System.out.println(e.getMessage());
-	        System.out.println(e.getCause());
-	        e.printStackTrace();
-	    }
 
-	    json = gson.toJson(result);
-	    return json;
+				while (seguir) {
+					// o si necesito varios articulos
+					// comparar con el stock del ultimo articulo con stock > 0
+					// si suma es distinto de cero quiere decir que con el articulo anterior (if
+					// anterior) no me alcanzo
+					if (suma >= sService.stockArtByID(a.getId()))// suma >= articulo mas viejo su cantidad
+					{
+						Integer restar = sService.stockArtByID(a.getId());
+						sService.deducirStock(a, restar);
+						suma -= restar;
+					}
+					if (suma < sService.stockArtByID(a.getId())) {
+						sService.deducirStock(a, suma);
+						suma = 0;
+					}
+					if (suma == 0) {
+						seguir = false;
+					}
+				};
+
+				System.out.println("SALGO DEL WHILE");
+				cont++;
+			}
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
+			LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
+			Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
+
+			vreq.setFecha(Date.from(instant));
+			vreq.setCliente(cService.obtenerPorId(cliente));
+			vreq.setMontoTotal(montoTotal);
+
+			service.insertar(vreq.construirVentaConArts());
+
+			System.out.println("TEST6");
+			result.setStatus(ResultStatus.ok);
+			result.setMessage("Se ha creado con �xito");
+		} catch (Exception e) {
+			result.setStatus(ResultStatus.error);
+			result.setMessage("Error al insertar venta");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+			e.printStackTrace();
+		}
+
+		json = gson.toJson(result);
+		return json;
 	}
-	
 
-	
-	
-     
-	@RequestMapping(value ="/eliminar/{id}" , method= { RequestMethod.GET })
+	@RequestMapping(value = "/eliminar/{id}", method = { RequestMethod.GET })
 	@ResponseBody
-	public String eliminar(@PathVariable int id){
+	public String eliminar(@PathVariable int id) {
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
 
-		String Message="";
+		String Message = "";
 
-		try{
+		try {
 			Ventas a = service.getbyID(id);
 			a.setEstado(false);
 			service.actualizar(a);
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha eliminado con exito con exito");
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			result.setStatus(ResultStatus.error);
 			result.setMessage("Error al eliminar la venta");
 			System.out.println(e);
@@ -189,23 +204,23 @@ public class VentasController {
 	}
 
 	@RequestMapping("/consultas")
-	public ModelAndView consultaVentas(){
+	public ModelAndView consultaVentas() {
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Ventas/Consultas");
-		
-		float suma=0;
+
+		float suma = 0;
 		ArrayList<Ventas> list = service.obtenerTodos();
 		for (Ventas v : list) {
 			suma += v.getMontoTotal();
 		}
 		MV.addObject("montoTotal", suma);
-		
+
 		return MV;
 	}
 
 	@RequestMapping(value = "/consultas/{fechaInicio}/{fechaFin}", method = RequestMethod.GET)
-	public ModelAndView listaPorfecha(@PathVariable("fechaInicio") String fechaInicio, @PathVariable("fechaFin") String fechaFin)
-			throws ParseException {
+	public ModelAndView listaPorfecha(@PathVariable("fechaInicio") String fechaInicio,
+			@PathVariable("fechaFin") String fechaFin) throws ParseException {
 
 		ModelAndView vm = new ModelAndView("Ventas/Consultas");
 
@@ -222,66 +237,59 @@ public class VentasController {
 	}
 
 	@RequestMapping(value = "/consultas/detalles/{id}", method = RequestMethod.GET)
-	public ModelAndView detallesVenta(@PathVariable int id)
-			throws ParseException {
+	public ModelAndView detallesVenta(@PathVariable int id) throws ParseException {
 		ModelAndView vm = new ModelAndView("Ventas/DetallesConsulta");
 		vm.addObject("articulos", this.service.getbyID(id).getListaArticulos());
 
 		return vm;
 	}
-	
-	
+
 	@RequestMapping(value = "/detalle/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView getDetalle(@PathVariable int id) {
 		Ventas venta = this.service.getbyID(id);
-		
+
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("venta", venta.getId());
 		mv.addObject("fecha", venta.getFecha());
-		mv.addObject("cliente", venta.getCliente().getNombre() + " "+venta.getCliente().getApellido());
+		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
 		mv.addObject("monto", venta.getMontoTotal());
 		mv.setViewName("Ventas/Detalle");
-		return mv;	 
-    }
-	
+		return mv;
+	}
+
 	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)
 	@ResponseBody
-    public ResponseEntity<String> getArticuloById(@PathVariable int id) {
+	public ResponseEntity<String> getArticuloById(@PathVariable int id) {
 		Articulo articulo = this.artService.getbyID(id);
 		ArticuloInfo aif = articulo.getArticuloInfo();
-	    Gson gson = new Gson();
-	    String jsonArray = gson.toJson(aif);
-	    return new ResponseEntity<>(jsonArray, HttpStatus.OK);
-    }
-	
+		Gson gson = new Gson();
+		String jsonArray = gson.toJson(aif);
+		return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/hasStock_by_id/{id}/{qt}", method = RequestMethod.GET)
 	@ResponseBody
-    public String hasStock(@PathVariable int id, @PathVariable int qt) {
-	    Gson gson = new Gson();
-	    String json;
+	public String hasStock(@PathVariable int id, @PathVariable int qt) {
+		Gson gson = new Gson();
+		String json;
 		long quantity = sService.artByID(id);
 		ResponseResult result = new ResponseResult();
 		System.out.println(String.valueOf(quantity));
-		
-		if(quantity - qt >= 0 && quantity != 0) {
+
+		if (quantity - qt >= 0 && quantity != 0) {
 			result.setStatus(ResultStatus.ok);
 			result.setMessage(String.valueOf(quantity));
 			json = gson.toJson(result);
 			return json;
-		}				
-		
+		}
+
 		result.setStatus(ResultStatus.error);
 		result.setMessage("Sin stock!");
 		json = gson.toJson(result);
 		return json;
 
-		
-    }
-	
-	
+	}
 
-	
-	
 }

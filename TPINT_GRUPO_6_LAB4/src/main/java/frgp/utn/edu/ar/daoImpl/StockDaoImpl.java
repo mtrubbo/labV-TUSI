@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import org.hibernate.Query;
@@ -43,7 +44,9 @@ public class StockDaoImpl implements StockDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public ArrayList<Stock> obtenerTodos() {
-		return (ArrayList<Stock>) this.hibernateTemplate.loadAll(Stock.class);
+		ArrayList<Stock> stockList= (ArrayList<Stock>) this.hibernateTemplate.loadAll(Stock.class);
+		Collections.reverse(stockList); // Ordenar en orden descendente 
+		return stockList;
 	}
 
 	
@@ -72,11 +75,25 @@ public class StockDaoImpl implements StockDao {
         return  0;
     }
 	
+	
+	//trae cantidad del articulo mas viejo ingresado con cantidad mayor a 0
+	@Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Integer stockArtByID(int id) {
+		String hql = "select s.cantidad FROM Stock s WHERE s.articulo.id = :idArticulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
+        Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setParameter("idArticulo", id);
+        query.setMaxResults(1);
+        if(query.uniqueResult()!=null)
+        	return (Integer) query.uniqueResult();
+        return  0;
+    }
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deducirStock(Articulo articulo, int cantidad) {
 	    // Consultar los registros de stock ordenados por fecha de ingreso ascendente (FIFO)
-	    String hql = "FROM Stock s WHERE s.articulo = :articulo ORDER BY s.fechaIngreso ASC";
+	    String hql = "FROM Stock s WHERE s.articulo = :articulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
 	    Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
 	    query.setParameter("articulo", articulo);
 	    query.setMaxResults(1); // Obtener el registro de stock más antiguo
