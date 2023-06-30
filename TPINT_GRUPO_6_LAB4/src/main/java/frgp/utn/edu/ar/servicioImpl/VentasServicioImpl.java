@@ -69,5 +69,10 @@ public class VentasServicioImpl  implements VentasService{
 	public void actualizar(Ventas id) {
 		dataAccess.actualizar(id);		
 	}
+
+	@Override
+	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin) {
+		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
+	}
 	
 }

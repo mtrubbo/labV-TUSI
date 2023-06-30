@@ -20,4 +20,5 @@ public interface VentasService {
 
 	Ventas getbyID(int id);
 
+	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin);
 }

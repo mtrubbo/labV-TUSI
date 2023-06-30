@@ -58,6 +58,20 @@ public class VentasDaoImpl  implements VentasDao{
 
 		return (ArrayList<Ventas>)query.list();
 	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin) {
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("select sum(montoTotal) from Ventas " +
+						"where estado=true and fecha between :fechaIni and :fechaFin");
+
+		query.setParameter("fechaIni", fechaIni);
+		query.setParameter("fechaFin", fechaFin);
+        query.setMaxResults(1);
+		return (double)query.uniqueResult();
+	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)

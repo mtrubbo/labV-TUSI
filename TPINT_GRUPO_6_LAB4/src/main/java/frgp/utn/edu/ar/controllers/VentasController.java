@@ -40,6 +40,7 @@ import frgp.utn.edu.ar.dominio.Cliente;
 import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ArticuloInfo;
+import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
@@ -219,6 +220,7 @@ public class VentasController {
 	}
 
 	@RequestMapping(value = "/consultas/{fechaInicio}/{fechaFin}", method = RequestMethod.GET)
+	@ResponseBody
 	public ModelAndView listaPorfecha(@PathVariable("fechaInicio") String fechaInicio,
 			@PathVariable("fechaFin") String fechaFin) throws ParseException {
 
@@ -230,8 +232,17 @@ public class VentasController {
 
 		Date fechaIni = dateFmt.parse(fechaInicio);
 		Date fechaFinal = dateFmt.parse(fechaFin);
-
+		
+		double montoTotalSuma = 0;
+		
+		List<ConsultaVentasResponse> lVentas = this.service.obtenerPorRangoDeFechas(fechaIni, fechaFinal);
+		
+		for (ConsultaVentasResponse consultaVentasResponse : lVentas) {
+			montoTotalSuma += consultaVentasResponse.getMontoTotal();
+		}
+		
 		vm.addObject("Ventas", this.service.obtenerPorRangoDeFechas(fechaIni, fechaFinal));
+		vm.addObject("montototalventas",this.service.obtenerTotalPorRangoFechas(fechaIni, fechaFinal));
 
 		return vm;
 	}

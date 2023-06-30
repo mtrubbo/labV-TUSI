@@ -104,7 +104,7 @@
     <section style="margin-top: 1.5rem;" class="sectionTable">
         <div class="row justify-content-around" style="display:flex; justify-content:space-around">
             <h2>Listado de Ventas</h2>
-            <h3 class="bg-success text-white"><span>Total General: $</span>${montoTotal}</h3>
+            <h3 class="bg-success text-white"><span>Total General: $</span>${montototalventas}</h3>
         </div>
 
 
