@@ -15,6 +15,7 @@ public class VentaRequest {
     private Cliente cliente;
 	private boolean estado;
     private List<Articulo> listaArticulos;
+    private float ganancias;
 	
 	@Override
 	public String toString() {
@@ -48,6 +49,12 @@ public class VentaRequest {
 	
 	
 	
+	public float getGanancias() {
+		return ganancias;
+	}
+	public void setGanancias(float ganancias) {
+		this.ganancias = ganancias;
+	}
 	public List<Articulo> getListaArticulos() {
 		return listaArticulos;
 	}
@@ -64,13 +71,12 @@ public class VentaRequest {
     }
 	
 	public Ventas construirVentaConArts(){
-		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, true);
+		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, ganancias,  true);
 
         if(id != 0){
             a.setId(id);
         }
         return a;
     }
-	
 
 }

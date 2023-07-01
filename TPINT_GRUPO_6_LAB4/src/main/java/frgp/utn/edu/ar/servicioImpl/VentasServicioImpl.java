@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
+import frgp.utn.edu.ar.dtos.StockRequest;
 import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
@@ -18,6 +19,7 @@ import frgp.utn.edu.ar.servicio.StockServicio;
 
 import frgp.utn.edu.ar.dao.VentasDao;
 import frgp.utn.edu.ar.dominio.Articulo;
+import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.servicio.VentasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,7 @@ public class VentasServicioImpl  implements VentasService{
 	private StockServicio stockServicio;
 	private ArticuloServicio articuloServicio;
 	private ClienteServicio clienteServicio;
-
-
+	
 	public void setDataAccess(VentasDao dataAccess) {
 		this.dataAccess = dataAccess;
 	}
@@ -86,11 +87,12 @@ public class VentasServicioImpl  implements VentasService{
 			vreq.setListaArticulos(new ArrayList<>());
 
 			Integer cont = 0;
+			float ganancia = 0;
 
 			for (String item : idsArticulos) {
 				int cantidadArticulo = Integer.parseInt(idsCantidades.get(cont));
 
-				deducirStockDeArticulo(vreq, Integer.parseInt(item), cantidadArticulo);
+				ganancia += deducirStockDeArticulo(vreq, Integer.parseInt(item), cantidadArticulo);
 
 				cont++;
 			}
@@ -105,6 +107,8 @@ public class VentasServicioImpl  implements VentasService{
 			vreq.setMontoTotal(montoTotal);
 
 			Ventas v = vreq.construirVentaConArts();
+			
+			v.setGanancia(ganancia);
 			dataAccess.insertar(v);
 
 
@@ -136,12 +140,16 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private void deducirStockDeArticulo(VentaRequest vreq, int idArt, int cantidadPedidaDeArticulo){
+	private float deducirStockDeArticulo(VentaRequest vreq, int idArt, int cantidadPedidaDeArticulo){
 			Articulo a = this.articuloServicio.getbyID(idArt); // buscamos objeto con ese id
+			vreq.setListaArticulos(new ArrayList<Articulo>());
 			vreq.getListaArticulos().add(a);
 			System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
 			Boolean stockInsuficiente = true;
+			Stock s = this.stockServicio.get_STOCKOBJ_BY_IDART(idArt);
+			
+			
 
 			if (cantidadPedidaDeArticulo <= this.stockServicio.obtenerStockDeArticuloMasViejo(a.getId())) {
 				this.stockServicio.deducirStock(a, cantidadPedidaDeArticulo);
@@ -163,8 +171,7 @@ public class VentasServicioImpl  implements VentasService{
 					stockInsuficiente = false;
 				}
 			}
-
-
+			return (a.getPrecio() - s.getPrecioCompra()) * cantidadPedidaDeArticulo;
 	}
 	
 }

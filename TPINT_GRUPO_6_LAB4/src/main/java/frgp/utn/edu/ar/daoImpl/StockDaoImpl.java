@@ -39,6 +39,8 @@ public class StockDaoImpl implements StockDao {
 	public Stock obtenerPorId(int id) {
 		return this.hibernateTemplate.get(Stock.class, id);
 	}
+	
+	
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
@@ -84,6 +86,18 @@ public class StockDaoImpl implements StockDao {
         if(query.uniqueResult()!=null)
         	return (Integer) query.uniqueResult();
         return  0;
+    }
+	
+	@Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Stock get_STOCKOBJ_BY_IDART(int id) {
+		String hql = "FROM Stock s WHERE s.articulo.id = :idArticulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
+        Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setParameter("idArticulo", id);
+        query.setMaxResults(1);
+        if(query.uniqueResult()!=null)
+        	return (Stock) query.uniqueResult();
+        return  null;
     }
 	
 	@Override

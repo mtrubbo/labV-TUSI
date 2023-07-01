@@ -62,5 +62,10 @@ public class StockServicioImpl implements StockServicio {
 	public Integer obtenerStockDeArticuloMasViejo(int id) {
 		return dataAccess.obtenerStockDeArticuloMasViejo(id);
 	}
+
+	@Override
+	public Stock get_STOCKOBJ_BY_IDART(int id) {
+		return dataAccess.get_STOCKOBJ_BY_IDART(id);
+	}
 	
 }
