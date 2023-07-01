@@ -1,13 +1,10 @@
 package frgp.utn.edu.ar.dominio;
 
 import frgp.utn.edu.ar.dtos.ClienteRequest;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.datetime.DateFormatter;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 
 @Entity
@@ -37,7 +34,7 @@ public class Cliente {
 	@Column
 	private String telefono;
 	@Column(nullable = false)
-	private Boolean eliminado;
+	private Boolean estado;
 
 	public Cliente() { }
 
@@ -63,7 +60,7 @@ public class Cliente {
 		this.email = email;
 		this.telefono = telefono;
 
-		this.eliminado = false;
+		this.estado = false;
 	}
 
 
@@ -149,9 +146,9 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	public Boolean getEliminado() { return eliminado; }
+	public Boolean getEstado() { return estado; }
 
-	public void setEliminado(Boolean eliminado) { this.eliminado = eliminado; }
+	public void setEstado(Boolean estado) { this.estado = estado; }
 
 	public String getNombreCompleto(){
 		return this.nombre + " " + this.apellido;

@@ -31,7 +31,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	public Cliente obtenerPorDni(String dni) {
 		Query query = this.hibernateTemplate.getSessionFactory()
 				.getCurrentSession()
-				.createQuery("from Cliente where dni= :dni and eliminado=false");
+				.createQuery("from Cliente where dni= :dni and estado=true");
 
 		query.setParameter("dni", dni);
 		return (Cliente)query.uniqueResult();
@@ -42,7 +42,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	public Cliente obtenerPorId(int id) {
 		Query query = this.hibernateTemplate.getSessionFactory()
 				.getCurrentSession()
-				.createQuery("from Cliente where id= :id and eliminado=false");
+				.createQuery("from Cliente where id= :id and estado=true");
 
 		query.setParameter("id", id);
 		return (Cliente)query.uniqueResult();
@@ -53,7 +53,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	public ArrayList<Cliente> obtenerTodos() {
 		Query query = this.hibernateTemplate.getSessionFactory()
 				.getCurrentSession()
-				.createQuery("from Cliente where eliminado=false ORDER BY id DESC");
+				.createQuery("from Cliente where estado=true ORDER BY id DESC");
 
 		return (ArrayList<Cliente>)query.list();
 	}
@@ -63,7 +63,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void eliminar(int id) {
 		Cliente c = obtenerPorId(id);
-		c.setEliminado(true);
+		c.setEstado(true);
 		this.hibernateTemplate.update(c);
 	}
 
