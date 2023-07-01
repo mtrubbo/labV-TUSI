@@ -59,8 +59,8 @@ public class StockServicioImpl implements StockServicio {
 	}
 
 	@Override
-	public Integer stockArtByID(int id) {
-		return dataAccess.stockArtByID(id);
+	public Integer obtenerStockDeArticuloMasViejo(int id) {
+		return dataAccess.obtenerStockDeArticuloMasViejo(id);
 	}
 	
 }

@@ -14,7 +14,7 @@ public interface StockServicio {
 	void actualizar(Stock a);
 	Stock getbyID(int id);	
 	long artByID(int id);	
-	Integer stockArtByID(int id);	
+	Integer obtenerStockDeArticuloMasViejo(int id);
 	void deducirStock(Articulo articulo, int cantidad);
 
 

@@ -46,6 +46,9 @@
 	<!-- CREO EL SERVICIO PARA Ventas -->
 	<bean id="serviceBeanVentas" class="frgp.utn.edu.ar.servicioImpl.VentasServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanVentas"></property>
+		<property name="stockServicio" ref="serviceBeanStock"></property>
+		<property name="articuloServicio" ref="serviceBeanArt"></property>
+		<property name="clienteServicio" ref="serviceBean"></property>
 	</bean>
 		
 	<!-- CREO EL SERVICE PARA TipoArticulo -->

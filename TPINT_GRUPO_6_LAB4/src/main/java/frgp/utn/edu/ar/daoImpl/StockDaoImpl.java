@@ -76,7 +76,7 @@ public class StockDaoImpl implements StockDao {
 	//trae cantidad del articulo mas viejo ingresado con cantidad mayor a 0
 	@Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Integer stockArtByID(int id) {
+    public Integer obtenerStockDeArticuloMasViejo(int id) {
 		String hql = "select s.cantidad FROM Stock s WHERE s.articulo.id = :idArticulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
         Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
         query.setParameter("idArticulo", id);

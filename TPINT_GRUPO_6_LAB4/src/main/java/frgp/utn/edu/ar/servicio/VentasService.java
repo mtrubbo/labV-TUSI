@@ -6,13 +6,19 @@ import java.util.List;
 
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
+import frgp.utn.edu.ar.dtos.VentaRequest;
 
 public interface VentasService {
 	
 	ArrayList<Ventas> obtenerTodos();
 	List<ConsultaVentasResponse> obtenerPorRangoDeFechas(Date fechaIni, Date fechaFin);
 
-	void insertar(Ventas a);
+	void crearVenta(VentaRequest vreq,
+								List<String> idsArticulos,
+								List<String> idsCantidades,
+								String fechaVenta,
+								int clienteId,
+								double montoTotal);
 
     void eliminar(int id) ;
     

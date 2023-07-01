@@ -13,22 +13,15 @@ import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,14 +30,12 @@ import com.google.gson.Gson;
 
 import frgp.utn.edu.ar.dominio.Articulo;
 import frgp.utn.edu.ar.dominio.Cliente;
-import frgp.utn.edu.ar.dominio.Stock;
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ArticuloInfo;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
 import frgp.utn.edu.ar.dtos.VentaRequest;
-import frgp.utn.edu.ar.helpers.JsonUtils;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.StockServicio;
@@ -99,81 +90,23 @@ public class VentasController {
 	@ResponseBody
 	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta, @PathVariable("cliente") int cliente,
 			@PathVariable("montoTotal") Double montoTotal, @PathVariable("listaArticulos") List<String> listaArticulos,
-			@PathVariable("listaCantidades") List<String> listaCantidades, HttpSession session) {
+			@PathVariable("listaCantidades") List<String> listaCantidades) {
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
 		VentaRequest vreq = new VentaRequest();
 
-		// System.out.println("LISTA ART: "+listaArticulos.toString());
+		try{
+			service.crearVenta(vreq, listaArticulos, listaCantidades, fechaVenta, cliente, montoTotal);
 
-		try {
-			vreq.setListaArticulos(new ArrayList<Articulo>());
-
-			Integer cont = 0;
-
-			for (String item : listaArticulos) { // item recibe los ids de listaarticulos
-
-				Articulo a = artService.getbyID(Integer.parseInt(item)); // buscamos objeto con ese id
-				vreq.getListaArticulos().add(a);
-				Integer suma = Integer.parseInt(listaCantidades.get(cont));
-				System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + suma);
-
-				Boolean seguir = true;
-				// me alcanza con 1 art
-				// comparar con el stock del ultimo articulo con stock > 0
-				// si el articulo mas viejo tiene stock suficiente
-				if (suma <= sService.stockArtByID(a.getId())) {
-					// get articulo mas viejo
-					sService.deducirStock(a, suma); // restarle stock al mas viejo
-					seguir = false; // que no entre al while
-				}
-
-				while (seguir) {
-					// o si necesito varios articulos
-					// comparar con el stock del ultimo articulo con stock > 0
-					// si suma es distinto de cero quiere decir que con el articulo anterior (if
-					// anterior) no me alcanzo
-					if (suma >= sService.stockArtByID(a.getId()))// suma >= articulo mas viejo su cantidad
-					{
-						Integer restar = sService.stockArtByID(a.getId());
-						sService.deducirStock(a, restar);
-						suma -= restar;
-					}
-					if (suma < sService.stockArtByID(a.getId())) {
-						sService.deducirStock(a, suma);
-						suma = 0;
-					}
-					if (suma == 0) {
-						seguir = false;
-					}
-				};
-
-				System.out.println("SALGO DEL WHILE");
-				cont++;
-			}
-
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
-			LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
-			Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
-
-			vreq.setFecha(Date.from(instant));
-			vreq.setCliente(cService.obtenerPorId(cliente));
-			vreq.setMontoTotal(montoTotal);
-
-			service.insertar(vreq.construirVentaConArts());
-
-			System.out.println("TEST6");
 			result.setStatus(ResultStatus.ok);
-			result.setMessage("Se ha creado con �xito");
-		} catch (Exception e) {
+			result.setMessage("Se ha creado exitosamente");
+		}
+		catch(Exception e){
 			result.setStatus(ResultStatus.error);
 			result.setMessage("Error al insertar venta");
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			e.printStackTrace();
 		}
+
 
 		json = gson.toJson(result);
 		return json;
