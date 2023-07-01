@@ -26,7 +26,7 @@ public class Ventas {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
 	private Date fecha;
     @Column(nullable = false)
     private double montoTotal;
@@ -64,6 +64,7 @@ public class Ventas {
 		this.listaArticulos = listaArticulos;
 		this.cliente = cliente;
 		this.estado = estado;
+
 	}    @Transient
     public List<Integer> getListaArticulosIds() {
         List<Integer> articuloIds = new ArrayList<>();
