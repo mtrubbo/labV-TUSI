@@ -16,5 +16,5 @@ public interface StockDao {
 	public long artByID(int id);
 	public Integer obtenerStockDeArticuloMasViejo(int id);
 	public void deducirStock(Articulo articulo, int cantidad);
-
+	public Stock get_STOCKOBJ_BY_IDART(int id);
 }

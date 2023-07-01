@@ -46,6 +46,9 @@ public class Ventas {
     @Column(nullable = false)
 	private boolean estado;
     
+    @Column(nullable = false)
+    private float ganancia;
+    
     public Ventas() {}
 
 	public Ventas(Date fecha, double montoTotal, Cliente cliente, boolean estado) {
@@ -56,10 +59,11 @@ public class Ventas {
 		this.estado = estado;
 	}
 	
-	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente,
+	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente, float ganancia,
 			boolean estado) {
 		super();
 		this.fecha = fecha;
+		this.ganancia = ganancia;
 		this.montoTotal = montoTotal;
 		this.listaArticulos = listaArticulos;
 		this.cliente = cliente;
@@ -84,6 +88,16 @@ public class Ventas {
 
 	public Date getFecha() {
 		return fecha;
+	}
+	 
+	
+	
+	public float getGanancia() {
+		return ganancia;
+	}
+
+	public void setGanancia(float ganancia) {
+		this.ganancia = ganancia;
 	}
 
 	public void setFecha(Date fecha) {
