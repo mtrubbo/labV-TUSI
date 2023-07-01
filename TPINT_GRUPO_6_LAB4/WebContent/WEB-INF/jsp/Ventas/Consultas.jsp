@@ -108,9 +108,10 @@
         </div>
 
 
-        <table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
+        <table id="tableDetalle" class="responsive table table-striped dataTables_wraper">
             <thead>
                 <tr>
+                	<th>N° Venta</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Monto total</th>
@@ -119,7 +120,8 @@
             <tbody>
                 <c:forEach items="${Ventas}" var="item">
                     <tr>
-                        <td>${item.fecha}</label> </td>
+                    	<td>${item.id} </td>
+                        <td>${item.fecha} </td>
                         <td>${item.nombreCliente}</td>
                         <td>${item.montoTotal}</td>
                         <td>
@@ -134,6 +136,13 @@
 </main>
 
 <script type="text/javascript" src='<c:url value="/resources/js/consultaVentas.js"/>'></script>
+
+<script>
+$(document).ready( function () {
+    $('#tableDetalle').DataTable({
+        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
+    });
+</script>
 
 <c:if test="${not empty sessionScope.mensaje}">
     <%-- Configurar la notificación Toastr --%>

@@ -16,6 +16,8 @@
 
 <!-- STYLESHEETS -->
 <link rel="stylesheet" type="text/css"
+	href='<c:url value="/resources/css/Home.css"/>'>
+<link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/bootstrap.css"/>'>
 <link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/ventas.css"/>'>
@@ -57,24 +59,27 @@
 </head>
 
 <body>
-	<div class="bg-light" style="text-align: center; margin: 4rem 18rem;padding: 1rem;border-radius:2rem;box-shadown: 0px 0 5px #000">
+	<div class="bg-light"
+		style="text-align: center; margin: 4rem 18rem; padding: 1rem; border-radius: 2rem; box-shadown: 0px 0 5px #000">
 		<h1>
 			<span>Venta N° </span>${venta}<h1>
-				<h3>
-					<span>Fecha: </span>${fecha}</h3>
-				<h2>
-					<span>Cliente: </span>${cliente}</h2>
+				<h5>
+					<span>Fecha: </span>${fecha}</h5>
+				<h5>
+					<span>Cliente: </span>${cliente}</h5>
 
 				<table id="tableVentas"
-					class="responsive table table-striped dataTables_wraper">
+					class="responsive table dataTables_wraper">
 					<thead>
 						<tr>
-							<th>Codigo</th>
-							<th>Nombre</th>
-							<th>Precio</th>
+							<th>Cod. Producto</th>
+							<th>Producto</th>
+							<th>Precio V.</th>
 							<th>Marca</th>
 						</tr>
 					</thead>
+					
+					<br>
 
 					<tbody>
 						<c:forEach items="${articulos}" var="item">
@@ -91,7 +96,8 @@
 				</table>
 
 
-				<h3><span>$ </span>${monto}</h3>
+				<h4 style="text-align:right">
+					<span><b>Total:</b> $ </span>${monto}</h4>
 	</div>
 </body>
 </html>

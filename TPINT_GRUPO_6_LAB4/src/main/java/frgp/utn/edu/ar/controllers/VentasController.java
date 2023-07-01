@@ -182,10 +182,15 @@ public class VentasController {
 
 	@RequestMapping(value = "/consultas/detalles/{id}", method = RequestMethod.GET)
 	public ModelAndView detallesVenta(@PathVariable int id) throws ParseException {
-		ModelAndView vm = new ModelAndView("Ventas/DetallesConsulta");
-		vm.addObject("articulos", this.service.getbyID(id).getListaArticulos());
+		Ventas venta = this.service.getbyID(id);
+		ModelAndView mv = new ModelAndView("Ventas/Detalle");
+		mv.addObject("venta", venta.getId());
+		mv.addObject("fecha", venta.getFecha());
+		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
+		mv.addObject("articulos", venta.getListaArticulos());
+		mv.addObject("monto", venta.getMontoTotal());
 
-		return vm;
+		return mv;
 	}
 
 	@RequestMapping(value = "/detalle/{id}", method = RequestMethod.GET)
