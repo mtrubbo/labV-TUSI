@@ -131,6 +131,7 @@
 				<value>frgp.utn.edu.ar.dominio.RolUsuario</value>
 				<value>frgp.utn.edu.ar.dominio.TipoArticulo</value>
 				<value>frgp.utn.edu.ar.dominio.Marcas</value>
+				<value>frgp.utn.edu.ar.dominio.Historico</value>
 				<value>frgp.utn.edu.ar.initializer.DataInitializer</value>
 			</list>
 		</property>

@@ -2,8 +2,10 @@ package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,10 +20,13 @@ import frgp.utn.edu.ar.dominio.Stock;
 public class HistoricoDaoImpl implements HistoricoDao {
 	
 	private HibernateTemplate hibernateTemplate = null;
-	
-	public void setSessionFactory(SessionFactory sessionFactory) {
-        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-    }
+	private Session currentSession;
+
+
+	public HistoricoDaoImpl(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+		Session s = this.hibernateTemplate.getSessionFactory().getCurrentSession();
+	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -32,73 +37,21 @@ public class HistoricoDaoImpl implements HistoricoDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Historico obtenerPorIDVenta(int idVenta) {
-		return this.hibernateTemplate.get(Historico.class, idVenta);
+	public List<Historico> obtenerHistoricoDeVenta(int idVenta) {
+		Query q = this.currentSession
+				.createQuery("FROM Historico h " +
+						"WHERE h.estado=true AND h.venta.id = :idVenta");
+
+		q.setParameter("idVenta", idVenta);
+
+		return (List<Historico>)q.list();
 	}
 
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public ArrayList<Historico> obtenerTodos(){
+	public ArrayList<Historico> obtenerTodos() {
 		return (ArrayList<Historico>) this.hibernateTemplate.loadAll(Historico.class);
 	}
-
-	
-
-
-	@Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long artByID(int id) {
-        String hql = "Select SUM(s.cantidad)FROM Stock s WHERE s.articulo.id = :idArticulo";
-        Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
-        query.setParameter("idArticulo", id);
-        query.setMaxResults(1);
-        if(query.uniqueResult()!=null)
-        	return (long) query.uniqueResult();
-        return  0;
-    }
-	
-	
-	//trae cantidad del articulo mas viejo ingresado con cantidad mayor a 0
-	@Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Integer obtenerStockDeArticuloMasViejo(int id) {
-		String hql = "select s.cantidad FROM Stock s WHERE s.articulo.id = :idArticulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
-        Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
-        query.setParameter("idArticulo", id);
-        query.setMaxResults(1);
-        if(query.uniqueResult()!=null)
-        	return (Integer) query.uniqueResult();
-        return  0;
-    }
-	
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void deducirStock(Articulo articulo, int cantidad) {
-	    // Consultar los registros de stock ordenados por fecha de ingreso ascendente (FIFO)
-	    String hql = "FROM Stock s WHERE s.articulo = :articulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
-	    Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
-	    query.setParameter("articulo", articulo);
-	    query.setMaxResults(1); // Obtener el registro de stock más antiguo
-	    Stock stock = (Stock) query.uniqueResult();
-
-	    if (stock != null) {
-	        int stockDisponible = stock.getCantidad();
-	        if (stockDisponible >= cantidad) {
-	            // Si hay suficiente stock disponible, deducir la cantidad solicitada
-	            stock.setCantidad(stockDisponible - cantidad);
-	            this.hibernateTemplate.update(stock);
-	        } else {
-	            // Si no hay suficiente stock disponible, lanzar una excepción o manejar el caso según sea necesario
-	            throw new RuntimeException("No hay suficiente stock disponible para deducir");
-	        }
-	    } else {
-	        // Si no se encuentra ningún registro de stock, lanzar una excepción o manejar el caso según sea necesario
-	        throw new RuntimeException("No se encontró ningún registro de stock para el artículo");
-	    }
-	}
-
-	
-	
 	
 }
