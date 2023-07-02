@@ -1,13 +1,22 @@
 @charset "ISO-8859-1";
 
 body{
-	overflow: hidden;
+	/*overflow: hidden;*/
+		background-image: url("/resources/img/home-background.jpg");
+			background-repeat: no-repeat;
+	
+					/*height:100%;*/
+					width:100%
 }
 
+main{
+	padding-top:120px;
+}
+/*
 .mainBackgorundsetting{
 	background-image: url("/resources/img/home-background.jpg");
-}
-
+}*/
+/*
 .home{
 	height: 90vh; 
 	width: 100%;
@@ -16,7 +25,7 @@ body{
 	background-size: cover;
 	background-position: center center;
 	background-color: #D8D8D8;
-}
+}*/
 .sectionSizes{
 	height: 400px;
 	width: inherit;
@@ -43,7 +52,7 @@ body{
 }
 
 .articuloCard{
-	background-image: url("/resources/img/articulos-clickevent.png");
+	background-image: url("/resources/img/articulos-clickevent.jpg");
 	background-size: cover;
 	background-position: center;
 	transition: transform 0.3s ease;
@@ -52,6 +61,21 @@ body{
 }
 
 .articuloCard:hover{
+	background-size: 120%;
+	transform: scale(1);
+	cursor: pointer;
+}
+
+.stockCard{
+	background-image: url("/resources/img/stock-clickevent.png");
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.3s ease;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+}
+
+.stockCard:hover{
 	background-size: 120%;
 	transform: scale(1);
 	cursor: pointer;
@@ -67,7 +91,7 @@ body{
 }
 
 .ventasCard:hover{
-		background-size: 120%;
+	background-size: 120%;
 	transform: scale(1);
 	cursor: pointer;
 }

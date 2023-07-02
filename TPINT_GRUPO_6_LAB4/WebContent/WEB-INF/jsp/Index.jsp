@@ -22,17 +22,34 @@
 		if (atributo.equalsIgnoreCase("vendedor")) {
 	%> <section
 		class="sectionSizes d-flex flex-row justify-content-around align-items-center">
-	<div class="linkingFirst linkingCard clientesCard">
-		<h1>Gestiona tus clientes</h1>
-	</div>
+
+
 	<div class="flex-column justify-content-around inhetHeight">
-		<div class="linkingCard linkingDoubles articuloCard">
-			<h1>Gestiona tus articulos</h1>
-		</div>
-		<div class="linkingCard linkingDoubles ventasCard">
-			<h1>Gestiona tus ventas</h1>
-		</div>
+		<a href="/clientes">
+			<div class="linkingCard linkingDoubles clientesCard">
+				<h1>Gestiona tus Clientes</h1>
+			</div>
+		</a> 
+		<a href="/stocks">
+			<div class="linkingCard linkingDoubles stockCard">
+				<h1>Gestiona tus Stocks</h1>
+			</div>
+		</a>
 	</div>
+
+	<div class="flex-column justify-content-around inhetHeight">
+		<a href="/articulos">
+			<div class="linkingCard linkingDoubles articuloCard">
+				<h1>Gestiona tus articulos</h1>
+			</div>
+		</a> 
+		<a href="/ventas">
+			<div class="linkingCard linkingDoubles ventasCard">
+				<h1>Gestiona tus ventas</h1>
+			</div>
+		</a>
+	</div>
+
 	</section> <%
  	}
  %> <%
