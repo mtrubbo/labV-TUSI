@@ -13,7 +13,6 @@ import java.util.List;
 import frgp.utn.edu.ar.dao.HistoricoDao;
 import frgp.utn.edu.ar.dominio.*;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
-import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.StockServicio;
@@ -107,7 +106,7 @@ public class VentasServicioImpl  implements VentasService{
 				venta.getListaArticulos().add(articulo);
 				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
 
-				historicos.addAll(deducirStockDeArticulo(venta, articulo, cantidadArticulo));
+				historicos.addAll(deducirStockDeArticuloYArmarHistorico(venta, articulo, cantidadArticulo));
 
 				cont++;
 			}
@@ -154,7 +153,7 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private List<Historico> deducirStockDeArticulo(Ventas v, Articulo a, int cantidadPedidaDeArticulo){
+	private List<Historico> deducirStockDeArticuloYArmarHistorico(Ventas v, Articulo a, int cantidadPedidaDeArticulo){
 		System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
 		// Trae todos los stocks del articulo, del mas viejo al mas nuevo.
@@ -169,8 +168,6 @@ public class VentasServicioImpl  implements VentasService{
 
 			if(cantidadPedidaDeArticulo >= cantidadStock){
 				s.setCantidad(0);
-				stockServicio.actualizar(s);
-
 				cantidadPedidaDeArticulo -= cantidadStock;
 
 				Historico historico = new Historico(v, s, cantidadStock);
@@ -178,12 +175,14 @@ public class VentasServicioImpl  implements VentasService{
 			}
 			else{
 				s.setCantidad(s.getCantidad() - cantidadPedidaDeArticulo);
-				stockServicio.actualizar(s);
 
 				Historico historico = new Historico(v, s, cantidadPedidaDeArticulo);
 				historicos.add(historico);
 				break;
 			}
+
+			stockServicio.actualizar(s);
+
 		}
 
 		return historicos;
