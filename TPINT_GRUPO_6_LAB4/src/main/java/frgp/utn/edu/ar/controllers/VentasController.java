@@ -173,35 +173,18 @@ public class VentasController {
 
 		return vm;
 	}
+	
+	
 
 	@RequestMapping(value = "/consultas/detalles/{id}", method = RequestMethod.GET)
 	public ModelAndView detallesVenta(@PathVariable int id) throws ParseException {
-		Ventas venta = this.service.getbyID(id);
-		ModelAndView mv = new ModelAndView("Ventas/Detalle");
-		mv.addObject("venta", venta.getId());
-		mv.addObject("fecha", venta.getFecha());
-		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
-		mv.addObject("articulos", venta.getListaArticulos());
-		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
-		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
-
-		return mv;
+		return service.buildDetalle(id,"Ventas/Detalle");
 	}
 
 	@RequestMapping(value = "/detalle/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView getDetalle(@PathVariable int id) {
-		Ventas venta = this.service.getbyID(id);
-
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("venta", venta.getId());
-		mv.addObject("fecha", venta.getFecha());
-		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
-		mv.addObject("articulos", venta.getListaArticulos());
-		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
-		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
-		mv.setViewName("Ventas/Detalle");
-		return mv;
+		return service.buildDetalle(id,"Ventas/Detalle");
 	}
 
 	@RequestMapping(value = "/getArticulo_by_venta/{id}", method = RequestMethod.GET)

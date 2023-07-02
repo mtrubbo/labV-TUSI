@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
 
@@ -25,4 +27,5 @@ public interface VentasService {
 
 	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin);
 	public double obtenerGananciaTotalPorRangoFechas(Date fechaIni, Date fechaFin);
+	public ModelAndView buildDetalle(int id, String view);
 }

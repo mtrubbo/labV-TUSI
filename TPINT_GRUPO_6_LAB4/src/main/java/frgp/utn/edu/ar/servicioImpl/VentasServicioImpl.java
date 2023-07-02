@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import frgp.utn.edu.ar.dao.HistoricoDao;
 import frgp.utn.edu.ar.dominio.*;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
@@ -216,6 +218,21 @@ public class VentasServicioImpl  implements VentasService{
 		}
 
 		return ganancia;
+	}
+	
+	
+	public ModelAndView buildDetalle(int id, String view) {
+		Ventas venta = getbyID(id);
+		ModelAndView mv = new ModelAndView(view);
+		
+		mv.addObject("venta", venta.getId());
+		mv.addObject("fecha", venta.getFecha());
+		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
+		mv.addObject("articulos", venta.getListaArticulos());
+		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
+		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
+		
+		return mv;
 	}
 }
 
