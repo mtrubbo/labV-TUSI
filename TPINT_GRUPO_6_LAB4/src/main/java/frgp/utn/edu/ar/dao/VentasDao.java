@@ -14,4 +14,5 @@ public interface VentasDao {
 	public void eliminar(int id);
 	public void actualizar(Ventas a);
 	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin);
+	public double obtenerGananciaTotalPorRangoFechas(Date fechaIni, Date fechaFin);
 }

@@ -133,12 +133,14 @@ public class VentasController {
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Ventas/Consultas");
 
+		/*
 		float suma = 0;
 		ArrayList<Ventas> list = service.obtenerTodos();
 		for (Ventas v : list) {
 			suma += v.getMontoTotal();
 		}
 		MV.addObject("montoTotal", suma);
+		*/
 
 		return MV;
 	}
@@ -157,16 +159,17 @@ public class VentasController {
 		Date fechaIni = dateFmt.parse(fechaInicio);
 		Date fechaFinal = dateFmt.parse(fechaFin);
 		
-		double montoTotalSuma = 0;
+		/*double montoTotalSuma = 0;
 		
 		List<ConsultaVentasResponse> lVentas = this.service.obtenerPorRangoDeFechas(fechaIni, fechaFinal);
 		
 		for (ConsultaVentasResponse consultaVentasResponse : lVentas) {
 			montoTotalSuma += consultaVentasResponse.getMontoTotal();
 		}
-		
+		*/
 		vm.addObject("Ventas", this.service.obtenerPorRangoDeFechas(fechaIni, fechaFinal));
 		vm.addObject("montototalventas",this.service.obtenerTotalPorRangoFechas(fechaIni, fechaFinal));
+		vm.addObject("gananciatotalventas",this.service.obtenerGananciaTotalPorRangoFechas(fechaIni, fechaFinal));
 
 		return vm;
 	}
@@ -180,6 +183,7 @@ public class VentasController {
 		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
 		mv.addObject("monto", venta.getMontoTotal());
+		mv.addObject("ganancia", venta.getGanancia());
 
 		return mv;
 	}
@@ -195,6 +199,7 @@ public class VentasController {
 		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
 		mv.addObject("monto", venta.getMontoTotal());
+		mv.addObject("ganancia", venta.getGanancia());
 		mv.setViewName("Ventas/Detalle");
 		return mv;
 	}

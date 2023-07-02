@@ -97,7 +97,9 @@
 
 
 				<h4 style="text-align:right">
-					<span><b>Total:</b> $ </span>${monto}</h4>
+					<span><b>Monto:</b> $ </span>${monto}</h4>
+				<h4 style="text-align:right">
+					<span><b>Ganancia:</b> $ </span>${ganancia}</h4>
 	</div>
 </body>
 </html>
