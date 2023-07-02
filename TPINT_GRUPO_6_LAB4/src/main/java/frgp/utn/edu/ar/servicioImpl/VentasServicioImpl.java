@@ -188,7 +188,7 @@ public class VentasServicioImpl  implements VentasService{
 			else{
 				s.setCantidad(cantidadStock - cantidadPedidaDeArticulo);
 				stockServicio.actualizar(s);
-				stocksDeducidos.add(new DeduccionStock(s, cantidadStock));
+				stocksDeducidos.add(new DeduccionStock(s, cantidadPedidaDeArticulo));
 				break;
 			}
 		}
