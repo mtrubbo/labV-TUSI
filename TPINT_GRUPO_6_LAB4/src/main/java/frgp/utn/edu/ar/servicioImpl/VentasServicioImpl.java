@@ -85,9 +85,6 @@ public class VentasServicioImpl  implements VentasService{
 						   int clienteId,
 						   double montoTotal) {
 		try {
-
-
-
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
 			LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
@@ -97,7 +94,9 @@ public class VentasServicioImpl  implements VentasService{
 
 			Ventas venta = new Ventas(Date.from(instant), montoTotal, clienteVenta);
 
-			Integer cont = 0;
+			List<Historico> historicos = new ArrayList<>();
+
+			int cont = 0;
 			double ganancia = 0;
 			for (String item : idsArticulos) {
 				int idArt = Integer.parseInt(item);
@@ -108,12 +107,13 @@ public class VentasServicioImpl  implements VentasService{
 				venta.getListaArticulos().add(articulo);
 				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
 
-				deducirStockDeArticulo(articulo, cantidadArticulo);
+				historicos.addAll(deducirStockDeArticulo(venta, articulo, cantidadArticulo));
 
 				cont++;
 			}
 
 			venta.setGanancia(ganancia);
+			venta.getHistorialDeduccionesStock().addAll(historicos);
 			dataAccess.insertar(venta);
 
 		} catch (Exception e) {
@@ -144,14 +144,17 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private void deducirStockDeArticulo(Articulo a, int cantidadPedidaDeArticulo){
+	private List<Historico> deducirStockDeArticulo(Ventas v, Articulo a, int cantidadPedidaDeArticulo){
 		System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
 		// Trae todos los stocks del articulo, del mas viejo al mas nuevo.
 		List<Stock> stocksArt = this.stockServicio.obtenerStocksDeArticulo(a.getId());
 
+		List<Historico> historicos = new ArrayList<>();
+
 		for(int i = 0; i < stocksArt.size(); i++){
 			Stock s = stocksArt.get(i);
+
 			int cantidadStock = s.getCantidad();
 
 			// si cant. pedida > stock disponible, deduzco solo el stock disponible
@@ -159,12 +162,18 @@ public class VentasServicioImpl  implements VentasService{
 			if(cantidadPedidaDeArticulo >= cantidadStock){
 				this.stockServicio.deducirStock(a, cantidadStock);
 				cantidadPedidaDeArticulo -= cantidadStock;
+
+				Historico historico = new Historico(v, s, cantidadStock);
+				historicos.add(historico);
 			}
 			else{
 				this.stockServicio.deducirStock(a, cantidadPedidaDeArticulo);
+				Historico historico = new Historico(v, s, cantidadPedidaDeArticulo);
+				historicos.add(historico);
 				break;
 			}
 		}
 
+		return historicos;
 	}
 }

@@ -1,8 +1,6 @@
 package frgp.utn.edu.ar.dominio;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,15 +29,17 @@ public class Ventas {
     @Column(nullable = false)
     private double montoTotal;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(
         name = "ventas_articulos",
         joinColumns = {@JoinColumn(name = "venta_id")},
         inverseJoinColumns = {@JoinColumn(name = "articulo_id")}
     )
-    private List<Articulo> listaArticulos;
-   
-    
+    private Set<Articulo> listaArticulos;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
+	private List<Historico> historialDeduccionesStock;
+
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
@@ -57,19 +57,11 @@ public class Ventas {
 		this.montoTotal = montoTotal;
 		this.cliente = cliente;
 		this.estado = true;
-		this.listaArticulos = new ArrayList<>();
+		this.listaArticulos = new HashSet<>();
+		this.historialDeduccionesStock = new ArrayList<>();
 	}
-	
-	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente, double ganancia) {
-		super();
-		this.fecha = fecha;
-		this.ganancia = ganancia;
-		this.montoTotal = montoTotal;
-		this.listaArticulos = listaArticulos;
-		this.cliente = cliente;
-		this.estado = true;
 
-	}    @Transient
+   	@Transient
     public List<Integer> getListaArticulosIds() {
         List<Integer> articuloIds = new ArrayList<>();
         for (Articulo articulo : listaArticulos) {
@@ -89,9 +81,7 @@ public class Ventas {
 	public Date getFecha() {
 		return fecha;
 	}
-	 
-	
-	
+
 	public double getGanancia() {
 		return ganancia;
 	}
@@ -128,14 +118,13 @@ public class Ventas {
 		this.estado = estado;
 	}
 
-	public List<Articulo> getListaArticulos() {
+	public Set<Articulo> getListaArticulos() {
 		return listaArticulos;
 	}
 
-	public void setListaArticulos(List<Articulo> listaArticulos) {
-		this.listaArticulos = listaArticulos;
-	};
-
+	public List<Historico> getHistorialDeduccionesStock() {
+		return historialDeduccionesStock;
+	}
 
 	public double calcularMontoTotal() {
 		double suma = 0;

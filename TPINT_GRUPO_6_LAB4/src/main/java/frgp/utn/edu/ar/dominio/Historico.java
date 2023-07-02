@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "historicos")
+@Table(name = "stock_deducciones_historico")
 public class Historico {
 	
 	@Id
@@ -22,29 +22,20 @@ public class Historico {
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="venta_c")
 	private Ventas venta;
-	
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="articulo_c")
-	private Articulo articulo;
-	
+
 	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="stock_c")
 	private Stock stock;
 	
 	@Column(name="cantidadStock")
-	private int cantidadStock;
+	private int cantidadDeducida;
+
 	
-	@Column(name="estado")
-	private Boolean estado; //true: Venta ok / false: devolución
-	
-	public Historico(int id, Ventas venta, Articulo articulo, Stock stock, int cantidadStock, Boolean estado) {
+	public Historico(Ventas venta, Stock stock, int cantidadStock) {
 		super();
-		this.id = id;
 		this.venta = venta;
-		this.articulo = articulo;
 		this.stock = stock;
-		this.cantidadStock = cantidadStock;
-		this.estado = estado;
+		this.cantidadDeducida = cantidadStock;
 	}
 		
 
@@ -64,14 +55,6 @@ public class Historico {
 		this.venta = venta;
 	}
 
-	public Articulo getArticulo() {
-		return articulo;
-	}
-
-	public void setArticulo(Articulo articulo) {
-		this.articulo = articulo;
-	}
-
 	public Stock getStock() {
 		return stock;
 	}
@@ -80,21 +63,12 @@ public class Historico {
 		this.stock = stock;
 	}
 	
-	public int getCantidadStock() {
-		return cantidadStock;
+	public int getCantidadDeducida() {
+		return cantidadDeducida;
 	}
 
-	public void setCantidadStock(int cantidadStock) {
-		this.cantidadStock = cantidadStock;
-	}
-
-
-	public Boolean getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
+	public void setCantidadDeducida(int cantidadDeducida) {
+		this.cantidadDeducida = cantidadDeducida;
 	}
 
 

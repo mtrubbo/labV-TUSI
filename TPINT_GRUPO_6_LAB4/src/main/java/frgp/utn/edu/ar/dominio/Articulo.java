@@ -1,7 +1,9 @@
 package frgp.utn.edu.ar.dominio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,7 +44,7 @@ public class Articulo {
 	private TipoArticulo tipo;
 	
 	@ManyToMany(mappedBy = "listaArticulos", fetch = FetchType.EAGER)
-	private List<Ventas> vLista;
+	private Set<Ventas> vLista;
 	
 	@Column(nullable = false)
 	private double precio;
@@ -62,7 +64,7 @@ public class Articulo {
 		this.estado = estado;
 	}
 
-	public Articulo(int id, String nombre, String descripcion, Marcas marca, TipoArticulo tipo, List<Ventas> vLista,
+	public Articulo(int id, String nombre, String descripcion, Marcas marca, TipoArticulo tipo,
 			double precio, boolean estado) {
 		super();
 		this.id = id;
@@ -70,7 +72,7 @@ public class Articulo {
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.tipo = tipo;
-		this.vLista = vLista;
+		this.vLista = new HashSet<>();
 		this.precio = precio;
 		this.estado = estado;
 	}
@@ -131,12 +133,8 @@ public class Articulo {
 		this.estado = estado;
 	}
 
-	public List<Ventas> getvLista() {
+	public Set<Ventas> getvLista() {
 		return vLista;
-	}
-
-	public void setvLista(List<Ventas> vLista) {
-		this.vLista = vLista;
 	}
 	
  	@Transient

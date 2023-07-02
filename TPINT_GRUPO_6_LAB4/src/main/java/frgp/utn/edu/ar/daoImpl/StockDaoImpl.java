@@ -105,7 +105,7 @@ public class StockDaoImpl implements StockDao {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public List<Stock> obtenerStocksDeArticulo(int artId) {
 		Query query  = this.hibernateTemplate.getSessionFactory().getCurrentSession()
-				.createQuery("FROM Stock s WHERE s.articulo.id = :idArt");
+				.createQuery("FROM Stock s WHERE s.articulo.id = :idArt AND s.cantidad > 0");
 
 		query.setParameter("idArt", artId);
 		return (List<Stock>)query.list();

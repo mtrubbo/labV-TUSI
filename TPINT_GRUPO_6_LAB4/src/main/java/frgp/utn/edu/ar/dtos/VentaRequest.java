@@ -38,9 +38,6 @@ public class VentaRequest {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
-	
-	
 	public double getGanancias() {
 		return ganancias;
 	}
@@ -55,15 +52,6 @@ public class VentaRequest {
 	}
 	public Ventas construirVenta(){
 		Ventas  a = new Ventas(fecha, montoTotal, cliente);
-
-        if(id != 0){
-            a.setId(id);
-        }
-        return a;
-    }
-	
-	public Ventas construirVentaConArts(){
-		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, ganancias);
 
         if(id != 0){
             a.setId(id);
