@@ -39,9 +39,9 @@ public class VentasDaoImpl  implements VentasDao{
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public ArrayList<Ventas> obtenerTodos() {
-		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(Ventas.class);
-	    criteria.add(Restrictions.eq("estado", true));
-	    List<Ventas> resultados = criteria.list();
+		Query q = hibernateTemplate.getSessionFactory().getCurrentSession()
+				.createQuery("FROM Ventas v WHERE v.estado=true");
+	    List<Ventas> resultados = q.list();
 	    return new ArrayList<>(resultados);
 	}
 
