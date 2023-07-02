@@ -19,6 +19,7 @@ import frgp.utn.edu.ar.servicio.StockServicio;
 
 import frgp.utn.edu.ar.dao.VentasDao;
 import frgp.utn.edu.ar.servicio.VentasService;
+import frgp.utn.edu.ar.servicioImpl.dtos.DeduccionStock;
 
 public class VentasServicioImpl  implements VentasService{
 
@@ -95,19 +96,20 @@ public class VentasServicioImpl  implements VentasService{
 			List<Historico> historicos = new ArrayList<>();
 
 			int cont = 0;
-			double ganancia = 0;
 			double montoTotalSuma = 0;
+			double ganancia = 0;
 			for (String item : idsArticulos) {
 				int idArt = Integer.parseInt(item);
 				Articulo articulo = this.articuloServicio.getbyID(idArt);
-				Stock stock = this.stockServicio.obtenerStockPorIdArticulo(articulo.getId());
 				int cantidadArticulo = Integer.parseInt(idsCantidades.get(cont));
 
 				venta.getListaArticulos().add(articulo);
-				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
 				montoTotalSuma += articulo.getPrecio() * cantidadArticulo;
 
-				historicos.addAll(deducirStockDeArticuloYArmarHistorico(venta, articulo, cantidadArticulo));
+				List<DeduccionStock> stocksDeducidos = deducirStockDeArticulo(venta, articulo, cantidadArticulo);
+				List<Historico> deduccionesDeStock = armarHistoricoDeStocksDeducidos(venta, stocksDeducidos);
+				historicos.addAll(deduccionesDeStock);
+				ganancia += calcularGananciaDeStocksDeducidos(stocksDeducidos, articulo);
 
 				cont++;
 			}
@@ -155,13 +157,12 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private List<Historico> deducirStockDeArticuloYArmarHistorico(Ventas v, Articulo a, int cantidadPedidaDeArticulo){
+	private List<DeduccionStock> deducirStockDeArticulo(Ventas v, Articulo a, int cantidadPedidaDeArticulo){
 		System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
 		// Trae todos los stocks del articulo con cantidad > 0, del mas viejo al mas nuevo.
 		List<Stock> stocksArt = this.stockServicio.obtenerStocksDeArticulo(a.getId());
-
-		List<Historico> historicos = new ArrayList<>();
+		List<DeduccionStock> stocksDeducidos = new ArrayList<>();
 
 		for(int i = 0; i < stocksArt.size(); i++){
 			Stock s = stocksArt.get(i);
@@ -171,22 +172,43 @@ public class VentasServicioImpl  implements VentasService{
 			if(cantidadPedidaDeArticulo >= cantidadStock){
 				s.setCantidad(0);
 				stockServicio.actualizar(s);
-
 				cantidadPedidaDeArticulo -= cantidadStock;
 
-				Historico historico = new Historico(v, s, cantidadStock);
-				historicos.add(historico);
+				stocksDeducidos.add(new DeduccionStock(s, cantidadStock));
 			}
 			else{
 				s.setCantidad(cantidadStock - cantidadPedidaDeArticulo);
 				stockServicio.actualizar(s);
-
-				Historico historico = new Historico(v, s, cantidadPedidaDeArticulo);
-				historicos.add(historico);
+				stocksDeducidos.add(new DeduccionStock(s, cantidadStock));
 				break;
 			}
 		}
 
-		return historicos;
+		return stocksDeducidos;
+	}
+	
+	private List<Historico> armarHistoricoDeStocksDeducidos(Ventas venta, List<DeduccionStock> stocksDeducidos){
+		List<Historico> historial = new ArrayList<>();
+
+		for (DeduccionStock stockDeducido :
+				stocksDeducidos) {
+			Historico h = new Historico(venta, stockDeducido.getStock(), stockDeducido.getCantidadDeducida());
+			historial.add(h);
+		}
+
+		return historial;
+	}
+
+	private double calcularGananciaDeStocksDeducidos(List<DeduccionStock> deducciones, Articulo a){
+		double ganancia = 0;
+
+		for (DeduccionStock deduccion:
+			 deducciones) {
+			Stock s = deduccion.getStock();
+			ganancia += (a.getPrecio() - s.getPrecioCompra()) * (double)deduccion.getCantidadDeducida();
+		}
+
+		return ganancia;
 	}
 }
+
