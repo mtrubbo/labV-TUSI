@@ -45,14 +45,14 @@ public class Articulo {
 	private List<Ventas> vLista;
 	
 	@Column(nullable = false)
-	private float precio;
+	private double precio;
 	
 	@Column(nullable = false)
 	private boolean estado;
 	
 	public Articulo() {}
 
-	public Articulo(String nombre, String descripcion, Marcas marca, TipoArticulo tipo, float precio, boolean estado) {
+	public Articulo(String nombre, String descripcion, Marcas marca, TipoArticulo tipo, double precio, boolean estado) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -63,7 +63,7 @@ public class Articulo {
 	}
 
 	public Articulo(int id, String nombre, String descripcion, Marcas marca, TipoArticulo tipo, List<Ventas> vLista,
-			float precio, boolean estado) {
+			double precio, boolean estado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -115,11 +115,11 @@ public class Articulo {
 		this.tipo = tipo;
 	}
 	
-	public float getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
@@ -139,9 +139,9 @@ public class Articulo {
 		this.vLista = vLista;
 	}
 	
-	 @Transient
-	    public ArticuloInfo getArticuloInfo() {
-	        return new ArticuloInfo(id, nombre, descripcion, marca, tipo, precio, estado);
-	    }
+ 	@Transient
+	public ArticuloInfo getArticuloInfo() {
+		return new ArticuloInfo(id, nombre, descripcion, marca, tipo, precio, estado);
+	}
 
 }

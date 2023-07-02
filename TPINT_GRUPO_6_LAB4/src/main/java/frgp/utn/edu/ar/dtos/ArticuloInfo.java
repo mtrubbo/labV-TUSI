@@ -9,12 +9,12 @@ public class ArticuloInfo {
     private String descripcion;
     private Marcas marca;
     private TipoArticulo tipo;
-    private float precio;
+    private double precio;
     private boolean estado;
     
     
     
-	public ArticuloInfo(int id, String nombre, String descripcion, Marcas marca, TipoArticulo tipo, float precio,
+	public ArticuloInfo(int id, String nombre, String descripcion, Marcas marca, TipoArticulo tipo, double precio,
 			boolean estado) {
 		super();
 		this.id = id;
@@ -55,10 +55,10 @@ public class ArticuloInfo {
 	public void setTipo(TipoArticulo tipo) {
 		this.tipo = tipo;
 	}
-	public float getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(float precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 	public boolean isEstado() {

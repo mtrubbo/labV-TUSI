@@ -33,7 +33,7 @@ public class Stock {
 	private int cantidad;
 	
 	@Column(nullable = false)
-	private float precioCompra;
+	private double precioCompra;
 	
 	
 
@@ -42,7 +42,7 @@ public class Stock {
 		
 	}
 
-	public Stock(Articulo articulo, Date fechaIngreso, int cantidad, float precioCompra) {
+	public Stock(Articulo articulo, Date fechaIngreso, int cantidad, double precioCompra) {
 		super();
 		this.articulo = articulo;
 		this.fechaIngreso = fechaIngreso;
@@ -82,11 +82,11 @@ public class Stock {
 		this.cantidad = cantidad;
 	}
 
-	public float getPrecioCompra() {
+	public double getPrecioCompra() {
 		return precioCompra;
 	}
 
-	public void setPrecioCompra(float precioCompra) {
+	public void setPrecioCompra(double precioCompra) {
 		this.precioCompra = precioCompra;
 	}
 }

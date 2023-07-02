@@ -12,7 +12,7 @@ public class ArticuloRequest {
 	private String descripcion;
 	private Marcas marca;
 	private TipoArticulo tipo;
-	private float precio;
+	private double precio;
 	private boolean estado;
 	
 	@Override
@@ -28,9 +28,7 @@ public class ArticuloRequest {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -63,11 +61,11 @@ public class ArticuloRequest {
 		this.tipo = ta;
 	}
 
-	public float getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 	

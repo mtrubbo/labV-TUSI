@@ -85,8 +85,8 @@ public class VentasServicioImpl  implements VentasService{
 						   int clienteId,
 						   double montoTotal) {
 		try {
-			Integer cont = 0;
-			float ganancia = 0;
+
+
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
@@ -97,6 +97,8 @@ public class VentasServicioImpl  implements VentasService{
 
 			Ventas venta = new Ventas(Date.from(instant), montoTotal, clienteVenta);
 
+			Integer cont = 0;
+			double ganancia = 0;
 			for (String item : idsArticulos) {
 				int idArt = Integer.parseInt(item);
 				Articulo articulo = this.articuloServicio.getbyID(idArt);
@@ -106,7 +108,7 @@ public class VentasServicioImpl  implements VentasService{
 				venta.getListaArticulos().add(articulo);
 				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
 
-				deducirStockDeArticulo(venta, articulo, cantidadArticulo);
+				deducirStockDeArticulo(articulo, cantidadArticulo);
 
 				cont++;
 			}
@@ -142,9 +144,7 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private void deducirStockDeArticulo(Ventas v,
-										 Articulo a,
-										 int cantidadPedidaDeArticulo){
+	private void deducirStockDeArticulo(Articulo a, int cantidadPedidaDeArticulo){
 		System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
 		// Trae todos los stocks del articulo, del mas viejo al mas nuevo.
