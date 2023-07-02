@@ -87,16 +87,15 @@ public class VentasDaoImpl  implements VentasDao{
 			query.setParameter("fechaIni", fechaIni);
 			query.setParameter("fechaFin", fechaFin);
 	        query.setMaxResults(1);
-			return (double)query.uniqueResult();
+
+			Object result = query.uniqueResult();
+			if(result == null)
+				return 0;
+			return (double)result;
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		finally {
-	        //System.out.println("RESULTADO: "+(double)query.uniqueResult());
-		}
-		return -1;
-
 	}
 
 	@Override
