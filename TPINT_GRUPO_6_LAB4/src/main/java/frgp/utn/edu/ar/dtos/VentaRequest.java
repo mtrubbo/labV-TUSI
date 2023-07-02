@@ -13,14 +13,12 @@ public class VentaRequest {
 	private Date fecha;
     private double montoTotal;
     private Cliente cliente;
-	private boolean estado;
     private List<Articulo> listaArticulos;
-    private float ganancias;
+    private double ganancias;
 	
 	@Override
 	public String toString() {
-		return "Fecha = " + fecha + ", Monto Total = " + montoTotal + ", Cliente = " + cliente.getDni() + ", estado = "
-				+ estado + "";
+		return "Fecha = " + fecha + ", Monto Total = " + montoTotal + ", Cliente = " + cliente.getDni();
 	}
 	public Date getFecha() {
 		return fecha;
@@ -40,19 +38,13 @@ public class VentaRequest {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public boolean isEstado() {
-		return estado;
-	}
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
 	
 	
 	
-	public float getGanancias() {
+	public double getGanancias() {
 		return ganancias;
 	}
-	public void setGanancias(float ganancias) {
+	public void setGanancias(double ganancias) {
 		this.ganancias = ganancias;
 	}
 	public List<Articulo> getListaArticulos() {
@@ -62,7 +54,7 @@ public class VentaRequest {
 		this.listaArticulos = listaArticulos;
 	}
 	public Ventas construirVenta(){
-		Ventas  a = new Ventas(fecha, montoTotal, cliente, estado);
+		Ventas  a = new Ventas(fecha, montoTotal, cliente);
 
         if(id != 0){
             a.setId(id);
@@ -71,7 +63,7 @@ public class VentaRequest {
     }
 	
 	public Ventas construirVentaConArts(){
-		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, ganancias,  true);
+		Ventas  a = new Ventas(fecha, montoTotal, listaArticulos, cliente, ganancias);
 
         if(id != 0){
             a.setId(id);

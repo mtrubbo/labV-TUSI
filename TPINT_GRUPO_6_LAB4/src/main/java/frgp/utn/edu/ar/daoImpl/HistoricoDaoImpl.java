@@ -19,13 +19,10 @@ import frgp.utn.edu.ar.dominio.Stock;
 
 public class HistoricoDaoImpl implements HistoricoDao {
 	
-	private HibernateTemplate hibernateTemplate = null;
-	private Session currentSession;
+	private HibernateTemplate hibernateTemplate;
 
-
-	public HistoricoDaoImpl(SessionFactory sessionFactory) {
+	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-		Session s = this.hibernateTemplate.getSessionFactory().getCurrentSession();
 	}
 
 	@Override
@@ -38,7 +35,7 @@ public class HistoricoDaoImpl implements HistoricoDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<Historico> obtenerHistoricoDeVenta(int idVenta) {
-		Query q = this.currentSession
+		Query q = this.hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createQuery("FROM Historico h " +
 						"WHERE h.estado=true AND h.venta.id = :idVenta");
 

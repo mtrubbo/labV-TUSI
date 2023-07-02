@@ -46,6 +46,7 @@
 	<!-- CREO EL SERVICIO PARA Ventas -->
 	<bean id="serviceBeanVentas" class="frgp.utn.edu.ar.servicioImpl.VentasServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanVentas"></property>
+		<property name="historico" ref="dataAccessBeanHistorico"></property>
 		<property name="stockServicio" ref="serviceBeanStock"></property>
 		<property name="articuloServicio" ref="serviceBeanArt"></property>
 		<property name="clienteServicio" ref="serviceBean"></property>
@@ -86,21 +87,25 @@
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
-	
+
+	<bean id="dataAccessBeanHistorico" class="frgp.utn.edu.ar.daoImpl.HistoricoDaoImpl"
+		  scope="singleton">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property>
+	</bean>
 			
-			<!-- CREO EL DAO PARA TipoArticulo -->
-		<bean id="dataAccessBeanTipoArticulo" class="frgp.utn.edu.ar.daoImpl.TipoArticuloDaoImpl">
-		    <property name="sessionFactory" ref="sessionFactoryBean" />
-		</bean>
+		<!-- CREO EL DAO PARA TipoArticulo -->
+	<bean id="dataAccessBeanTipoArticulo" class="frgp.utn.edu.ar.daoImpl.TipoArticuloDaoImpl">
+		<property name="sessionFactory" ref="sessionFactoryBean" />
+	</bean>
+
+	<!-- CREO EL DAO PARA Marca -->
+	<bean id="dataAccessBeanMarca" class="frgp.utn.edu.ar.daoImpl.MarcasDaoImpl">
+		<property name="sessionFactory" ref="sessionFactoryBean" />
+	</bean>
 		
-		<!-- CREO EL DAO PARA Marca -->
-		<bean id="dataAccessBeanMarca" class="frgp.utn.edu.ar.daoImpl.MarcasDaoImpl">
-		    <property name="sessionFactory" ref="sessionFactoryBean" />
-		</bean>
-		
-<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer" scope="prototype">
-    <constructor-arg ref="jdbcTemplate" />
-</bean>
+	<bean id="dataInitializer" class="frgp.utn.edu.ar.initializer.DataInitializer" scope="prototype">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
 		
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
 	<bean id="dataSourceBean"
@@ -141,7 +146,7 @@
 				<prop key="show_sql">true</prop >
 				
 				<!-- CREACION DE LA BASE -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop> 
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>

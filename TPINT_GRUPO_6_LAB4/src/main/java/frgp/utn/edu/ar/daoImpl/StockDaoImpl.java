@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -90,7 +91,7 @@ public class StockDaoImpl implements StockDao {
 	
 	@Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Stock get_STOCKOBJ_BY_IDART(int id) {
+    public Stock obtenerStockPorIdArticulo(int id) {
 		String hql = "FROM Stock s WHERE s.articulo.id = :idArticulo AND s.cantidad > 0 ORDER BY s.fechaIngreso ASC";
         Query query = this.hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql);
         query.setParameter("idArticulo", id);
@@ -99,7 +100,17 @@ public class StockDaoImpl implements StockDao {
         	return (Stock) query.uniqueResult();
         return  null;
     }
-	
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public List<Stock> obtenerStocksDeArticulo(int artId) {
+		Query query  = this.hibernateTemplate.getSessionFactory().getCurrentSession()
+				.createQuery("FROM Stock s WHERE s.articulo.id = :idArt");
+
+		query.setParameter("idArt", artId);
+		return (List<Stock>)query.list();
+	}
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deducirStock(Articulo articulo, int cantidad) {

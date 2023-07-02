@@ -10,29 +10,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import frgp.utn.edu.ar.dao.HistoricoDao;
+import frgp.utn.edu.ar.dominio.*;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
-import frgp.utn.edu.ar.dtos.StockRequest;
 import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.StockServicio;
 
 import frgp.utn.edu.ar.dao.VentasDao;
-import frgp.utn.edu.ar.dominio.Articulo;
-import frgp.utn.edu.ar.dominio.Stock;
-import frgp.utn.edu.ar.dominio.Ventas;
 import frgp.utn.edu.ar.servicio.VentasService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class VentasServicioImpl  implements VentasService{
 
-	private VentasDao dataAccess = null;
+	private VentasDao dataAccess;
+	private HistoricoDao historico;
 	private StockServicio stockServicio;
 	private ArticuloServicio articuloServicio;
 	private ClienteServicio clienteServicio;
-	
+
 	public void setDataAccess(VentasDao dataAccess) {
 		this.dataAccess = dataAccess;
+	}
+
+	public void setHistorico(HistoricoDao historico) {
+		this.historico = historico;
 	}
 
 	public void setStockServicio(StockServicio stockServicio) {
@@ -77,40 +79,40 @@ public class VentasServicioImpl  implements VentasService{
 	}
 
 	@Override
-	public void crearVenta(VentaRequest vreq,
-						   List<String> idsArticulos,
+	public void crearVenta(List<String> idsArticulos,
 						   List<String> idsCantidades,
 						   String fechaVenta,
 						   int clienteId,
 						   double montoTotal) {
 		try {
-			vreq.setListaArticulos(new ArrayList<>());
-
 			Integer cont = 0;
 			float ganancia = 0;
-
-			for (String item : idsArticulos) {
-				int cantidadArticulo = Integer.parseInt(idsCantidades.get(cont));
-
-				ganancia += deducirStockDeArticulo(vreq, Integer.parseInt(item), cantidadArticulo);
-
-				cont++;
-			}
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
 			LocalDateTime ingresoDateTime = ingresoDate.atStartOfDay();
 			Instant instant = ingresoDateTime.toInstant(ZoneOffset.UTC);
 
-			vreq.setFecha(Date.from(instant));
-			vreq.setCliente(this.clienteServicio.obtenerPorId(clienteId));
-			vreq.setMontoTotal(montoTotal);
+			Cliente clienteVenta = this.clienteServicio.obtenerPorId(clienteId);
 
-			Ventas v = vreq.construirVentaConArts();
-			
-			v.setGanancia(ganancia);
-			dataAccess.insertar(v);
+			Ventas venta = new Ventas(Date.from(instant), montoTotal, clienteVenta);
 
+			for (String item : idsArticulos) {
+				int idArt = Integer.parseInt(item);
+				Articulo articulo = this.articuloServicio.getbyID(idArt);
+				Stock stock = this.stockServicio.obtenerStockPorIdArticulo(articulo.getId());
+				int cantidadArticulo = Integer.parseInt(idsCantidades.get(cont));
+
+				venta.getListaArticulos().add(articulo);
+				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
+
+				deducirStockDeArticulo(venta, articulo, cantidadArticulo);
+
+				cont++;
+			}
+
+			venta.setGanancia(ganancia);
+			dataAccess.insertar(venta);
 
 		} catch (Exception e) {
 
@@ -140,38 +142,29 @@ public class VentasServicioImpl  implements VentasService{
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
-	private float deducirStockDeArticulo(VentaRequest vreq, int idArt, int cantidadPedidaDeArticulo){
-			Articulo a = this.articuloServicio.getbyID(idArt); // buscamos objeto con ese id
-			vreq.setListaArticulos(new ArrayList<Articulo>());
-			vreq.getListaArticulos().add(a);
-			System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
+	private void deducirStockDeArticulo(Ventas v,
+										 Articulo a,
+										 int cantidadPedidaDeArticulo){
+		System.out.println("ARTICULO: " + a.getNombre() + " - CANTIDAD: " + cantidadPedidaDeArticulo);
 
-			Boolean stockInsuficiente = true;
-			Stock s = this.stockServicio.get_STOCKOBJ_BY_IDART(idArt);
-			
-			
+		// Trae todos los stocks del articulo, del mas viejo al mas nuevo.
+		List<Stock> stocksArt = this.stockServicio.obtenerStocksDeArticulo(a.getId());
 
-			if (cantidadPedidaDeArticulo <= this.stockServicio.obtenerStockDeArticuloMasViejo(a.getId())) {
+		for(int i = 0; i < stocksArt.size(); i++){
+			Stock s = stocksArt.get(i);
+			int cantidadStock = s.getCantidad();
+
+			// si cant. pedida > stock disponible, deduzco solo el stock disponible
+			// para que no quede nro negativo.
+			if(cantidadPedidaDeArticulo >= cantidadStock){
+				this.stockServicio.deducirStock(a, cantidadStock);
+				cantidadPedidaDeArticulo -= cantidadStock;
+			}
+			else{
 				this.stockServicio.deducirStock(a, cantidadPedidaDeArticulo);
-				stockInsuficiente = false;
+				break;
 			}
+		}
 
-			while (stockInsuficiente) {
-				if (cantidadPedidaDeArticulo >= this.stockServicio.obtenerStockDeArticuloMasViejo(a.getId()))
-				{
-					Integer restar = this.stockServicio.obtenerStockDeArticuloMasViejo(a.getId());
-					this.stockServicio.deducirStock(a, restar);
-					cantidadPedidaDeArticulo -= restar;
-				}
-				if (cantidadPedidaDeArticulo < this.stockServicio.obtenerStockDeArticuloMasViejo(a.getId())) {
-					this.stockServicio.deducirStock(a, cantidadPedidaDeArticulo);
-					cantidadPedidaDeArticulo = 0;
-				}
-				if (cantidadPedidaDeArticulo == 0) {
-					stockInsuficiente = false;
-				}
-			}
-			return (a.getPrecio() - s.getPrecioCompra()) * cantidadPedidaDeArticulo;
 	}
-	
 }

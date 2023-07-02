@@ -47,27 +47,27 @@ public class Ventas {
 	private boolean estado;
     
     @Column(nullable = false)
-    private float ganancia;
+    private double ganancia;
     
     public Ventas() {}
 
-	public Ventas(Date fecha, double montoTotal, Cliente cliente, boolean estado) {
+	public Ventas(Date fecha, double montoTotal, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.montoTotal = montoTotal;
 		this.cliente = cliente;
-		this.estado = estado;
+		this.estado = true;
+		this.listaArticulos = new ArrayList<>();
 	}
 	
-	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente, float ganancia,
-			boolean estado) {
+	public Ventas(Date fecha, double montoTotal, List<Articulo> listaArticulos, Cliente cliente, double ganancia) {
 		super();
 		this.fecha = fecha;
 		this.ganancia = ganancia;
 		this.montoTotal = montoTotal;
 		this.listaArticulos = listaArticulos;
 		this.cliente = cliente;
-		this.estado = estado;
+		this.estado = true;
 
 	}    @Transient
     public List<Integer> getListaArticulosIds() {
@@ -92,11 +92,11 @@ public class Ventas {
 	 
 	
 	
-	public float getGanancia() {
+	public double getGanancia() {
 		return ganancia;
 	}
 
-	public void setGanancia(float ganancia) {
+	public void setGanancia(double ganancia) {
 		this.ganancia = ganancia;
 	}
 

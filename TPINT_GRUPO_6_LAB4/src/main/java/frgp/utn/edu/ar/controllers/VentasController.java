@@ -94,10 +94,9 @@ public class VentasController {
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
-		VentaRequest vreq = new VentaRequest();
 
 		try{
-			service.crearVenta(vreq, listaArticulos, listaCantidades, fechaVenta, cliente, montoTotal);
+			service.crearVenta(listaArticulos, listaCantidades, fechaVenta, cliente, montoTotal);
 
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha creado exitosamente");
