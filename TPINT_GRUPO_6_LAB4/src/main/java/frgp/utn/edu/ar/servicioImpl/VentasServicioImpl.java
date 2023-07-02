@@ -76,6 +76,8 @@ public class VentasServicioImpl  implements VentasService{
 
 		return response;
 	}
+	
+	
 
 	@Override
 	public void crearVenta(List<String> idsArticulos,
@@ -153,6 +155,11 @@ public class VentasServicioImpl  implements VentasService{
 	@Override
 	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin) {
 		return dataAccess.obtenerTotalPorRangoFechas(fechaIni, fechaFin);
+	}
+	
+	@Override
+	public double obtenerGananciaTotalPorRangoFechas(Date fechaIni, Date fechaFin) {
+		return dataAccess.obtenerGananciaTotalPorRangoFechas(fechaIni, fechaFin);
 	}
 
 	private List<Historico> deducirStockDeArticuloYArmarHistorico(Ventas v, Articulo a, int cantidadPedidaDeArticulo){

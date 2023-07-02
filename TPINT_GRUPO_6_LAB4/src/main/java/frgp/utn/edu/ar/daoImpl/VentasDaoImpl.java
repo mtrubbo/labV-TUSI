@@ -73,6 +73,31 @@ public class VentasDaoImpl  implements VentasDao{
 			return 0;
 		return (double)result;
 	}
+	
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public double obtenerGananciaTotalPorRangoFechas(Date fechaIni, Date fechaFin) {
+		try {
+			Query query = this.hibernateTemplate.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("select sum(ganancia) from Ventas " +
+							"where estado=true and fecha between :fechaIni and :fechaFin");
+
+			query.setParameter("fechaIni", fechaIni);
+			query.setParameter("fechaFin", fechaFin);
+	        query.setMaxResults(1);
+			return (double)query.uniqueResult();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		finally {
+	        //System.out.println("RESULTADO: "+(double)query.uniqueResult());
+		}
+		return -1;
+
+	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
