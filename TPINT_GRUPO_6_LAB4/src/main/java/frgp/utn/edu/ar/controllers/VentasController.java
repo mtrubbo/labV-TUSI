@@ -182,8 +182,8 @@ public class VentasController {
 		mv.addObject("fecha", venta.getFecha());
 		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
-		mv.addObject("monto", venta.getMontoTotal());
-		mv.addObject("ganancia", venta.getGanancia());
+		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
+		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
 
 		return mv;
 	}
@@ -198,8 +198,8 @@ public class VentasController {
 		mv.addObject("fecha", venta.getFecha());
 		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
-		mv.addObject("monto", venta.getMontoTotal());
-		mv.addObject("ganancia", venta.getGanancia());
+		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
+		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
 		mv.setViewName("Ventas/Detalle");
 		return mv;
 	}
