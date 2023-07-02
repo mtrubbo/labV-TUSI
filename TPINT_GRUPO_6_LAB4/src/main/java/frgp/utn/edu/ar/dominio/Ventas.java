@@ -51,7 +51,7 @@ public class Ventas {
     
     public Ventas() {}
 
-	public Ventas(Date fecha, double montoTotal, Cliente cliente) {
+	public Ventas(Date fecha, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.montoTotal = montoTotal;

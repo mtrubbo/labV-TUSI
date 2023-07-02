@@ -2,17 +2,11 @@ package frgp.utn.edu.ar.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -35,7 +29,6 @@ import frgp.utn.edu.ar.dtos.ArticuloInfo;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
 import frgp.utn.edu.ar.dtos.ResponseResult;
 import frgp.utn.edu.ar.dtos.ResultStatus;
-import frgp.utn.edu.ar.dtos.VentaRequest;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
 import frgp.utn.edu.ar.servicio.StockServicio;
@@ -89,14 +82,14 @@ public class VentasController {
 	@RequestMapping(value = "/crear/{fechaVenta}/{cliente}/{montoTotal}/{listaArticulos}/{listaCantidades}", method = RequestMethod.GET)
 	@ResponseBody
 	public String crearVenta(@PathVariable("fechaVenta") String fechaVenta, @PathVariable("cliente") int cliente,
-			@PathVariable("montoTotal") Double montoTotal, @PathVariable("listaArticulos") List<String> listaArticulos,
-			@PathVariable("listaCantidades") List<String> listaCantidades) {
+							 @PathVariable("listaArticulos") List<String> listaArticulos,
+							 @PathVariable("listaCantidades") List<String> listaCantidades) {
 		Gson gson = new Gson();
 		ResponseResult result = new ResponseResult();
 		String json = "";
 
 		try{
-			service.crearVenta(listaArticulos, listaCantidades, fechaVenta, cliente, montoTotal);
+			service.crearVenta(listaArticulos, listaCantidades, fechaVenta, cliente);
 
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha creado exitosamente");

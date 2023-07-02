@@ -81,8 +81,7 @@ public class VentasServicioImpl  implements VentasService{
 	public void crearVenta(List<String> idsArticulos,
 						   List<String> idsCantidades,
 						   String fechaVenta,
-						   int clienteId,
-						   double montoTotal) {
+						   int clienteId) {
 		try {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate ingresoDate = LocalDate.parse(fechaVenta, formatter);
@@ -91,12 +90,13 @@ public class VentasServicioImpl  implements VentasService{
 
 			Cliente clienteVenta = this.clienteServicio.obtenerPorId(clienteId);
 
-			Ventas venta = new Ventas(Date.from(instant), montoTotal, clienteVenta);
+			Ventas venta = new Ventas(Date.from(instant), clienteVenta);
 
 			List<Historico> historicos = new ArrayList<>();
 
 			int cont = 0;
 			double ganancia = 0;
+			double montoTotalSuma = 0;
 			for (String item : idsArticulos) {
 				int idArt = Integer.parseInt(item);
 				Articulo articulo = this.articuloServicio.getbyID(idArt);
@@ -105,6 +105,7 @@ public class VentasServicioImpl  implements VentasService{
 
 				venta.getListaArticulos().add(articulo);
 				ganancia += (articulo.getPrecio() - stock.getPrecioCompra()) * cantidadArticulo;
+				montoTotalSuma += articulo.getPrecio() * cantidadArticulo;
 
 				historicos.addAll(deducirStockDeArticuloYArmarHistorico(venta, articulo, cantidadArticulo));
 
@@ -112,6 +113,7 @@ public class VentasServicioImpl  implements VentasService{
 			}
 
 			venta.setGanancia(ganancia);
+			venta.setMontoTotal(montoTotalSuma);
 			venta.getHistorialDeduccionesStock().addAll(historicos);
 			dataAccess.insertar(venta);
 
