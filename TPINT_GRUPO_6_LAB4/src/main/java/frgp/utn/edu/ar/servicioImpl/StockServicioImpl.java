@@ -41,7 +41,6 @@ public class StockServicioImpl implements StockServicio {
 	@Override
 	public void actualizar(Stock c) {
 		dataAccess.actualizar(c);
-		
 	}
 
 	@Override
@@ -52,16 +51,6 @@ public class StockServicioImpl implements StockServicio {
 	@Override
 	public long artByID(int id) {
 		return dataAccess.artByID(id);
-	}
-	
-	@Override
-	public void deducirStock(Articulo articulo, int cantidad) {
-		dataAccess.deducirStock(articulo, cantidad);	
-	}
-
-	@Override
-	public Integer obtenerStockDeArticuloMasViejo(int id) {
-		return dataAccess.obtenerStockDeArticuloMasViejo(id);
 	}
 
 	@Override

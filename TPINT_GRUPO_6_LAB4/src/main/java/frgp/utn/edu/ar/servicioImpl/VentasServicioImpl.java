@@ -126,7 +126,17 @@ public class VentasServicioImpl  implements VentasService{
 
 	@Override
 	public void eliminar(int id) {
-		dataAccess.eliminar(id);		
+		Ventas v = getbyID(id);
+
+		for (Historico h :
+				v.getHistorialDeduccionesStock()) {
+			Stock s = h.getStock();
+			s.setCantidad(s.getCantidad() + h.getCantidadDeducida());
+			stockServicio.actualizar(s);
+		}
+
+		v.setEstado(false);
+		dataAccess.actualizar(v);
 	}
 
 	@Override
@@ -157,17 +167,19 @@ public class VentasServicioImpl  implements VentasService{
 
 			int cantidadStock = s.getCantidad();
 
-			// si cant. pedida > stock disponible, deduzco solo el stock disponible
-			// para que no quede nro negativo.
 			if(cantidadPedidaDeArticulo >= cantidadStock){
-				this.stockServicio.deducirStock(a, cantidadStock);
+				s.setCantidad(0);
+				stockServicio.actualizar(s);
+
 				cantidadPedidaDeArticulo -= cantidadStock;
 
 				Historico historico = new Historico(v, s, cantidadStock);
 				historicos.add(historico);
 			}
 			else{
-				this.stockServicio.deducirStock(a, cantidadPedidaDeArticulo);
+				s.setCantidad(s.getCantidad() - cantidadPedidaDeArticulo);
+				stockServicio.actualizar(s);
+
 				Historico historico = new Historico(v, s, cantidadPedidaDeArticulo);
 				historicos.add(historico);
 				break;

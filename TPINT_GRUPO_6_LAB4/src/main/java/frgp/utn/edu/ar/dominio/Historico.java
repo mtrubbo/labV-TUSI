@@ -30,7 +30,10 @@ public class Historico {
 	@Column(name="cantidadStock")
 	private int cantidadDeducida;
 
-	
+
+	public Historico() {
+	}
+
 	public Historico(Ventas venta, Stock stock, int cantidadStock) {
 		super();
 		this.venta = venta;

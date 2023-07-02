@@ -121,9 +121,8 @@ public class VentasController {
 		String Message = "";
 
 		try {
-			Ventas a = service.getbyID(id);
-			a.setEstado(false);
-			service.actualizar(a);
+			service.eliminar(id);
+
 			result.setStatus(ResultStatus.ok);
 			result.setMessage("Se ha eliminado con exito con exito");
 		} catch (Exception e) {

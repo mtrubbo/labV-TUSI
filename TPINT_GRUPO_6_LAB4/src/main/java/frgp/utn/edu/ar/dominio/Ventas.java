@@ -37,7 +37,7 @@ public class Ventas {
     )
     private Set<Articulo> listaArticulos;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta")
 	private List<Historico> historialDeduccionesStock;
 
     @ManyToOne
