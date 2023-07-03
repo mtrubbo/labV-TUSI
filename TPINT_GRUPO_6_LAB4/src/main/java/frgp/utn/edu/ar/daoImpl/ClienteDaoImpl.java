@@ -63,7 +63,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void eliminar(int id) {
 		Cliente c = obtenerPorId(id);
-		c.setEstado(true);
+		c.setEstado(false);
 		this.hibernateTemplate.update(c);
 	}
 

@@ -55,12 +55,10 @@ public class Cliente {
 		this.sexo = sexo;
 		this.fechaNac = fechaNac;
 		this.direccion = direccion;
-
 		this.localidad = localidad;
 		this.email = email;
 		this.telefono = telefono;
-
-		this.estado = false;
+		this.estado = true;
 	}
 
 
