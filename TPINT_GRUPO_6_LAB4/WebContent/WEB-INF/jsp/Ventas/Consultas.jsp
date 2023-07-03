@@ -114,6 +114,7 @@
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Monto total</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -141,6 +142,7 @@ $(document).ready( function () {
     $('#tableDetalle').DataTable({
         order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
     });
+});
 </script>
 
 <c:if test="${not empty sessionScope.mensaje}">
