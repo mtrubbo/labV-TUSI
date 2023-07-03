@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import frgp.utn.edu.ar.dominio.Ventas;
+import frgp.utn.edu.ar.dtos.AVSFetch;
 
 public interface VentasDao {
 	public void insertar(Ventas a);
@@ -15,4 +16,5 @@ public interface VentasDao {
 	public void actualizar(Ventas a);
 	public double obtenerTotalPorRangoFechas(Date fechaIni, Date fechaFin);
 	public double obtenerGananciaTotalPorRangoFechas(Date fechaIni, Date fechaFin);
+	AVSFetch fetchVentaDetails(int id);
 }

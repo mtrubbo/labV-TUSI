@@ -16,8 +16,20 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name="id_rol")
     private RolUsuario rol;
+    
+    public Usuario(){}
+    
 
-    public String getNombrePublico() {
+    public Usuario(int id, String nombrePublico, String nombreUsuario, String contrasena, RolUsuario rol) {
+		super();
+		this.id = id;
+		this.nombrePublico = nombrePublico;
+		this.nombreUsuario = nombreUsuario;
+		this.contrasena = contrasena;
+		this.rol = rol;
+	}
+
+	public String getNombrePublico() {
         return nombrePublico;
     }
 

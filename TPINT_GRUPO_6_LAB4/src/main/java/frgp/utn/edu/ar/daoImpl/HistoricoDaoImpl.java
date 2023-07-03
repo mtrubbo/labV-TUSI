@@ -37,7 +37,7 @@ public class HistoricoDaoImpl implements HistoricoDao {
 	public List<Historico> obtenerHistoricoDeVenta(int idVenta) {
 		Query q = this.hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createQuery("FROM Historico h " +
-						"WHERE h.estado=true AND h.venta.id = :idVenta");
+						"WHERE h.venta.id = :idVenta");
 
 		q.setParameter("idVenta", idVenta);
 

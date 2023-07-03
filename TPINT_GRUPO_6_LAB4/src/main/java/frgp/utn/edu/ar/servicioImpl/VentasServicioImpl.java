@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dao.HistoricoDao;
 import frgp.utn.edu.ar.dominio.*;
+import frgp.utn.edu.ar.dtos.AVSFetch;
 import frgp.utn.edu.ar.dtos.ConsultaVentasResponse;
 import frgp.utn.edu.ar.servicio.ArticuloServicio;
 import frgp.utn.edu.ar.servicio.ClienteServicio;
@@ -223,13 +224,25 @@ public class VentasServicioImpl  implements VentasService{
 	
 	public ModelAndView buildDetalle(int id, String view) {
 		Ventas venta = getbyID(id);
+		List<Historico> h = historico.obtenerHistoricoDeVenta(id);
+		ArrayList<AVSFetch> avsList = new ArrayList<AVSFetch>();
+ 		
+		for (Historico item : h) {
+			avsList.add((AVSFetch)dataAccess.fetchVentaDetails(item.getId()));
+		}
+		
 		ModelAndView mv = new ModelAndView(view);
 		
 		mv.addObject("venta", venta.getId());
 		mv.addObject("fecha", venta.getFecha());
 		mv.addObject("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
 		mv.addObject("articulos", venta.getListaArticulos());
-		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal())	);
+
+		if(avsList != null && avsList.size()>0) {
+			mv.addObject("ProductosVendidos", avsList);
+		}
+		
+		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal()));
 		mv.addObject("ganancia", String.format("%.2f", venta.getGanancia()) );
 		
 		return mv;

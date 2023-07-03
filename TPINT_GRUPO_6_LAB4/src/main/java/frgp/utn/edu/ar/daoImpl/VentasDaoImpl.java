@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.VentasDao;
 import frgp.utn.edu.ar.dominio.Ventas;
+import frgp.utn.edu.ar.dtos.AVSFetch;
 
 public class VentasDaoImpl  implements VentasDao{
 
@@ -104,6 +105,35 @@ public class VentasDaoImpl  implements VentasDao{
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Ventas a) {
 		this.hibernateTemplate.update(a);		
+	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public AVSFetch fetchVentaDetails(int id) {
+		String hql = "SELECT h.cantidadDeducida, a.descripcion, a.precio FROM Historico h " +
+	             "INNER JOIN h.venta v " +
+	             "INNER JOIN h.stock s " +
+	             "INNER JOIN s.articulo a " +
+	             "WHERE h.id = :idH";	
+		
+		Query query = this.hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(hql);
+
+		query.setParameter("idH", id);
+
+		Object result = query.uniqueResult();
+		if (result == null) {
+		    return null;
+		}
+
+		Object[] row = (Object[]) result;
+		int cantidadDeducida = (int) row[0];
+		String descripcion = (String) row[1];
+		double precio = (double) row[2];
+
+		AVSFetch avsFetch = new AVSFetch(descripcion, cantidadDeducida, precio);
+		return avsFetch;
 	}
 	
 }
