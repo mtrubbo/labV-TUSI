@@ -64,28 +64,45 @@
 		<h1>
 			<span>Venta N° </span>${venta}
 		</h1>
-				<h5>
-					<span>Fecha: </span>${fecha}</h5>
-				<h5>
-					<span>Cliente: </span>${cliente}</h5>
+		<h5>
+			<span><b>Fecha:</b> </span>${fecha}</h5>
+		<h5>
+			<span><b>Cliente:</b> </span>${cliente}</h5>
 
-				<div class="row">
+		<div class="row">
+			<hr>
+
+			<table id="tableDetalle"
+				class="responsive table table-striped dataTables_wraper" style="text-align:center">
+				<thead>
+					<tr>
+						<th>Descripcion</th>
+						<th>Cantidad</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
 					<c:forEach items="${ProductosVendidos}" var="item">
-							<div class="col-md-3 col-sm-3" style="background-color: #DAAE59; display: inline-block; margin: 5px 10px; padding: 15px; color: #fff; border-radius: 10px;">
-								<p>${item.descripcion}</p>
-								<p>x${item.cantidadDeducida}</p>
-								<p>$ ${item.precio * item.cantidadDeducida}</p>
-							</div>
-						</c:forEach>
-				</div>
-				<h4 style="text-align:right">
-					<span><b>Monto:</b> $ </span>${monto}</h4>
-				<h4 style="text-align:right">
-					<span><b>Ganancia:</b> $ </span>${ganancia}</h4>
-					
-				<div class="row d-flex justify-content-center align-items-center">
-					<a href="/ventas" class="btn-primary btn w-25">Volver</a>
-				</div>
+
+						<tr>
+							<td>${item.descripcion}</td>
+							<td>x${item.cantidadDeducida}</td>
+							<td>$ ${item.precio * item.cantidadDeducida}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+
+		</div>
+
+		<h4 style="text-align: right">
+			<span><b>Monto:</b> $ </span>${monto}</h4>
+		<h5 style="text-align: right">
+			<span><b>Ganancia:</b> $ </span>${ganancia}</h5>
+
+		<div class="row d-flex justify-content-center align-items-center">
+			<a href="/ventas" class="btn-primary btn w-25">Volver</a>
+		</div>
 	</div>
 </body>
 </html>
