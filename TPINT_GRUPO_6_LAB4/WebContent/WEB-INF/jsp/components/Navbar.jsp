@@ -30,7 +30,7 @@
 		if (atributo.equalsIgnoreCase("vendedor")) {
 	%>
 	        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/clientes">Clientes</a>
+          <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/clientes">Clientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="${pageContext.request.contextPath}/articulos">Articulos</a>
