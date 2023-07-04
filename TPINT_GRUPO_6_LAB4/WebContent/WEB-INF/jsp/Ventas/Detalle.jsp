@@ -78,6 +78,7 @@
 					<tr>
 						<th>Descripcion</th>
 						<th>Cantidad</th>
+						<th>Precio</th>
 						<th>Total</th>
 					</tr>
 				</thead>
@@ -87,6 +88,7 @@
 						<tr>
 							<td>${item.descripcion}</td>
 							<td>x${item.cantidadDeducida}</td>
+							<td>$ ${item.precio}</td>
 							<td>$ ${item.precio * item.cantidadDeducida}</td>
 						</tr>
 					</c:forEach>

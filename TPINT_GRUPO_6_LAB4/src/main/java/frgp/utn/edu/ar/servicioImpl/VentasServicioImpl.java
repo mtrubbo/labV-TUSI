@@ -67,12 +67,13 @@ public class VentasServicioImpl  implements VentasService{
 
 		SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
 
-		for (Ventas venta :
-				ventas) {
+		for (Ventas venta :	ventas) {
 			ConsultaVentasResponse item = new ConsultaVentasResponse();
 			item.setId(venta.getId());
 			item.setNombreCliente(venta.getCliente().getNombreCompleto());
-			item.setMontoTotal(venta.calcularMontoTotal());
+			//item.setMontoTotal(venta.calcularMontoTotal());
+			item.setMontoTotal(venta.getMontoTotal());
+			System.out.println(item.getMontoTotal());
 			item.setFecha(dateFmt.format(venta.getFecha()));
 
 			response.add(item);
