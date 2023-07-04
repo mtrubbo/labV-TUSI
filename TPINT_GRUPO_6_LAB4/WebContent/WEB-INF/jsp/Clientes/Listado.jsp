@@ -97,15 +97,25 @@
     </div>
 
 	<!-- scripts -->
-	<script type="text/javascript">
-		$(document).ready( function () {
-	    $('#tableClientes').DataTable({
-	        order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma
-									// descendente
-	    });
-    </script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src='<c:url value="/resources/js/listadoClientes.js"/>'></script>
+
+	<script type="text/javascript">
+		$(document).ready( function () {
+			
+			$.extend($.fn.dataTable.defaults, {
+				    language: {
+				      search: 'Buscar' ,
+				      lengthMenu: 'Mostrar _MENU_ registros'
+				    }
+				  });
+			  
+	    	$('#tableClientes').DataTable({
+	        	order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma
+									// descendente
+	    	});
+		});
+    </script>
 </body>
 </html>

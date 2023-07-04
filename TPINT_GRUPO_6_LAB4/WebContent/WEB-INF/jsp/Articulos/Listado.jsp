@@ -234,6 +234,14 @@
 <!-- SCRIPTS INIT -->
 <script>
 $(document).ready( function () {
+	
+	$.extend($.fn.dataTable.defaults, {
+	    language: {
+	      search: 'Buscar' ,
+	      lengthMenu: 'Mostrar _MENU_ registros'
+	    }
+	  });
+	
     $('#tableArticulos').DataTable({
         order: [[0, 'desc']] // Ordena por la primera columna (ID) de forma descendente
     });
