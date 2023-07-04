@@ -43,16 +43,11 @@
 		<div>${MensajeError}</div>
 		<button type="submit" class="btn"
 			style="background-color: #f4ac23; color: #fff; width: 100%; font-weigth: bold">Ingresar</button>
+		<br>
+		<p style="color:#808080">Made with love <3 || © Grupo 6</p>
 	</form>
 	</section>
-
-	
 	</main>
-	
-	<footer style="display:block;width:100%">
-		<div>
-			<p class="">Made with love <3 || © Grupo 6</p>
-		</div>
-	</footer>
+
 </body>
 </html>

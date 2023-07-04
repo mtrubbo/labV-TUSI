@@ -13,12 +13,12 @@
 
     <%String atributo = (String) request.getSession().getAttribute("usuarioRol");%>
 
-<nav class="navbar navbar-expand-lg fixed-top mb-sm-5 navbar-dark bg-dark">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg fixed-top mb-sm-5 navbar-dark">
+  <div class="container-fluid" style="background-color:#fff">
     <a class="navbar-brand" href="${pageContext.request.contextPath}">
-    	<img class="navLogo" src='<c:url value="/resources/img/logo-navbar.png"/>'/>
+    	<img class="navLogo" src='<c:url value="/resources/img/logotp.png"/>'/>
     </a>
-    <h5 style="display:inline-block;z-index:500;color:#fff">Usuario: <%=atributo%></h5>
+    <h5 style="display:inline-block;z-index:500;color:#000">Usuario: <%=atributo%></h5>
       
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@
 	
 
          <li class="nav-item">
-          <a class="nav-link btn btn-success" href="${pageContext.request.contextPath}/logout">Salir</a>
+          <a class="nav-link btn btn-success logout" href="${pageContext.request.contextPath}/logout">Salir</a>
         </li>
       </ul>
     </div>

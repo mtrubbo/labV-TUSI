@@ -1,9 +1,21 @@
 @charset "ISO-8859-1";
 
 .navLogo{
-	height: 85px;
+	/*height: 85px;*/
+	width:40%;
 }
 
 a{
 	text-decoration:none;
+	
+}
+
+a.nav-link{
+	color:#000;
+	font-size:1.4rem;
+	padding-left:2rem;
+}
+a.logout{
+	color:#fff;
+	font-size:1.4rem;
 }
