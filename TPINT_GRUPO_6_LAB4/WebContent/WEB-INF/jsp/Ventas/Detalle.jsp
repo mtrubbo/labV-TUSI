@@ -102,9 +102,6 @@
 		<h5 style="text-align: right">
 			<span><b>Ganancia:</b> $ </span>${ganancia}</h5>
 
-		<div class="row d-flex justify-content-center align-items-center">
-			<a href="/ventas" class="btn-primary btn w-25">Volver</a>
-		</div>
 	</div>
 </body>
 </html>
