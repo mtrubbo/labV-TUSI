@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
 import frgp.utn.edu.ar.dao.HistoricoDao;
 import frgp.utn.edu.ar.dominio.*;
 import frgp.utn.edu.ar.dtos.AVSFetch;
@@ -232,6 +234,25 @@ public class VentasServicioImpl  implements VentasService{
 			avsList.add((AVSFetch)dataAccess.fetchVentaDetails(item.getId()));
 		}
 		
+		ArrayList<AVSFetch> lFetch = new ArrayList<AVSFetch>();
+		
+		for (AVSFetch item : avsList) {
+			boolean sameId = false;
+			
+			for (AVSFetch toFetch : lFetch) {
+				
+				if(toFetch.getDescripcion().equals(item.getDescripcion())) {
+					toFetch.setCantidadDeducida(toFetch.getCantidadDeducida() + item.getCantidadDeducida());
+					sameId = true;
+					break;
+				}
+			}
+			
+			if(!sameId) {
+				lFetch.add(item);
+			}
+		}
+ 		
 		ModelAndView mv = new ModelAndView(view);
 		
 		mv.addObject("venta", venta.getId());
@@ -240,7 +261,7 @@ public class VentasServicioImpl  implements VentasService{
 		mv.addObject("articulos", venta.getListaArticulos());
 
 		if(avsList != null && avsList.size()>0) {
-			mv.addObject("ProductosVendidos", avsList);
+			mv.addObject("ProductosVendidos", lFetch);
 		}
 		
 		mv.addObject("monto", String.format("%.2f", venta.getMontoTotal()));
