@@ -2,20 +2,38 @@
 
 .navLogo{
 	/*height: 85px;*/
-	width:40%;
+	width:50%;
 }
 
 a{
 	text-decoration:none;
-	
+	/*font-family: 'Jost', sans-serif;*/
+	font-family: 'Roboto';
 }
 
 a.nav-link{
-	color:#000;
-	font-size:1.4rem;
+	color:#808080;
+	font-size:1.3rem;
 	padding-left:2rem;
+	letter-spacing:1px;
+	/*font-weight:bolder;*/
 }
+a.nav-link:hover{
+	color:#10ba99;
+}
+
 a.logout{
 	color:#fff;
-	font-size:1.4rem;
+	font-size:1.3rem;
+	background-color:#10ba99;
+}
+a.logout:hover{
+	color:#fff;
+	background-color:#10ba99;
+}
+
+.userrol{
+	display:inline-block;
+	z-index:500;
+	color:#10ba99;
 }

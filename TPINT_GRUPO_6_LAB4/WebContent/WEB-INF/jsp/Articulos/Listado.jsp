@@ -44,11 +44,11 @@
 
 
 </head>
-<body class="">
+<body style="background-color:#10ba99;">
 
 
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
-<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100">
 	<section class="sectionTable">
 	<div class="row justify-content-around">
 		<h2>Articulos</h2>
@@ -65,7 +65,7 @@
 	<table id="tableArticulos" class="responsive table table-striped dataTables_wraper">
 		<thead>
 			<tr>
-				<th>ID</th>
+				<th style="display:none">ID</th>
 				<th>Nombre</th>
 				<th>Descripcion</th>
 				<th>Marca</th>
@@ -77,17 +77,17 @@
 		<tbody>
 			<c:forEach items="${articulos}" var="item">
 				<tr>
-					<td>${item.id}</label> </td>
+					<td style="display:none">${item.id}</label> </td>
 					<td>${item.nombre}</label> </td>
 					<td>${item.descripcion}</td>
 					<td>${item.marca.nombre}</td>
 					<td>${item.tipo.descripcion}</td>
 					<td>${item.precio}</td>
 					<td>
-						<button class="btnTableEdit" onclick='editOpen(${item.id})'>
+						<button class="btnNewArt" onclick='editOpen(${item.id})'>
 							<i class="fa-solid fa-pencil"></i>
 						</button>
-						<button class="btnTableDelete" onclick='confirmDelete(${item.id})'>
+						<button class="btnCancel" onclick='confirmDelete(${item.id})'>
 							<i class="fa-solid fa-trash"></i>
 						</button>
 					</td>
@@ -200,8 +200,8 @@
 	      						</div>
       						</div>
       						<div class="mt-5">
-		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-		        				<button type="submit" class="btn btn-primary">Guardar Cambios</button>
+		        				<button type="button" class="btn btnCancel" data-bs-dismiss="modal">Cancelar</button>
+		        				<button type="submit" class="btn btnNewArt">Guardar</button>
 							</div>
       					</form>
     			</div>

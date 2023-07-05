@@ -27,10 +27,11 @@
 <link rel="stylesheet" href='<c:url value="/resources/fontawesome/webfonts/fa-solid-900.woff2"/>'>
 
 </head>
-<body>
+<body style="background-color:#10ba99">
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
-<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
-	<section style="width:90%; margin-top: 7rem;" class="sectionTable">
+<!-- style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');" -->
+<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100">
+	<section style="width:90%;" class="sectionTable">
 		<input type="hidden" id="pathGlobal" value="${pageContext.request.contextPath}">
         <h2>Clientes</h2>
 
@@ -42,13 +43,13 @@
         <table id="tableClientes" class="responsive table table-striped dataTables_wraper">
             <thead>
                 <tr>
-                	<th>ID</th>
+                	<th style="display: none">ID</th>
                     <th>DNI</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Sexo</th>
-                    <th>Fecha de nacimiento</th>
-                    <th>Direccion</th>
+
+                    <th style="display: none">Sexo</th>
+                    <th style="display: none">Fecha de nacimiento</th>
+                    <th style="display: none">Direccion</th>
                     <th>Localidad</th>
                     <th>Email</th>
                     <th>Telefono</th>
@@ -58,20 +59,19 @@
             <tbody>
                 <c:forEach items="${clientes}" var="item">
                     <tr>
-                    <td>${item.id}</label> </td>
+                    <td style="display: none">${item.id} </td>
                     <td>${item.dni}</label> </td>
-                    <td>${item.nombre}</td>
-                    <td>${item.apellido}</td>
-                    <td>${item.sexo}</td>
-                    <td>${item.fechaNac}</td>
-                    <td>${item.direccion}</td>
+                    <td>${item.nombre} ${item.apellido}</td>
+                    <td style="display: none">${item.sexo}</td>
+                    <td style="display: none">${item.fechaNac}</td>
+                    <td style="display: none">${item.direccion}</td>
                     <td>${item.localidad}</td>
                     <td>${item.email}</td>
                     <td>${item.telefono}</td>
                     <td>
-                        <button class="btnTableEdit" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button>
+                        <button class="btnNewArt" onclick='editOpen(${item.id})'><i class="fa-solid fa-pencil"></i></button>
                         <button onclick='eliminar(${item.id})'>
-                            <i class="fa-solid fa-trash"></i>
+                            <i class="fa-solid fa-trash btnCancel" style="border:0'"></i>
                         </button>
                     </td>
                     </tr>

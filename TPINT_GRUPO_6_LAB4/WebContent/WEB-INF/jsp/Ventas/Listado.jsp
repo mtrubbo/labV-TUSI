@@ -44,11 +44,11 @@
 
 
 </head>
-<body class="">
+<body style="background-color:#10ba99">
 
 
 <jsp:include page="../components/Navbar.jsp"></jsp:include>
-<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100" style="background-image: url('${pageContext.request.contextPath}/resources/img/home-background.jpg');">
+<main class="articulosBody d-flex justify-content-center align-items-center flex-column w-100">
 	<section class="sectionTable">
 	<div class="row justify-content-around">
 		<h2>Ventas</h2>
@@ -56,7 +56,7 @@
 	</div>
 	
 	<!-- Action Modal -->
-	<button type="button" class="btnNewVent " data-bs-toggle="modal" data-bs-target="#newVent">
+	<button type="button" class="btnNewVent btnNewArt" data-bs-toggle="modal" data-bs-target="#newVent">
   		Nueva Venta
 	</button>
 	
@@ -77,13 +77,13 @@
 				<tr>
 					<td>${item.id}</label> </td>
 					<td>${item.fecha}</td>
-					<td>${item.cliente.dni}</td>
+					<td>${item.cliente.nombre} ${item.cliente.apellido}</td>
 					<td>${item.montoTotal}</td>
 					<td>
-						<button class="btnTableDetalle" onclick='detalleOpen(${item.id})'>
+						<button class="btnTableDetalle btnNewArt" onclick='detalleOpen(${item.id})'>
 							<i class="fas fa-eye"></i>
 						</button>
-						<button class="btnTableDelete" onclick='confirmDelete(${item.id})'>
+						<button class="btnTableDelete btnCancel" onclick='confirmDelete(${item.id})'>
 							<i class="fa-solid fa-trash"></i>
 						</button>
 					</td>
@@ -99,14 +99,14 @@
 		<div class="modal fade" id="newVent" tabindex="-1" aria-labelledby="newVentlabel" aria-hidden="true">
   			<div class="modal-dialog modal-lg">
     			<div class="modal-content">
-      				<div class="modal-header" style="background: #DAAE59; color: #fff;">
+      				<div class="modal-header" style="background: #10ba99; color: #fff;">
         				<h5 class="modal-title" id="newVentlabel">Nueva Venta</h5>
         				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       				</div>
       				<div class="modal-body">
       					<form id="ingresarventa" action="${pageContext.request.contextPath}/ventas/crear" method="GET">
       						<input type="hidden" id="estado" value="true" name="estado">
-      						<div class="row mb-5">
+      						<div class="row mb-4">
       							<h5>Cliente</h5>
 	      						<div class="col-md-4">
 	      							<label class="form-label">Fecha Venta</label>
@@ -121,7 +121,10 @@
   									</select>
       							</div>
       						</div>
-      						<div class="row mb-5">
+      						
+      			
+      						
+      						<div class="row mb-4">
       						<h5>Articulos</h5>
       							<div class="col-md-6">
       								<label class="form-label">Articulos</label>
@@ -144,8 +147,10 @@
 	      							<label class="form-label">Precio Total</label>
 	      							<input id="precioTotal" disabled type="number" name="precio" class="form-control" required>
 	      						</div>
-	      						<div class="col-md-6 mx-auto mt-3 text-center">
-		      						<button type="button" class="btn btn-primary" id="addArtToList">Agregar</button>
+	      						<div class="col-md-6 mx-auto mt-1 text-center">
+	      						</div>
+	      						<div class="col-md-6 mx-auto mt-3 text-right w-100">
+		      						<button type="button" class="btn btnNewArt" id="addArtToList">Agregar</button>
 	      						</div>
 	      					</div>	
       						<div class="row">
@@ -160,9 +165,9 @@
 	      							<input id="montoTotal" disabled type="number" name="precio" class="form-control" required>
       							</div>
       						</div>
-      						<div class="mt-5">
-		        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-		        				<button type="submit" class="btn " style="background: #DAAE59; color: #fff;">Ingresar Venta</button>
+      						<div class="mt-3">
+		        				<button type="button" class="btn btnCancel" data-bs-dismiss="modal">Cancelar</button>
+		        				<button type="submit" class="btn btnNewArt">Ingresar Venta</button>
 							</div>
       					</form>
     			</div>

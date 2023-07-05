@@ -6,6 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
+
+<link rel="stylesheet"
+	href='<c:url value="/resources/fontawesome/css/all.min.css"/>'>
+
 <link rel="stylesheet" type="text/css"
 	href='<c:url value="/resources/css/bootstrap.css"/>'>
 <link rel="stylesheet" type="text/css"
@@ -30,22 +34,29 @@
 		VENDER</h1>
 	<br>
 	<form action"${pageContext.request.contextPath}/login" method="POST">
-		<div class="mb-3">
+		<div class="mb-3 d-flex align-items-center gap-2">
 			<!--  <label for="usuario" class="form-label">Usuario</label>-->
+			<i class="fa-regular fa-user fa-beat" style="color: #1bc080;"></i>
 			<input type="text" placeholder="Usuario" class="form-control"
 				id="usuario" name="usuario"
 				style="box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.20); border: 0">
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 d-flex align-items-center gap-2">
 			<!-- <label for="password" class="form-label">Clave</label>  -->
+			<i class="fa-regular fa-keyboard" style="color: #1bc080;"></i>
 			<input type="password" placeholder="Clave" class="form-control"
 				id="password" name="contrasena"
 				style="box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.20); border: 0">
 		</div>
-		<button type="submit" class="btn"
-			style="font-weight: 700; background-color: #10ba99; color: #fff; width: 100%; font-weigth: bold; box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);">INGRESAR</button>
-		<br>
-		<br>
+		
+		<div class="mb-3">			
+			<button type="submit" class="btn"
+				style="font-weight: 700; background-color: #10ba99; color: #fff; width: 100%; font-weigth: bold; box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);">
+				<i class="fa-regular fa-circle-check" style="color: #ffffff;"></i>
+				INGRESAR
+			</button>
+		</div>
+		<br> <br>
 		<div style="color: red; text-align: center">${MensajeError}</div>
 
 	</form>

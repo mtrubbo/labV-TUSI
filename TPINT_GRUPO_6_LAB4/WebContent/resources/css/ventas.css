@@ -14,11 +14,47 @@ body{
 .sectionTable{
 	z-index: 0;
 	background: #fff;
-	padding: 55px;
+	padding: 25px;
 	width: 70%;
 	border-radius: 10px;
 	box-shadow: 3px 2px 8px 0 #000;
-	margin-top: 300px
+	margin-top: 100px
+}
+
+.btnNewArt{
+	/*background-color: #DAAE59;*/
+	/*background-color: #08C2D1;*/
+	background-color: #33cc50;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.btnNewArt:hover{
+	background-color: #33cc50;
+	color: #fff;
+	transform: scale(0.9);
+}
+.btnCancel{
+	/*background-color: #DAAE59;*/
+	/*background-color: #08C2D1;*/
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.btnCancel:hover{
+	background-color: #dc3545;
+	color: #fff;
+	transform: scale(0.9);
 }
 
 .cardAddedArt{
