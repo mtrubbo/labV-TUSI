@@ -15,39 +15,43 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
 	rel="stylesheet">
+	
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body style="background-color:#fcfcfc">
 	<main class="d-flex vh-100 justify-content-around align-items-center">
-	<section class="welcomeSection  h-100">
-	<div
-		class="d-flex text-center flex-column justify-content-between h-100">
-		<!-- <img class="header-img" src="<c:url value="/resources/img/logo-navbar.png" />"/>-->
-		<!-- <h1 class="titleHeader">Bienvenido</h1>-->
-	</div>
-	</section> <section
+
+	<section
 		class="formSection d-flex flex-column justify-content-center align-items-center">
-	<img width=60% src="/resources/img/logotp.png"> <br>
+	<img width=50% src="/resources/img/maxiventas-logo.png"> <br>
 	<br>
-	<!-- <h1>Ingresar</h1>-->
+	<h1 style="font-size:1.5rem; letter-spacing:0.2rem">COMIENZA A VENDER</h1>
+	<br>
 	<form action"${pageContext.request.contextPath}/login" method="POST">
 		<div class="mb-3">
 			<!--  <label for="usuario" class="form-label">Usuario</label>-->
 			<input type="text" placeholder="Usuario" class="form-control"
-				id="usuario" name="usuario">
+				id="usuario" name="usuario" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.20); border:0 ">
 		</div>
 		<div class="mb-3">
 			<!-- <label for="password" class="form-label">Clave</label>  -->
 			<input type="password" placeholder="Clave" class="form-control"
-				id="password" name="contrasena">
+				id="password" name="contrasena" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.20); border:0">
 		</div>
 		<div>${MensajeError}</div>
 		<button type="submit" class="btn"
-			style="background-color: #f4ac23; color: #fff; width: 100%; font-weigth: bold">Ingresar</button>
+			style="font-weight:700; background-color: #27c668; color: #fff; width: 100%; font-weigth: bold; box-shadow: 0px 1px 4px rgba(0,0,0,0.25);">Ingresar</button>
 		<br>
-		<p style="color:#808080">Made with love <3 || © Grupo 6</p>
+		
 	</form>
 	</section>
+	
+
 	</main>
+	
+		<footer>
+		<p style="color:#808080;text-align:center">Made with love <i class="material-icons">favorite</i> Â© Grupo 6</p>
+	</footer>
 
 </body>
 </html>
