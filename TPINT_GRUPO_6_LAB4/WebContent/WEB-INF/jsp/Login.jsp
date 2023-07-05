@@ -15,42 +15,46 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
 	rel="stylesheet">
-	
-	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
-<body style="background-color:#fcfcfc">
+<body style="background-color: #fcfcfc">
 	<main class="d-flex vh-100 justify-content-around align-items-center">
 
 	<section
 		class="formSection d-flex flex-column justify-content-center align-items-center">
 	<img width=50% src="/resources/img/maxiventas-logo.png"> <br>
 	<br>
-	<h1 style="font-size:1.5rem; letter-spacing:0.2rem">COMIENZA A VENDER</h1>
+	<h1 style="font-size: 1.5rem; letter-spacing: 0.2rem">COMIENZA A
+		VENDER</h1>
 	<br>
 	<form action"${pageContext.request.contextPath}/login" method="POST">
 		<div class="mb-3">
 			<!--  <label for="usuario" class="form-label">Usuario</label>-->
 			<input type="text" placeholder="Usuario" class="form-control"
-				id="usuario" name="usuario" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.20); border:0 ">
+				id="usuario" name="usuario"
+				style="box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.20); border: 0">
 		</div>
 		<div class="mb-3">
 			<!-- <label for="password" class="form-label">Clave</label>  -->
 			<input type="password" placeholder="Clave" class="form-control"
-				id="password" name="contrasena" style="box-shadow: 0px 1px 4px rgba(0,0,0,0.20); border:0">
+				id="password" name="contrasena"
+				style="box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.20); border: 0">
 		</div>
-		<div>${MensajeError}</div>
 		<button type="submit" class="btn"
-			style="font-weight:700; background-color: #27c668; color: #fff; width: 100%; font-weigth: bold; box-shadow: 0px 1px 4px rgba(0,0,0,0.25);">Ingresar</button>
+			style="font-weight: 700; background-color: #10ba99; color: #fff; width: 100%; font-weigth: bold; box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);">INGRESAR</button>
 		<br>
-		
-	</form>
-	</section>
-	
+		<br>
+		<div style="color: red; text-align: center">${MensajeError}</div>
 
-	</main>
-	
-		<footer>
-		<p style="color:#808080;text-align:center">Made with love <i class="material-icons">favorite</i> © Grupo 6</p>
+	</form>
+	</section> </main>
+
+	<footer>
+	<p style="color: #808080; text-align: center">
+		Made with love <i class="material-icons">favorite</i> © Grupo 6
+	</p>
 	</footer>
 
 </body>
